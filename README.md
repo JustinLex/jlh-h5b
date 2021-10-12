@@ -60,6 +60,11 @@ A Kubernetes-based Homelab
 
 * MetalLB layer 2 gateway
   * No routing bottlenecks with cheap switches and routers, even at 10GB throughput
+  * x86 Node will be leader in normal situations
+  * Local traffic policy so that TCP applications aren't confused about source
+  * This means that x86 node will run all TCP applications, such as ingress, Wireguard, and game servers, and these will not be load balanced
+    * However ingress and wireguard will fail over to raspi nodes if x86 node goes down
+  * HTTP servers and internal services will still load balance across servers
 
 * Istio service mesh
   * Inter-pod network segmentation?
