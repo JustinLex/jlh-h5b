@@ -9,7 +9,7 @@ A Kubernetes-based Homelab
   * No need for multiple clusters
   * All software can run on primary cluster
   * Bootstrapping and storage can run alongside cluster on x86 node
-  * No hardware available to spin up mutliple clusters without use of VMs?
+  * No hardware available to spin up mutliple clusters without use of clunky VMs anyways
 
 * 1 controlplane, 2 worker nodes
   * Worker node redundancy
@@ -25,6 +25,7 @@ A Kubernetes-based Homelab
     * even if k8s API goes down
     * even if persistent storage goes down
     * Useful for ensuring VPN access is maintained
+   * Maybe failover serving direct from B2 remote backups?
 
 ### Hardware
 * 3 Node cluster
