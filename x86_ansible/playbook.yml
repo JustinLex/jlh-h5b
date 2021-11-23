@@ -17,10 +17,15 @@
     #    ${package_installer} install -y https://${rpm_site}/k3s/${rpm_channel}/common/${rpm_site_infix}/noarch/k3s-selinux-0.4-1.${rpm_target}.noarch.rpm
 
     # Mount NFS
+    - name: Install NFS driver
+      ansible.builtin.apt:
+        name: nfs-common
+        state: latest
+
     - name: mount NFS share
       ansible.posix.mount:
         fstype: nfs
-        src: freenas.home.jlh.name:/mnt/solid/kubernetes
+        src: freenas.home.jlh.name:/mnt/solid/k8s
         path: /mnt
         opts: noauto,x-systemd.automount,x-systemd.mount-timeout=60,_netdev
         state: mounted
