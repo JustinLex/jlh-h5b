@@ -32,12 +32,14 @@
 
     # Install CRI-O https://cri-o.io/
     - name: Install CRI-O repository keys
-      ansible.builtin.apt_key:
-        url: "{{ item }}"
-        state: present
+      ansible.builtin.get_url:
+        url: "{{ item.url }}"
+        dest: "/etc/apt/trusted.gpg.d/{{ item.name }}"
       loop:
-        - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ k8s_version }}/Debian_11/Release.key"
-        - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_11/Release.key"
+        - url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ k8s_version }}/Debian_11/Release.key"
+          name: opensuse_libcontainers_crio.key
+        - url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_11/Release.key"
+          name: opensuse_libcontainers.key
 
     - name: Install CRI-O repositories
       ansible.builtin.apt_repository:
