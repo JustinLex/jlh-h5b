@@ -85,11 +85,14 @@ A Kubernetes-based Homelab
     * System logs
   * Kubernetes metrics
     * Kubernetes granular usage metrics
+    * Kubernetes events
   * Containers
     * Per process usage metrics
     * container logs
   * Networking
     * Firewall logs and statistics
+    * DHCP logs
+    * Wifi events and throughput metrics
   * Home Assistant
     * Sensor metrics
     * Event logs
