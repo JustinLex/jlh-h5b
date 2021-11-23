@@ -76,3 +76,21 @@ A Kubernetes-based Homelab
 * Minimal RBAC
   * Cluster only administered by me
   * Only need service accounts for meta services like monitoring or job spawners
+
+### Monitoring
+  * x86 node IPMI
+    * IPMI sensors and events
+  * Nodes
+    * Linux performance metrics
+    * System logs
+  * Kubernetes metrics
+    * Kubernetes granular usage metrics
+  * Containers
+    * Per process usage metrics
+    * container logs
+  * Networking
+    * Firewall logs and statistics
+  * Home Assistant
+    * Sensor metrics
+    * Event logs
+  
