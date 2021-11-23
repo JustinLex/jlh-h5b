@@ -33,6 +33,8 @@ A Kubernetes-based Homelab
     * Ryzen-based for future scaling
     * 64GB ECC RAM
     * Persistant storage
+      * ZFS for checksums, dedup, and RAID 
+      * HDDs will have L2ARC and SLOG on NVMe boot drives
     * IPMI for robustness and high uptime
     * 10G networking for high capacity
     * Worker node with big capacity and x86 support
