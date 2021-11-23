@@ -83,6 +83,7 @@ A Kubernetes-based Homelab
   * Nodes
     * Linux performance metrics
     * System logs
+    * SELinux audits
   * Kubernetes metrics
     * Kubernetes granular usage metrics
     * Kubernetes events
