@@ -1,0 +1,46 @@
+---
+- hosts: cloyster.home.jlh.name
+  become: yes
+  vars_files: ["vars.yml"]
+  tasks:
+    # Update system
+
+    # Setup SELinux https://wiki.debian.org/SELinux/Setup
+
+    # Mount NFS
+    - name: mount NFS share
+      ansible.posix.mount:
+        fstype: nfs
+        src: freenas.home.jlh.name:/mnt/solid/kubernetes
+        path: /mnt
+        opts: noauto,x-systemd.automount,x-systemd.mount-timeout=60,_netdev
+        state: mounted
+
+    # Install CRI-O https://cri-o.io/
+    - name: Install CRI-O repository keys
+      ansible.builtin.apt_key:
+        url: "{{ item }}"
+        state: present
+      loop:
+        - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ k8s_version }}/Debian_11/Release.key"
+        - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_11/Release.key"
+
+
+    - name: Install CRI-O repositories
+      ansible.builtin.apt_repository:
+        repo: "{{ item }}"
+        state: present
+      loop:
+        - "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_11/"
+        - "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/cri-o:/{{ k8s_version }}/Debian_11/"
+
+    - name: Install CRI-O
+      ansible.builtin.apt:
+        name:
+          - cri-o
+          - cri-o-runc
+        update_cache: yes
+        state: latest
+
+    - name: Install k3s
+    - name: start kubernetes
