@@ -12,6 +12,9 @@
 
     # Setup SELinux https://wiki.debian.org/SELinux/Setup
 
+    # k3s selinux bits
+    #    ${package_installer} install -y container-selinux
+    #    ${package_installer} install -y https://${rpm_site}/k3s/${rpm_channel}/common/${rpm_site_infix}/noarch/k3s-selinux-0.4-1.${rpm_target}.noarch.rpm
 
     # Mount NFS
     - name: mount NFS share
@@ -31,7 +34,6 @@
         - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ k8s_version }}/Debian_11/Release.key"
         - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_11/Release.key"
 
-
     - name: Install CRI-O repositories
       ansible.builtin.apt_repository:
         repo: "{{ item }}"
@@ -48,5 +50,27 @@
         update_cache: yes
         state: latest
 
-    - name: Install k3s
-    - name: start kubernetes
+    # Install k3s https://github.com/k3s-io/k3s-ansible
+    - name: Download k3s binary
+      ansible.builtin.get_url:
+        url: https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s
+        checksum: sha256:https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/sha256sum-amd64.txt
+        dest: /usr/local/bin/k3s
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Install k3s service
+      ansible.builtin.copy:
+        src: "k3s.service"
+        dest: "/etc/systemd/system/k3s.service"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Enable and restart K3s service
+      ansible.builtin.systemd:
+        name: k3s
+        daemon_reload: yes
+        state: restarted
+        enabled: yes

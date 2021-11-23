@@ -1,0 +1,30 @@
+[Unit]
+Description=Lightweight Kubernetes
+Documentation=https://k3s.io
+After=network-online.target
+
+# k3s CRI-O + Calico CLI args found here: https://github.com/cri-o/cri-o/issues/4491
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/k3s server \
+  --data-dir /var/lib/rancher/k3s \
+  --flannel-backend=none \
+  --disable-network-policy \
+  --disable=traefik \
+  --container-runtime-endpoint=unix:///var/run/crio/crio.sock
+# --cluster-cidr=192.168.0.0/16
+KillMode=process
+Delegate=yes
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=1048576
+LimitNPROC=infinity
+LimitCORE=infinity
+TasksMax=infinity
+TimeoutStartSec=0
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
