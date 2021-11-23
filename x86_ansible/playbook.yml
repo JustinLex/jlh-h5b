@@ -3,9 +3,15 @@
   become: yes
   vars_files: ["vars.yml"]
   tasks:
+
     # Update system
+    - name: Update system
+      ansible.builtin.apt:
+        upgrade: safe
+        update_cache: yes
 
     # Setup SELinux https://wiki.debian.org/SELinux/Setup
+
 
     # Mount NFS
     - name: mount NFS share
