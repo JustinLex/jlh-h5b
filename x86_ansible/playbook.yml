@@ -31,23 +31,28 @@
         state: mounted
 
     # Install CRI-O https://cri-o.io/
+    - name: Install gpg
+      ansible.builtin.apt:
+        name: gpg
+        state: latest
+
     - name: Install CRI-O repository keys
-      ansible.builtin.get_url:
-        url: "{{ item.url }}"
-        dest: "/etc/apt/trusted.gpg.d/{{ item.name }}"
+      ansible.builtin.apt_key:
+        url: "{{ item }}"
+        state: present
       loop:
-        - url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ k8s_version }}/Debian_11/Release.key"
-          name: opensuse_libcontainers_crio.key
-        - url: "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_11/Release.key"
-          name: opensuse_libcontainers.key
+        - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ k8s_version }}/Debian_11/Release.key"
+        - "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable/Debian_11/Release.key"
 
     - name: Install CRI-O repositories
       ansible.builtin.apt_repository:
         repo: "{{ item }}"
         state: present
       loop:
-        - "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_11/"
-        - "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/cri-o:/{{ k8s_version }}/Debian_11/"
+        - "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/Debian_11/ /"
+
+
+        - "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{ k8s_version }}/Debian_11/ /"
 
     - name: Install CRI-O
       ansible.builtin.apt:
@@ -56,6 +61,12 @@
           - cri-o-runc
         update_cache: yes
         state: latest
+
+    - name: Enable and restart crio service
+      ansible.builtin.systemd:
+        name: crio
+        state: restarted
+        enabled: yes
 
     # Install k3s https://github.com/k3s-io/k3s-ansible
     - name: Download k3s binary
