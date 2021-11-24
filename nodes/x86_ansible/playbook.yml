@@ -96,4 +96,4 @@
     # Install Calico
     - name: Install Calico operator
       ansible.builtin.command:
-        cmd: kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+        cmd: /usr/local/bin/k3s kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
