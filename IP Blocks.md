@@ -6,8 +6,8 @@ My home network is full-stack, and both IPv4 and IPV6 are used.
 ## Why everything is on network "1"
 Because I don't have fast Layer 3 routing on my home network, my devices and servers share the same Layer 2 subnet.
 
-The IPMI, IoT, and Guest networks can be separated out into their own subnets and 
-routed through my pfSense router. 
+The IPMI, IoT, and Guest networks don't require more than 1gbit routing speed,
+and they can be separated out into their own subnets and routed through my pfSense router. 
 These networks have higher security risks so separating them out is a good idea.
 
 Kubernetes Pods are on their own subnet because they are not routable outside of 
