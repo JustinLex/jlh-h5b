@@ -36,7 +36,7 @@ Since my ISP, Bahnhof, does not offer IPv6, these IP blocks are from the "Unique
 
 The ID for my ULA block is 448f3dc818.
 
-* Workstations/Nodes/Kubernetes Services (VLAN 1)
+* Workstations/Kubernetes Services (VLAN 1)
   * fd44:8f3d:c818:100::/64
 * IPMI (VLAN 2)
   * fd44:8f3d:c818:200::/64
