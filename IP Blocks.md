@@ -6,15 +6,19 @@ My home network is full-stack, and both IPv4 and IPV6 are used.
 ## Why everything is on network "1"
 Because I don't have fast Layer 3 routing on my home network, my devices and servers share the same Layer 2 subnet.
 
-Slower networks like IoT and Guest networks are separated out into their own subnets and 
-routed through my pfSense router.
-
+The IPMI, IoT, and Guest networks can be separated out into their own subnets and 
+routed through my pfSense router. 
 These networks have higher security risks so separating them out is a good idea.
+
+Kubernetes Pods are on their own subnet because they are not routable outside of 
+Kubernetes nodes unless BGP routing is used.
 
 ## IPv4
 
-* Workstations/Nodes/IPMI/Kubernetes Services
+* Workstations/Nodes/Kubernetes Services
   * 10.1.0.0/16
+* IPMI
+  * 10.2.0.0/16
 * IoT devices
   * 10.3.0.0/16
 * Kubernetes Pods
@@ -30,6 +34,8 @@ The ID for my ULA block is 448f3dc818.
 
 * Workstations/Nodes/IPMI/Kubernetes Services
   * fd44:8f3d:c818:100::/64
+* IPMI
+  * fd44:8f3d:c818:200::/64
 * IoT devices
   * fd44:8f3d:c818:300::/64
 * Kubernetes Pods
