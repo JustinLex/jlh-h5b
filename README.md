@@ -61,9 +61,11 @@ A Kubernetes-based Homelab
   * Boot parameters configured as code through PXE
 
 ### Agent Selection
+* CRI-O
+  * RedHat and SUSE generally have better designed software than other vendors
+
 * Calico CNI
   * Robust, standardized layer 3 networking
-  * High performance eBPF on x86 node
 
 * MetalLB layer 2 gateway
   * No routing bottlenecks with cheap switches and routers, even at 10GB throughput
