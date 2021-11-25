@@ -13,7 +13,7 @@ spec:
     bgp: Enabled
     hostPorts: Enabled
     ipPools: # Note: The ipPools section cannot be modified post-install.
-    - cidr: "10.42.0.0/24"
+    - cidr: "10.42.0.0/16"
       blockSize: 26
       encapsulation: None
       natOutgoing: Enabled

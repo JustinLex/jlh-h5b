@@ -13,8 +13,8 @@ ExecStart=/usr/local/bin/k3s server \
   --disable-network-policy \
   --disable=traefik \
   --container-runtime-endpoint=unix:///var/run/crio/crio.sock \
-  --kubelet-arg cgroup-driver="systemd"
-# --cluster-cidr=192.168.0.0/16
+  --kubelet-arg cgroup-driver="systemd" \
+  --cluster-cidr=10.0.0.0/16
 KillMode=process
 Delegate=yes
 # Having non-zero Limit*s causes performance problems due to accounting overhead
