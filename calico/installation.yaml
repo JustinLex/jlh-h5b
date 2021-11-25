@@ -13,12 +13,12 @@ spec:
     bgp: Enabled
     hostPorts: Enabled
     ipPools: # Note: The ipPools section cannot be modified post-install.
-    - cidr: "10.42.0.0/16"
+    - cidr: "10.4.0.0/16"
       blockSize: 26
       encapsulation: None
       natOutgoing: Enabled
       nodeSelector: all()
-#    - cidr: "fd00:29d1:d025:7b::/48" # This block is within the fc00::/7 "Unique Local Address" block.
+#    - cidr: "fd44:8f3d:c818:400::/64"
 #      blockSize: 116
 #      encapsulation: None
 #      natOutgoing: Enabled
