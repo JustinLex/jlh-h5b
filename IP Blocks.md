@@ -15,15 +15,19 @@ Kubernetes nodes unless BGP routing is used.
 
 ## IPv4
 
-* Workstations/Nodes/Kubernetes Services
+* Workstations/Nodes/Kubernetes Services (VLAN 1)
   * 10.1.0.0/16
-* IPMI
+  * Note: Workstations and nodes receive their IPs through DHCP, 
+    but kubernetes services are dynamically allocated by MetalLB.
+    * 10.1.1.0/24 DHCP range
+    * 10.1.2.0/24 MetalLB IP pool
+* IPMI (VLAN 2)
   * 10.2.0.0/16
-* IoT devices
+* IoT devices (VLAN 3)
   * 10.3.0.0/16
 * Kubernetes Pods
   * 10.4.0.0/16
-* Guest Wifi
+* Guest Wifi (VLAN 5)
   * 10.5.0.0/16
 
 ## IPv6
@@ -32,15 +36,15 @@ Since my ISP, Bahnhof, does not offer IPv6, these IP blocks are from the "Unique
 
 The ID for my ULA block is 448f3dc818.
 
-* Workstations/Nodes/IPMI/Kubernetes Services
+* Workstations/Nodes/Kubernetes Services (VLAN 1)
   * fd44:8f3d:c818:100::/64
-* IPMI
+* IPMI (VLAN 2)
   * fd44:8f3d:c818:200::/64
-* IoT devices
+* IoT devices (VLAN 3)
   * fd44:8f3d:c818:300::/64
 * Kubernetes Pods
   * fd44:8f3d:c818:400::/64
-* Guest Wifi
+* Guest Wifi (VLAN 5)
   * fd44:8f3d:c818:500::/64
 
 ## VLANs
