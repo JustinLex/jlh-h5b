@@ -10,6 +10,12 @@
         upgrade: safe
         update_cache: yes
 
+    - name: Install admin tools
+      ansible.builtin.apt:
+        name:
+          - htop
+        state: latest
+
     # Setup SELinux https://wiki.debian.org/SELinux/Setup
 
     # k3s selinux bits
