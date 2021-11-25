@@ -92,8 +92,3 @@
         daemon_reload: yes
         state: restarted
         enabled: yes
-
-    # Install Calico
-    - name: Install Calico operator
-      ansible.builtin.command:
-        cmd: /usr/local/bin/k3s kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
