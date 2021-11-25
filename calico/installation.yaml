@@ -1,0 +1,35 @@
+# This section includes base Calico installation configuration.
+# For more information, see: https://docs.projectcalico.org/v3.21/reference/installation/api#operator.tigera.io/v1.Installation
+apiVersion: operator.tigera.io/v1
+kind: Installation
+metadata:
+  name: default
+spec:
+  # Configures Calico networking.
+  # Note, we use BGP Layer 3 routing for pods to communicate with each other across nodes,
+  # instead of VXLAN encapsulation.
+  calicoNetwork:
+    linuxDataplane: Iptables # eBPF would be nice, but it is not supported on ARM and does not support IPv6.
+    bgp: Enabled
+    hostPorts: Enabled
+    ipPools: # Note: The ipPools section cannot be modified post-install.
+    - cidr: "10.42.0.0/24"
+      blockSize: 26
+      encapsulation: None
+      natOutgoing: Enabled
+      nodeSelector: all()
+#    - cidr: "fd00:29d1:d025:7b::/48" # This block is within the fc00::/7 "Unique Local Address" block.
+#      blockSize: 116
+#      encapsulation: None
+#      natOutgoing: Enabled
+#      nodeSelector: all()
+
+---
+
+# This section configures the Calico API server.
+# For more information, see: https://docs.projectcalico.org/v3.21/reference/installation/api#operator.tigera.io/v1.APIServer
+apiVersion: operator.tigera.io/v1
+kind: APIServer
+metadata:
+  name: default
+spec: {}
