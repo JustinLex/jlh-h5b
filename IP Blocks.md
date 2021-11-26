@@ -47,6 +47,3 @@ The ID for my ULA block is 448f3dc818.
   * fd44:8f3d:c818:500::/64
 * IoT devices (VLAN 6)
   * fd44:8f3d:c818:600::/64
-
-
-## VLANs
