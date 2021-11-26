@@ -12,13 +12,12 @@ All services such as SSH and kube api only listen on VLAN 3.
 
 ## IPv4
 
-* Workstations/Kubernetes Services (VLAN 1)
+* Workstations/Kubernetes LBs (VLAN 1)
   * 10.1.0.0/16
   * Note: Workstations and nodes receive their IPs through DHCP, 
     but kubernetes services are dynamically allocated by MetalLB.
-    * 10.1.1.0/24 DHCP range
-    * 10.1.2.0/24 MetalLB IP pool
-    * 10.1.3.0/24 Legacy Proxmox services static IP block
+    * 10.1.0.0/20 DHCP range
+    * 10.1.16.0/20 MetalLB IP pool
 * IPMI (VLAN 2)
   * 10.2.0.0/16
 * Nodes (VLAN 3)
