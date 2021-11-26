@@ -1,0 +1,11 @@
+all:
+  children:
+    #totoro: # This hostname will be used when the x86 node is migrated to bare metal
+    cloyster:
+    raspis:
+      hosts:
+        # mac addresses are used to pick the right OS image during PXE boot
+        satsuki:
+          mac_address: ff:ff:ff:ff:ff:ff
+        mei:
+          mac_address: ff:ff:ff:ff:ff:ff
