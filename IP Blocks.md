@@ -6,7 +6,7 @@ This document lays out the different IP blocks for my internal network.
 ###IPv6
 My ISP, Bahnhof, does not offer IPv6 at my apartment.
 However, I would like to take advantage of the large subnets that IPv6 has, to make it easier to manage my network.
-Hopefully, I will be able to prepare my Kubernetes cluster for the IPv6 transition, as well.
+Also, I like the idea of having an IPv6 native Kubernetes cluster.
 
 Because I have no global IPv6 subnets allocated to me, I am using a /48 from the "Unique Local Address" block.
 The ID for my ULA block is 448f3dc818.
