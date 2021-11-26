@@ -45,10 +45,6 @@ A Kubernetes-based Homelab
  
 * Metal OSes
   * Debian
-    * Runs some things outside of the cluster inside Podman for Disaster Recovery and extra security
-      * PXE server
-      * Backup server
-      * MetalLB
     * Provides PXE server and persistant storage
     * Runs k3s to provide an x86 worker node
     * Provisioned with Ansible?
