@@ -26,7 +26,7 @@ All services such as SSH and the kube api only listen on VLAN 3.
       but kubernetes services are dynamically allocated by MetalLB.
       * 10.1.0.0/20 DHCP range
       * 10.1.16.0/20 MetalLB IP pool
-  * fd44:8f3d:c818:100::/64
+  * fd44:8f3d:c818:100::/64 (We don't expect SLAAC and MetalLB to collide in a pool of 18 quintillion addresses)
   * VLAN 1
 * IPMI 
   * 10.2.0.0/16
