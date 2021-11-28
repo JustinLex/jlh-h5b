@@ -15,4 +15,4 @@ It does a system update, installs admin tools, and installs SELinux.
 * k3s installs k3s and CRI-O, and connects the system to the cluster as a worker node.
 
 ## Running the play
-`ansible-playbook -K -i inventory.yml site.yml`
+`ansible-playbook -K -i cloyster.home.jlh.name, site.yml`

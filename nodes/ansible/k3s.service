@@ -12,8 +12,6 @@ ExecStart=/usr/local/bin/k3s server \
   --flannel-backend=none \
   --disable-network-policy \
   --disable=traefik \
-  --container-runtime-endpoint=unix:///var/run/crio/crio.sock \
-  --kubelet-arg cgroup-driver="systemd" \
   --cluster-cidr=10.4.0.0/16
 KillMode=process
 Delegate=yes
