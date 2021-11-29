@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: hello-world
 spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Local
   selector:
     app: hello-world
   ports:
