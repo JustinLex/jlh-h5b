@@ -11,6 +11,7 @@ spec:
   calicoNetwork:
     linuxDataplane: Iptables # eBPF would be nice, but it is not supported on ARM and does not support IPv6.
     bgp: Enabled
+    # mtu: 10218 # max jumbo frame support for Mikrotik CSS328 switch
     hostPorts: Enabled
     ipPools: # Note: The ipPools section cannot be modified post-install.
     - cidr: "10.4.0.0/16"
