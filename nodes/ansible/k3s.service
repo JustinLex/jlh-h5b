@@ -12,6 +12,7 @@ ExecStart=/usr/local/bin/k3s server \
   --flannel-backend=none \
   --disable-network-policy \
   --disable=traefik \
+  --disable=servicelb \
   --cluster-cidr=10.4.0.0/16
 KillMode=process
 Delegate=yes
