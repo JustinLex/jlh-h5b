@@ -10,6 +10,7 @@
     * Kubernetes events
     * Kubernetes API auditing
   * Ingress
+    * (HTTP logs are in container logs)
     * Prometheus Metrics 
       * https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#prometheus-metrics
   * Containers
