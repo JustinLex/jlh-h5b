@@ -62,27 +62,3 @@
 * Minimal RBAC
   * Cluster only administered by me
   * Only need service accounts for meta services like monitoring or job spawners
-
-### Monitoring
-  * x86 node IPMI
-    * IPMI sensors and events
-  * Nodes
-    * Linux performance metrics
-    * System logs
-    * SELinux audits
-  * Kubernetes
-    * Kubernetes granular performance metrics
-    * Kubernetes events
-    * Kubernetes API auditing
-  * Ingress?
-  * Containers
-    * Per process usage metrics
-    * container logs
-  * Networking
-    * Firewall logs and statistics
-    * DHCP logs
-    * Wifi events and throughput metrics
-  * Home Assistant
-    * Sensor metrics
-    * Event logs
-  
