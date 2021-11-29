@@ -1,0 +1,25 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# Nodes network (VLAN 3)
+allow-hotplug ens18
+iface ens18 inet dhcp
+iface ens18 inet6 auto
+
+# Workstation network (VLAN 1)
+allow-hotplug ens19
+# iface ens19 inet dhcp
+# iface ens19 inet6 auto
+
+# I tried to disable debian from listening on VLAN 1 with this,
+# but it seems that kube-proxy won't listen to an interface without an IP address?
+# iface ens19 inet manual
+# iface ens19 inet6 manual
+# pre-up /sbin/sysctl -w net.ipv6.conf.ens19.accept_ra=0
+

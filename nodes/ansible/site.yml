@@ -16,6 +16,11 @@
           - htop
         state: latest
 
+    - name: Configure network
+      ansible.builtin.copy:
+        src: interfaces
+        dest: /etc/network/interfaces
+
     # Setup SELinux https://wiki.debian.org/SELinux/Setup
 
     # k3s selinux bits
