@@ -1,0 +1,12 @@
+controller:
+  # Become default IngressClass
+  watchIngressWithoutClass: true
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: true
+    controllerValue: "k8s.io/ingress-nginx"
+
+  # Don't hide source IP
+  service:
+    externalTrafficPolicy: Local
