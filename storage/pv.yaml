@@ -9,4 +9,4 @@ spec:
     - ReadWriteMany
   nfs:
     server: freenas.home.jlh.name
-    path: "/solid/kubernetes"
+    path: "/mnt/solid/k8s"
