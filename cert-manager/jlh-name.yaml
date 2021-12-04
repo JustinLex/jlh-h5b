@@ -5,7 +5,7 @@ metadata:
 spec:
   secretName: jlh-name-tls
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt
     kind: ClusterIssuer
   dnsNames:
   - 'jlh.name'
