@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wireguard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: wireguard
+  template:
+    metadata:
+      labels:
+        component: wireguard
+    spec:
+      volumes:
+        - name: wg-data
+          persistentVolumeClaim:
+            claimName: nfs
+      containers:
+        - name: wg-ui
+          image: "embarkstudios/wireguard-ui:1.3.0"
+          command: ["/wireguard-ui"]
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 8080
+              name: gui
+            - containerPort: 5555
+              name: wireguard
+          volumeMounts:
+            - mountPath: /data
+              name: wg-data
+              subPath: "wireguard-ui"
