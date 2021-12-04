@@ -1,3 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: smultronfeet-external
+spec:
+  type: ExternalName
+  externalName: hitmonlee.home.jlh.name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-external
+spec:
+  type: ExternalName
+  externalName: swablu.home.jlh.name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pve-external
+spec:
+  type: ExternalName
+  externalName: pve.home.jlh.name
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -12,6 +36,46 @@ spec:
         backend:
           service:
             name: hello-world
+            port:
+              number: 80
+#  - host: wg.jlh.name # THIS SERVICE HAS NO AUTHENTICATION AND SHOULD NOT BE PUBLIC
+#    http:
+#      paths:
+#      - path: /
+#        pathType: Prefix
+#        backend:
+#          service:
+#            name: wireguard-http
+#            port:
+#              number: 80
+  - host: smultronfeet.nu
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: smultronfeet-external
+            port:
+              number: 80
+  - host: cloud.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cloud-external
+            port:
+              number: 80
+  - host: pve.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pve-external
             port:
               number: 80
 ---
