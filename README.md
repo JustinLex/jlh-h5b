@@ -7,4 +7,5 @@ A Kubernetes-based Homelab
 3. MetalLB Helm chart
 4. ingress-nginx Helm chart
 5. Storage PV and PVC
-6. unifi Helm chart
+6. Wireguard deployment and services
+7. unifi Helm chart
