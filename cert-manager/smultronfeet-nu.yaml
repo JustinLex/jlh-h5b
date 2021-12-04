@@ -5,7 +5,7 @@ metadata:
 spec:
   secretName: smultronfeet-nu-tls
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt
     kind: ClusterIssuer
   dnsNames:
   - smultronfeet.nu
