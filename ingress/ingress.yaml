@@ -33,6 +33,9 @@ spec:
       - cloud.jlh.name
       - pve.jlh.name
     secretName: jlh-name-tls
+  - hosts:
+      - smultronfeet.nu
+    secretName: smultronfeet-nu-tls
   rules:
   - host: hello-world.jlh.name
     http:
