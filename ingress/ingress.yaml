@@ -27,6 +27,12 @@ kind: Ingress
 metadata:
   name: site
 spec:
+  tls:
+  - hosts:
+      - hello-world.jlh.name
+      - cloud.jlh.name
+      - pve.jlh.name
+    secretName: jlh-name-tls
   rules:
   - host: hello-world.jlh.name
     http:
