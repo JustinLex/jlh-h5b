@@ -31,7 +31,6 @@ spec:
   - hosts:
       - hello-world.jlh.name
       - cloud.jlh.name
-      - pve.jlh.name
     secretName: jlh-name-tls
   - hosts:
       - smultronfeet.nu
@@ -85,6 +84,10 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
+  tls:
+  - hosts:
+      - pve.jlh.name
+    secretName: jlh-name-tls
   rules:
   - host: pve.jlh.name
     http:
