@@ -36,6 +36,7 @@ spec:
   - hosts:
       - hello-world.jlh.name
       - cloud.jlh.name
+      - hass.jlh.name
     secretName: jlh-name-tls
   - hosts:
       - smultronfeet.nu
@@ -79,6 +80,16 @@ spec:
         backend:
           service:
             name: cloud-external
+            port:
+              number: 80
+  - host: hass.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: home-assistant
             port:
               number: 80
 ---
