@@ -26,6 +26,7 @@ so we just put all nodes on the workstation network.
       but kubernetes services are dynamically allocated by MetalLB.
       * 10.1.0.0/20 DHCP range
       * 10.1.16.0/20 MetalLB IP pool
+      * 10.1.32.0/20 VPN client DHCP
   * fd44:8f3d:c818:100::/64 (It is statistically impossible for SLAAC and MetalLB to collide in a /64.)
   * VLAN 1
 * IPMI 
