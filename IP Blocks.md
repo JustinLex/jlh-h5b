@@ -27,9 +27,10 @@ so we just put all nodes on the workstation network.
       * 10.1.0.0/20 DHCP range
       * 10.1.16.0/20 MetalLB IP pool
       * 10.1.32.0/20 VPN client DHCP
+      * 10.2.48.0/20 Static IP for Media devices that dont give a hostname using DHCP \>:\(
   * fd44:8f3d:c818:100::/64 (It is statistically impossible for SLAAC and MetalLB to collide in a /64.)
   * VLAN 1
-* IPMI 
+* IPMI / Management
   * 10.2.0.0/16
   * fd44:8f3d:c818:200::/64
   * VLAN 2
