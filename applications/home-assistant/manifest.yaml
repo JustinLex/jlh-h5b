@@ -55,6 +55,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: config
 spec:
+  storageClassName: nfs-freenas
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
