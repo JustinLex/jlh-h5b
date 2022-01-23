@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: h5b-apps
-  namespace: argocd
+  namespace: application-set
 spec:
   generators:
   - git:
