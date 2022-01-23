@@ -7,6 +7,7 @@ https://argo-cd.readthedocs.io/en/stable/getting_started/
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 kubectl apply -f argocd/ingress.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj-labs/applicationset/v0.3.0/manifests/install.yaml
 ```
 
 ## Get password
