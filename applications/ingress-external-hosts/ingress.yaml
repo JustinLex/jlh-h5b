@@ -34,34 +34,12 @@ metadata:
 spec:
   tls:
   - hosts:
-      - hello-world.jlh.name
       - cloud.jlh.name
-      - hass.jlh.name
     secretName: jlh-name-tls
   - hosts:
       - smultronfeet.nu
     secretName: smultronfeet-nu-tls
   rules:
-  - host: hello-world.jlh.name
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: hello-world
-            port:
-              number: 80
-#  - host: wg.jlh.name # THIS SERVICE HAS NO AUTHENTICATION AND SHOULD NOT BE PUBLIC
-#    http:
-#      paths:
-#      - path: /
-#        pathType: Prefix
-#        backend:
-#          service:
-#            name: wireguard-http
-#            port:
-#              number: 80
   - host: smultronfeet.nu
     http:
       paths:
@@ -80,16 +58,6 @@ spec:
         backend:
           service:
             name: cloud-external
-            port:
-              number: 80
-  - host: hass.jlh.name
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: home-assistant
             port:
               number: 80
 ---
@@ -115,22 +83,3 @@ spec:
             name: pve-external
             port:
               number: 8006
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: unifi
-  annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-spec:
-  rules:
-  - host: unifi.jlh.name
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: unifi
-            port:
-              number: 8443
