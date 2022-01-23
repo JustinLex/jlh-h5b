@@ -20,5 +20,5 @@ spec:
         targetRevision: HEAD
         path: '{{path}}'
       destination:
-        server: https://home.jlh.name:6616
+        server: in-cluster
         namespace: '{{path.basename}}'
