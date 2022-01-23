@@ -1,0 +1,11 @@
+kind: ApplicationSet
+metadata:
+  name: h5b-apps
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/JustinLex/jlh-h5b.git
+      revision: HEAD
+      directories:
+      - path: applications/*
