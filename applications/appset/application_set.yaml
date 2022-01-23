@@ -1,8 +1,13 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: appset
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: h5b-apps
-  namespace: application-set
+  name: appset
+  namespace: appset
 spec:
   generators:
   - git:
