@@ -41,13 +41,23 @@ spec:
         volumeMounts:
         - name: config
           mountPath: /config
-          subPath: home-assistant/
       volumes:
         - name: config
           persistentVolumeClaim:
-            claimName: nfs
+            claimName: config
       dnsConfig:  # Fix DNS resolution in Alpine 3.11 https://github.com/gliderlabs/docker-alpine/issues/539
         options:
           - name: ndots
             value: "1"
-
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 8Gi
