@@ -4,6 +4,7 @@
 kubectl apply -f applications/argocd/argo_and_appset_controller.yaml
 kubectl apply -f applications/argocd/argo_and_appset_controller.yaml
 ```
+You might need to bootstrap calico too.
 
 ## Get password
 ```shell
