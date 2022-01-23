@@ -10,3 +10,15 @@ spec:
       revision: HEAD
       directories:
       - path: applications/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/JustinLex/jlh-h5b.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://home.jlh.name:6616
+        namespace: '{{path.basename}}'
