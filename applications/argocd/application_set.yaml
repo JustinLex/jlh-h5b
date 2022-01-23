@@ -1,13 +1,8 @@
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: appset
----
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: appset
-  namespace: appset
+  namespace: argocd
 spec:
   generators:
   - git:
