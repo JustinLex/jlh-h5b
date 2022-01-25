@@ -1,14 +1,14 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: backup-solid
 spec:
   schedule: "35 */2 * * *"
+  # Ensure only one copy of the backup is running, even if it runs
+  # so long that it is still running when the next cron slot comes up
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
-      # Ensure only one copy of the backup is running, even if it runs
-      # so long that it is still running when the next cron slot comes up
-      concurrencyPolicy: Forbid
       template:
         spec:
           containers:
