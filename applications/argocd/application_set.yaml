@@ -22,3 +22,7 @@ spec:
       destination:
         name: in-cluster
         namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+        syncOptions:
+          - CreateNamespace=true
