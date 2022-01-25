@@ -1,0 +1,32 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: backup-solid
+spec:
+  schedule: "35 */2 * * *"
+  jobTemplate:
+    spec:
+      # Ensure only one copy of the backup is running, even if it runs
+      # so long that it is still running when the next cron slot comes up
+      concurrencyPolicy: Forbid
+      template:
+        spec:
+          containers:
+          - name: backup-solid
+            image: kroniak/ssh-client:latest
+            args:
+            - ssh
+            - root@ditto.home.jlh.name
+            - /bin/bash
+            - /root/backup.sh
+
+            volumeMounts:
+              - name: ssh-key
+                mountPath: "/root/.ssh"
+          volumes:
+            - name: ssh-key
+                secret:
+                  secretName: ditto-ssh-key
+                  defaultMode: 0400
+
+          restartPolicy: OnFailure
