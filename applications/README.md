@@ -20,6 +20,6 @@ install /tmp/kubeseal /usr/local/bin/kubeseal
 ```
 Once Argo has synced, you can create SealedSecrets by piping the secret manifest into: 
 ```
-kubeseal --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml
+kubeseal --scope cluster-wide --controller-namespace sealed-secrets --controller-name sealed-secrets -o yaml
 ```
 The output can be copied into a file and uploaded to git.
