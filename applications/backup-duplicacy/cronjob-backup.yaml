@@ -16,6 +16,8 @@ spec:
             image: kroniak/ssh-client:latest
             args:
             - ssh
+            - "-o"
+            - StrictHostKeyChecking=no
             - root@ditto.home.jlh.name
             - /bin/bash
             - /root/backup.sh
