@@ -18,6 +18,8 @@ spec:
             - ssh
             - "-o"
             - StrictHostKeyChecking=no
+            - "-i"
+            - /root/.ssh/ditto-id
             - root@ditto.home.jlh.name
             - /bin/bash
             - /root/backup.sh
