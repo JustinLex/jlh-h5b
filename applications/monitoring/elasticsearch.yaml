@@ -4,9 +4,20 @@ metadata:
   name: monitoring
 spec:
   version: 7.17.0
+  volumeClaimDeletePolicy: DeleteOnScaledownOnly
   nodeSets:
   - name: default
     count: 1
+    volumeClaimTemplates:
+      - metadata:
+          name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: nfs-freenas
     podTemplate:
       spec:
         initContainers:
