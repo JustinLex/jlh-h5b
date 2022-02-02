@@ -7,13 +7,16 @@ spec:
   count: 1
   elasticsearchRef:
     name: monitoring
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kibana
   annotations:
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   tls:
   - hosts:
@@ -30,6 +33,7 @@ spec:
             name: monitoring-kb-http
             port:
               number: 5601
+
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
