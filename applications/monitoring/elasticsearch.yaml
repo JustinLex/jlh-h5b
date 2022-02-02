@@ -8,6 +8,7 @@ spec:
   nodeSets:
   - name: default
     count: 1
+    # Storage
     volumeClaimTemplates:
       - metadata:
           name: elasticsearch-data # Do not change this name unless you set up a volume mount for the data path.
@@ -18,6 +19,7 @@ spec:
             requests:
               storage: 5Gi
           storageClassName: nfs-freenas
+    # sysctl optimization
     podTemplate:
       spec:
         initContainers:
