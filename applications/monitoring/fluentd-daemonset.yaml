@@ -35,6 +35,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: fluentd
+  namespace: monitoring
 ---
 apiVersion: apps/v1
 kind: DaemonSet
