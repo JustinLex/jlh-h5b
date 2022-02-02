@@ -1,0 +1,43 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: monitoring
+spec:
+  version: 7.17.0
+  count: 1
+  elasticsearchRef:
+    name: monitoring
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana
+  annotations:
+spec:
+  tls:
+  - hosts:
+      - kibana.jlh.name
+    secretName: kibana-jlh-name-tls
+  rules:
+  - host: kibana.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: monitoring-kb-http
+            port:
+              number: 5601
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kibana-jlh-name
+spec:
+  secretName: kibana-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+  - kibana.jlh.name
