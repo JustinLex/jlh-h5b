@@ -63,7 +63,7 @@ spec:
         image: fluent/fluentd-kubernetes-daemonset:v1.11.2-debian-elasticsearch7-1.0
         env:
           - name:  FLUENT_ELASTICSEARCH_HOST
-            value: quickstart-es-http
+            value: monitoring-es-http
           # default user
           - name:  FLUENT_ELASTICSEARCH_USER
             value: elastic
