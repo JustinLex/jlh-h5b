@@ -20,6 +20,7 @@
     * Firewall logs and statistics
     * DHCP logs
     * Wifi events and throughput metrics
+    * wifi logs form Zyxel (VRPT/Syslog)
   * Home Assistant
     * Sensor metrics
     * Event logs
