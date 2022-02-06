@@ -2,20 +2,20 @@
   * x86 node IPMI
     * IPMI sensors and events
   * Nodes
-    * Linux performance metrics
-    * System logs
+    * Linux performance metrics ✓
+    * System logs ✓
     * SELinux audits
   * Kubernetes
-    * Kubernetes granular performance metrics
-    * Kubernetes events
+    * Kubernetes granular performance metrics ✓
+    * Kubernetes events 
     * Kubernetes API auditing
   * Ingress
     * (HTTP logs are in container logs)
     * Prometheus Metrics 
       * https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#prometheus-metrics
   * Containers
-    * Per process usage metrics
-    * container logs
+    * Per process usage metrics ✓
+    * container logs ✓
   * Networking
     * Firewall logs and statistics
     * DHCP logs
