@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+  annotations:
+spec:
+  tls:
+  - hosts:
+      - grafana.jlh.name
+    secretName: grafana-jlh-name-tls
+  rules:
+  - host: grafana.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: loki-grafana
+            port:
+              number: 80
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana-jlh-name
+spec:
+  secretName: grafana-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+  - grafana.jlh.name
