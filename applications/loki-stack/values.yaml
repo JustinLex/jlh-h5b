@@ -23,10 +23,10 @@ prometheus:
   enabled: true
   alertmanager:
     persistentVolume:
-      enabled: false
+      enabled: true
   server:
     persistentVolume:
-      enabled: false
+      enabled: true
 
 filebeat:
   enabled: false
