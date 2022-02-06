@@ -1,8 +1,8 @@
 ## Bootstrapping Argo and applications
 
 ```shell
-kubectl apply -f applications/argocd/argo_and_appset_controller.yaml
-kubectl apply -f applications/argocd/application_set.yaml
+helm install argocd applications/argocd -n argocd --create-namespace
+kubectl apply -f applications/argocd-extras/application_set.yaml
 ```
 You might need to bootstrap calico too.
 
