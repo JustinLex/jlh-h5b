@@ -107,16 +107,16 @@ scrapeConfigs: []
 # Custom scrape_configs together with the default ones in the configmap
 extraScrapeConfigs:
   - job_name: journal
-      journal:
-        path: /var/log/journal
-        max_age: 12h
-        labels:
-          job: systemd-journal
-      relabel_configs:
-        - source_labels: [ '__journal__systemd_unit' ]
-          target_label: 'unit'
-        - source_labels: [ '__journal__hostname' ]
-          target_label: 'hostname'
+    journal:
+      path: /var/log/journal
+      max_age: 12h
+      labels:
+        job: systemd-journal
+    relabel_configs:
+      - source_labels: [ '__journal__systemd_unit' ]
+        target_label: 'unit'
+      - source_labels: [ '__journal__hostname' ]
+        target_label: 'hostname'
 
 securityContext:
   readOnlyRootFilesystem: true
