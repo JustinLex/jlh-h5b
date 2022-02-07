@@ -38,7 +38,16 @@ spec:
                   target_label: 'unit'
                 - source_labels: [ '__journal__hostname' ]
                   target_label: 'hostname'
-        
+          extraVolumes:
+            - name: journal
+              hostPath:
+                path: /var/log/journal
+          
+          extraVolumeMounts:
+            - name: journal
+              mountPath: /var/log/journal
+              readOnly: true
+          
         fluent-bit:
           enabled: false
         
