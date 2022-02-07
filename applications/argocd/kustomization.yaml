@@ -9,15 +9,18 @@ resources:
 - application_set.yaml
 - ingress.yaml
 
-patchesJson6902:
-- target: # Add prometheus annotations to enable scraping
-    version: apps/v1
-    kind: StatefulSet
-    name: argocd-application-controller
-  patch: |-
-    - op: add
-      path: /metadata/annotations
-      value: [ {"prometheus.io/scrape": "true"},
-      {"prometheus.io/path": "/metrics"},
-      {"prometheus.io/port": "8080"},
-    ]
+patchesStrategicMerge:
+  - delete-secret.yaml
+
+#patchesJson6902:
+#- target: # Add prometheus annotations to enable scraping
+#    version: apps/v1
+#    kind: StatefulSet
+#    name: argocd-application-controller
+#  patch: |-
+#    - op: add
+#      path: /metadata/annotations
+#      value: [ {"prometheus.io/scrape": "true"},
+#      {"prometheus.io/path": "/metrics"},
+#      {"prometheus.io/port": "8080"},
+#    ]
