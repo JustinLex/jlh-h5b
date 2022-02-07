@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: argocd
+
+resources:
+- argocd.yaml
+- argo_applicationset_controller.yaml
+- application_set.yaml
+- ingress.yaml
+
+patchesJson6902:
+- target: # Add prometheus annotations to enable scraping
+    version: apps/v1
+    kind: StatefulSet
+    name: argocd-application-controller
+  patch: |-
+    - op: add
+      path: /metadata/annotations
+      value: [
+      {"prometheus.io/scrape": "true"},
+      {"prometheus.io/path": "/metrics"},
+      {"prometheus.io/port": "8080"},
+    ]
