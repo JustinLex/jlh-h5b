@@ -5,14 +5,109 @@ metadata:
   namespace: argocd
 spec:
   project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: loki-stack
   source:
     chart: loki-stack
     repoURL: https://grafana.github.io/helm-charts
     targetRevision: 2.6.0
     helm:
       releaseName: loki-stack
-      valueFiles:
-        - values.yaml
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: loki-stack
+      # Having values inline here is a bit of a hack until values files are supported
+      # https://github.com/argoproj/argo-cd/issues/2789
+      values: |
+        loki:
+          enabled: true
+          persistence:
+            enabled: true
+            storageClassName: nfs-freenas
+            size: 5Gi
+        
+        promtail:
+          enabled: true
+          extraScrapeConfigs:
+            - job_name: journal
+              journal:
+                path: /var/log/journal
+                max_age: 12h
+                labels:
+                  job: systemd-journal
+              relabel_configs:
+                - source_labels: [ '__journal__systemd_unit' ]
+                  target_label: 'unit'
+                - source_labels: [ '__journal__hostname' ]
+                  target_label: 'hostname'
+        
+        fluent-bit:
+          enabled: false
+        
+        grafana:
+          enabled: true
+          persistence:
+            enabled: true
+            size: 5Gi
+          sidecar:
+            datasources:
+              enabled: true
+          image:
+            tag: 8.3.4
+        
+        prometheus:
+          enabled: true
+          alertmanager:
+            persistentVolume:
+              enabled: true
+          server:
+            persistentVolume:
+              enabled: true
+        
+        filebeat:
+          enabled: false
+          filebeatConfig:
+            filebeat.yml: |
+              # logging.level: debug
+              filebeat.inputs:
+              - type: container
+                paths:
+                  - /var/log/containers/*.log
+                processors:
+                - add_kubernetes_metadata:
+                    host: ${NODE_NAME}
+                    matchers:
+                    - logs_path:
+                        logs_path: "/var/log/containers/"
+              output.logstash:
+                hosts: ["logstash-loki:5044"]
+        
+        logstash:
+          enabled: false
+          image: grafana/logstash-output-loki
+          imageTag: 1.0.1
+          filters:
+            main: |-
+              filter {
+                if [kubernetes] {
+                  mutate {
+                    add_field => {
+                      "container_name" => "%{[kubernetes][container][name]}"
+                      "namespace" => "%{[kubernetes][namespace]}"
+                      "pod" => "%{[kubernetes][pod][name]}"
+                    }
+                    replace => { "host" => "%{[kubernetes][node][name]}"}
+                  }
+                }
+                mutate {
+                  remove_field => ["tags"]
+                }
+              }
+          outputs:
+            main: |-
+              output {
+                loki {
+                  url => "http://loki:3100/loki/api/v1/push"
+                  #username => "test"
+                  #password => "test"
+                }
+                # stdout { codec => rubydebug }
+              }
