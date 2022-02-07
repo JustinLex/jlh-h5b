@@ -8,6 +8,7 @@ resources:
 - argo_applicationset_controller.yaml
 - application_set.yaml
 - ingress.yaml
+- ../../hello-world/pod.yaml
 
 patchesJson6902:
 - target: # Add prometheus annotations to enable scraping
@@ -17,8 +18,7 @@ patchesJson6902:
   patch: |-
     - op: add
       path: /metadata/annotations
-      value: [
-      {"prometheus.io/scrape": "true"},
+      value: {"prometheus.io/scrape": "true"}
       {"prometheus.io/path": "/metrics"},
       {"prometheus.io/port": "8080"},
     ]
