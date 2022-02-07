@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-grafana
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/JustinLex/jlh-h5b.git
+    targetRevision: HEAD
+    path: applications/monitoring/grafana
+  destination:
+    name: in-cluster
+    namespace: 'monitoring-grafana'
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
