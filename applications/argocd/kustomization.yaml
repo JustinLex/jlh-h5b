@@ -4,6 +4,7 @@ metadata:
   name: argocd
 
 resources:
+- namespace.yaml
 - argocd.yaml
 - argo_applicationset_controller.yaml
 - application_set.yaml
