@@ -4,9 +4,4 @@ A Kubernetes-based Homelab
 ## Install order
 1. Ansible playbook for x86 node
 2. Calico Operator and operator.tigera.io/v1/Installation
-3. MetalLB Helm chart
-4. ingress-nginx Helm chart
-5. Storage PV and PVC
-6. cert-manager helm chart
-7. Wireguard deployment and services
-8. unifi Helm chart
+3. ArgoCD kustomize
