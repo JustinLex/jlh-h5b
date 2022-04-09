@@ -2,10 +2,9 @@
 This is an Ansible playbook that sets up the x86 node for the cluster 
 from a fresh install of Debian 11 after the SSH keys have been added.
 
-The x86 node also bootstraps and configures the Raspberry Pis when they come up, 
-so this Ansible playbook is effectively the core of our kubernetes cluster configuration.
+We also prepare images for the raspberry pis?
 
-## Roles
+## Roles (OUTDATED)
 There are four roles in the playbook: base, pi_image_k3s, pxe_server, and k3s.
 
 * base does some basic preparation for the system. 
