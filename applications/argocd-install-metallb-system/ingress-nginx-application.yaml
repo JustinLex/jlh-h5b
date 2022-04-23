@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb-system
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metallb-system
+  syncPolicy:
+    automated:
+      selfHeal: true  # Prevent argo lockout if sync fails
+    syncOptions:
+      - CreateNamespace=true
+  source:
+    chart: metallb
+    repoURL: https://metallb.github.io/metallb
+    targetRevision: 0.12.*
+    helm:
+      releaseName: metallb
+      parameters:
+        - name: "configInline.address-pools[0].name"
+          value: "default"
+        - name: "configInline.address-pools[0].protocol"
+          value: "layer2"
+        - name: "configInline.address-pools[0].addresses[0]"
+          value: "10.1.16.0/20"
