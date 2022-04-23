@@ -13,6 +13,7 @@ ExecStart=/usr/local/bin/k3s server \
   --disable-network-policy \
   --disable=traefik \
   --disable=servicelb \
+  --disable=local-storage \
   --cluster-cidr=10.4.0.0/16
 KillMode=process
 Delegate=yes
