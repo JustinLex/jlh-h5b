@@ -10,7 +10,7 @@ spec:
     namespace: ingress-nginx
   syncPolicy:
     automated:
-      selfHeal: true
+      selfHeal: true  # Prevent argo lockout if sync fails
     syncOptions:
       - CreateNamespace=true
   source:
@@ -36,4 +36,4 @@ spec:
           value: "k8s.io/ingress-nginx"
         # Don't hide source IP
         - name: "controller.service.externalTrafficPolicy"
-          value: "local"
+          value: "Local"
