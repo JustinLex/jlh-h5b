@@ -24,13 +24,13 @@ spec:
           value: true
         # Become default IngressClass
         - name: "controller.watchIngressWithoutClass"
-          value: true
+          value: "true"
         - name: "controller.ingressClassResource.name"
           value: "nginx"
         - name: "controller.ingressClassResource.enabled"
-          value: true
+          value: "true"
         - name: "controller.ingressClassResource.default"
-          value: true
+          value: "true"
         - name: "controller.ingressClassResource.controllerValue"
           value: "k8s.io/ingress-nginx"
         # Don't hide source IP
