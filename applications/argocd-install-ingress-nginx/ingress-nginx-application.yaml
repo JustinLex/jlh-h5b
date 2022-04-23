@@ -21,7 +21,7 @@ spec:
       parameters:
         # Use new chroot hardened controller
         - name: "controller.image.chroot"
-          value: true
+          value: "true"
         # Become default IngressClass
         - name: "controller.watchIngressWithoutClass"
           value: "true"
