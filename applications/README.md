@@ -1,9 +1,17 @@
 ## Bootstrapping Argo and applications
 
+First bootstrap calico to make nodes happy:
+
+```shell
+kubectl apply -f applications/calico/tigera.yaml
+kubectl apply -f applications/calico/installation.yaml
+```
+
+Then you can bootstrap argocd:
+
 ```shell
 kubectl apply -k applications/argocd
 ```
-You might need to bootstrap calico too.
 
 ## Get password
 ```shell
