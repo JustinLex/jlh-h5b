@@ -12,10 +12,13 @@ spec:
   - host: photos.jlh.name
     http:
       paths:
-      - backend:
-          serviceName: photoprism
-          servicePort: http
-        path: /
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: photoprism
+            port: http
+
   tls:
   - hosts:
     - photos.jlh.name
