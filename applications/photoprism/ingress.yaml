@@ -17,7 +17,8 @@ spec:
         backend:
           service:
             name: photoprism
-            port: http
+            port:
+              name: http
 
   tls:
   - hosts:
