@@ -23,3 +23,5 @@ spec:
           value: "photoprism"
         - name: "auth.password"
           value: "photoprism"
+        - name: "auth.rootPassword"
+          value: "fh64wEVpEOuQEN7FsdlL"
