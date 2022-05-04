@@ -32,7 +32,7 @@ spec:
         - name: PHOTOPRISM_SITE_URL
           value: "https://photos.jlh.name"
         - name: PHOTOPRISM_SITE_AUTHOR
-          value: "Justin Lex-Hammarskjold"
+          value: "Justin Lex-Hammarskjöld"
         - name: PHOTOPRISM_HTTP_HOST
           value: 0.0.0.0
         - name: PHOTOPRISM_HTTP_PORT
