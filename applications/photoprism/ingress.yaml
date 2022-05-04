@@ -4,7 +4,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     # Default is very low so most photo uploads will fail
-    nginx.ingress.kubernetes.io/proxy-body-size: "512M"
+    nginx.ingress.kubernetes.io/proxy-body-size: "4G"
   name: photoprism
 spec:
   rules:
