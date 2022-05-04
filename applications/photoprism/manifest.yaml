@@ -29,10 +29,14 @@ spec:
           value: /assets/photos/originals
         - name: PHOTOPRISM_DATABASE_DRIVER
           value: mysql
+        - name: PHOTOPRISM_SITE_URL
+          value: "https://photos.jlh.name"
+        - name: PHOTOPRISM_SITE_AUTHOR
+          value: "Justin Lex-Hammarskjold"
         - name: PHOTOPRISM_HTTP_HOST
-          value: 0.0.0.0
+          value: "photos.jlh.name"
         - name: PHOTOPRISM_HTTP_PORT
-          value: "2342"
+          value: "80"
         # Load database DSN & admin password from secret
         envFrom:
         - secretRef:
