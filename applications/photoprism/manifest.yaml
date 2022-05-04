@@ -34,9 +34,9 @@ spec:
         - name: PHOTOPRISM_SITE_AUTHOR
           value: "Justin Lex-Hammarskjold"
         - name: PHOTOPRISM_HTTP_HOST
-          value: "photos.jlh.name"
+          value: 0.0.0.0
         - name: PHOTOPRISM_HTTP_PORT
-          value: "80"
+          value: "2342"
         # Load database DSN & admin password from secret
         envFrom:
         - secretRef:
