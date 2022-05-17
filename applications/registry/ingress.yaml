@@ -23,6 +23,8 @@ metadata:
     nginx.ingress.kubernetes.io/auth-secret: basic-auth
     # message to display with an appropriate context why the authentication is required
     nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
+    # Allow big image chunks
+    nginx.ingress.kubernetes.io/proxy-body-size: "4G"
 spec:
   tls:
   - hosts:
