@@ -17,8 +17,18 @@ metadata:
   name: gh-actions-deploy
 rules:
 - apiGroups: [""] # "" indicates the core API group
-  resources: ["pods"]
-  verbs: ["get", "watch", "list"]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["networking"]
+  resources: ["networkpolicies", "ingresses"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["cert-manager.io"]
+  resources: ["certificates"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -32,3 +42,6 @@ roleRef:
   kind: Role
   name: gh-actions-deploy
   apiGroup: rbac.authorization.k8s.io
+
+# Note: you can test the rbac with the following command:
+# kubectl auth can-i -n tmeit --list --as system:serviceaccount:tmeit:gh-actions-deploy
