@@ -3,3 +3,11 @@ kind: ServiceAccount
 metadata:
   name: gh-actions-deploy
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sa-token-gh-actions-deploy
+  annotations:
+    kubernetes.io/service-account.name: "gh-actions-deploy"
+type: kubernetes.io/service-account-token
+---
