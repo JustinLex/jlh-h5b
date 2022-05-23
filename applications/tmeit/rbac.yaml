@@ -26,7 +26,7 @@ metadata:
   name: gh-actions-deploy
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: gh-actions-deploy
   namespace: tmeit
 roleRef:
   kind: Role
