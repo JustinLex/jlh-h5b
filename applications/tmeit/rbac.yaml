@@ -23,10 +23,7 @@ rules:
   resources: ["deployments"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["networking"]
-  resources: ["networkpolicies", "ingresses"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["cert-manager.io"]
-  resources: ["certificates"]
+  resources: ["networkpolicies"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 
 ---
