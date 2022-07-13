@@ -45,8 +45,8 @@ spec:
           persistentVolumeClaim:
             claimName: store
         - name: config
-            secret:
-              secretName: owntracks-config-secret
+          secret:
+            secretName: owntracks-config-secret
       dnsConfig:  # Fix DNS resolution in Alpine 3.11 https://github.com/kubernetes/kubernetes/issues/64924 https://github.com/gliderlabs/docker-alpine/issues/539
         options:
           - name: ndots
