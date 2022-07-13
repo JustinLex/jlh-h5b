@@ -6,9 +6,9 @@ metadata:
     app: owntracks
 spec:
   ports:
-  - port: 443
+  - port: 8083
     name: web
-    targetPort: 443
+    targetPort: 8083
   clusterIP: None
   selector:
     app: owntracks
@@ -32,32 +32,21 @@ spec:
       containers:
       - name: owntracks
         image: owntracks/recorder:latest
-        env:
-        - name: OTR_PORT
-          value: "0"  # disable connecting to MQTT broker
-        - name: OTR_HTTPHOST
-          value: "0.0.0.0"
-        - name: OTR_HTTPPORT
-          value: "443"
-        - name: OTR_LMDBSIZE
-          value: "1048576000000" # 100 MiB, not sure if this is stored in memory or a PV
-        - name: OTR_PRECISION
-          value: "7"  # Street addresses for geotags are fetched with 150m^2 precision
-        - name: OTR_GEOKEY  # API key for reverse geo
-          valueFrom:
-            secretKeyRef:
-              name: geokey-secret
-              key: OTR_GEOKEY
         ports:
-        - containerPort: 443
+        - containerPort: 8083
           name: web
         volumeMounts:
         - name: store
           mountPath: /store
+        - name: config # owntracks envvars dont work https://github.com/owntracks/recorder/issues/390
+          mountPath: /config
       volumes:
         - name: store
           persistentVolumeClaim:
             claimName: store
+        - name: config
+            secret:
+              secretName: owntracks-config-secret
       dnsConfig:  # Fix DNS resolution in Alpine 3.11 https://github.com/kubernetes/kubernetes/issues/64924 https://github.com/gliderlabs/docker-alpine/issues/539
         options:
           - name: ndots
