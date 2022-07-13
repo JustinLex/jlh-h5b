@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: site
+  annotations:
+spec:
+  tls:
+  - hosts:
+      - owntracks.jlh.name
+    secretName: owntracks-jlh-name-tls
+  rules:
+  - host: owntracks.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: owntracks
+            port:
+              number: 80
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: owntracks-jlh-name
+spec:
+  secretName: owntracks-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+  - owntracks.jlh.name
