@@ -8,7 +8,7 @@ spec:
   ports:
   - port: 80
     name: web
-    targetPort: 8083
+    targetPort: 80
   clusterIP: None
   selector:
     app: owntracks
@@ -38,7 +38,7 @@ spec:
         - name: OTR_HTTPHOST
           value: "0.0.0.0"
         - name: OTR_HTTPHOST
-          value: "8083"
+          value: "80"
         - name: OTR_LMDBSIZE
           value: "1048576000000" # 100 MiB, not sure if this is stored in memory or a PV
         - name: OTR_PRECISION
@@ -49,7 +49,7 @@ spec:
               name: geokey-secret
               key: OTR_GEOKEY
         ports:
-        - containerPort: 8083
+        - containerPort: 80
           name: web
         volumeMounts:
         - name: store
