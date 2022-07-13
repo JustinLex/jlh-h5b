@@ -24,7 +24,7 @@ spec:
           service:
             name: owntracks
             port:
-              number: 8083
+              number: 443
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
