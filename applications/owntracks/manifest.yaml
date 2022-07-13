@@ -39,7 +39,7 @@ spec:
           - "--http-host"
           - "0.0.0.0"
           - "--http-port"
-          - "--8083"
+          - "8083"
         env:
           - name: OTR_LMDBSIZE
             value: "1048576000000" # 100 MiB, not sure if this is stored in memory or a PV
