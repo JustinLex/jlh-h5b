@@ -32,6 +32,7 @@ spec:
       containers:
       - name: owntracks
         image: owntracks/recorder:latest
+        args: ["--http-port", "8083"]
         env:
         - name: OTR_HTTPHOST
           value: "0.0.0.0"
