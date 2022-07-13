@@ -32,21 +32,34 @@ spec:
       containers:
       - name: owntracks
         image: owntracks/recorder:latest
+        command: ["ot-recorder"]
+        args:
+          - "--port"
+          - "0"
+          - "--http-host"
+          - "0.0.0.0"
+          - "--http-port"
+          - "--8083"
+        env:
+          - name: OTR_LMDBSIZE
+            value: "1048576000000" # 100 MiB, not sure if this is stored in memory or a PV
+          - name: OTR_PRECISION
+            value: "7"  # Street addresses for geotags are fetched with 150m^2 precision
+          - name: OTR_GEOKEY  # API key for reverse geo
+            valueFrom:
+              secretKeyRef:
+                name: geokey-secret
+                key: OTR_GEOKEY
         ports:
         - containerPort: 8083
           name: web
         volumeMounts:
         - name: store
           mountPath: /store
-        - name: config # owntracks envvars dont work https://github.com/owntracks/recorder/issues/390
-          mountPath: /config
       volumes:
         - name: store
           persistentVolumeClaim:
             claimName: store
-        - name: config
-          secret:
-            secretName: owntracks-config-secret
       dnsConfig:  # Fix DNS resolution in Alpine 3.11 https://github.com/kubernetes/kubernetes/issues/64924 https://github.com/gliderlabs/docker-alpine/issues/539
         options:
           - name: ndots
