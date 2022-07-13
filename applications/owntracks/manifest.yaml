@@ -28,17 +28,18 @@ spec:
       labels:
         app: owntracks # has to match .spec.selector.matchLabels
     spec:
-      terminationGracePeriodSeconds: 10
+      terminationGracePeriodSeconds: 5
       containers:
       - name: owntracks
         image: owntracks/recorder:latest
+        args:
+          - "--port"
+          - "0" # disable connecting to MQTT broker
+          - "--http-host"
+          - "0.0.0.0"
+          - "--http-port"
+          - "80"
         env:
-        - name: OTR_PORT
-          value: "0"  # disable connecting to MQTT broker
-        - name: OTR_HTTPHOST
-          value: "0.0.0.0"
-        - name: OTR_HTTPPORT
-          value: "80"
         - name: OTR_LMDBSIZE
           value: "1048576000000" # 100 MiB, not sure if this is stored in memory or a PV
         - name: OTR_PRECISION
