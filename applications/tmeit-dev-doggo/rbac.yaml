@@ -1,0 +1,43 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: gh-actions-deploy
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods", "services", "configmaps"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["batch"]
+  resources: [ "jobs" ]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["policy"]
+  resources: ["poddisruptionbudgets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["networkpolicies"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["bitnami.com"]
+  resources: ["sealedsecrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["kubegres.reactive-tech.io"]
+  resources: ["kubegres"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: gh-actions-deploy
+subjects:
+- kind: User
+  name: doggo
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: gh-actions-deploy
+  apiGroup: rbac.authorization.k8s.io
+
+# Note: you can test the rbac with the following command:
+# kubectl auth can-i -n tmeit --list --as system:serviceaccount:tmeit:gh-actions-deploy
