@@ -3,6 +3,9 @@ kind: Role
 metadata:
   name: gh-actions-deploy
 rules:
+- apiGroups: [""] # Events needed for Tilt
+  resources: ["events"]
+  verbs: ["get", "list", "watch"]
 - apiGroups: [""] # "" indicates the core API group
   resources: ["pods", "services", "configmaps"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
