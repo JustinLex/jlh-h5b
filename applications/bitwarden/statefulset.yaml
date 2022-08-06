@@ -47,12 +47,6 @@ spec:
         - name: data
           mountPath: /data
         env:
-          - name: ROCKET_ADDRESS
-            value: "0.0.0.0"
-          - name: ROCKET_PORT
-            value: "8080"
-          - name: DOMAIN
-            value: "https://bitwarden.jlh.name"
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:
