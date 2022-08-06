@@ -1,0 +1,50 @@
+apiVersion: kubegres.reactive-tech.io/v1
+kind: Kubegres
+metadata:
+  name: bitwarden
+spec:
+  replicas: 3
+  image: postgres:15beta1
+  database:
+    size: 200Mi
+  customConfig: kubegres-conf
+  env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+         secretKeyRef:
+            name: kubegres-passwords
+            key: superUserPassword
+    - name: POSTGRES_REPLICATION_PASSWORD
+      valueFrom:
+         secretKeyRef:
+            name: kubegres-passwords
+            key: replicationUserPassword
+    - name: POSTGRES_APP_PASSWORD
+      valueFrom:
+         secretKeyRef:
+            name: kubegres-passwords
+            key: appPassword
+  resources:
+  limits:
+    memory: "500Mi"
+    cpu: "1"
+    ephemeral-storage: 1Gi
+  requests:
+    memory: "200Mi"
+    cpu: "50m"
+    ephemeral-storage: 1Gi
+  backup:
+    schedule: "0 0 * * *"
+    pvcName: bitwarden-db-backup
+    volumeMount: /var/lib/backup
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bitwarden-db-backup
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi

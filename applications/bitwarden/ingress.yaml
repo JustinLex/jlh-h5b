@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bitwarden
+  annotations:
+spec:
+  tls:
+  - hosts:
+      - bitwarden.jlh.name
+    secretName: bitwarden-jlh-name-tls
+  rules:
+  - host: bitwarden.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bitwarden
+            port:
+              number: 8080
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: bitwarden-jlh-name
+spec:
+  secretName: bitwarden-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+  - bitwarden.jlh.name

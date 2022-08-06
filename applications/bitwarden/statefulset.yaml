@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bitwarden
+  labels:
+    app: bitwarden
+spec:
+  ports:
+  - port: 8080
+    name: http
+  selector:
+    app: bitwarden
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: bitwarden
+spec:
+  selector:
+    matchLabels:
+      app: bitwarden # has to match .spec.template.metadata.labels
+  serviceName: "bitwarden"
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: bitwarden # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: bitwarden
+        image: vaultwarden/server:1.25.2-alpine
+        ports:
+        - containerPort: 8080
+          name: http
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+            ephemeral-storage: 2Gi
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+            ephemeral-storage: 2Gi
+        securityContext:
+          readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        env:
+          - name: ROCKET_PORT
+            value: "8080"
+          - name: DOMAIN
+            value: "https://bitwarden.jlh.name"
+          - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: database-url
+                  key: DATABASE_URL
+      securityContext:
+        runAsUser: 20000
+        runAsGroup: 20000
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
