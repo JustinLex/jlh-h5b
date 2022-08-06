@@ -43,8 +43,6 @@ spec:
             cpu: "1"
             memory: "1Gi"
             ephemeral-storage: 2Gi
-        securityContext:
-          readOnlyRootFilesystem: true
         volumeMounts:
         - name: data
           mountPath: /data
@@ -60,9 +58,6 @@ spec:
               secretKeyRef:
                 name: database-url
                 key: DATABASE_URL
-      securityContext:
-        runAsUser: 20000
-        runAsGroup: 20000
   volumeClaimTemplates:
   - metadata:
       name: data
