@@ -45,6 +45,14 @@ spec:
             ephemeral-storage: 2Gi
         securityContext:
           readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /alive
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /alive
+            port: http
         volumeMounts:
         - name: data
           mountPath: /data
