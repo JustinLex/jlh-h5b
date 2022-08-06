@@ -25,14 +25,14 @@ spec:
             name: kubegres-passwords
             key: appPassword
   resources:
-  limits:
-    memory: "500Mi"
-    cpu: "1"
-    ephemeral-storage: 1Gi
-  requests:
-    memory: "200Mi"
-    cpu: "50m"
-    ephemeral-storage: 1Gi
+    limits:
+      memory: "500Mi"
+      cpu: "1"
+      ephemeral-storage: 1Gi
+    requests:
+      memory: "200Mi"
+      cpu: "50m"
+      ephemeral-storage: 1Gi
   backup:
     schedule: "0 0 * * *"
     pvcName: bitwarden-db-backup
