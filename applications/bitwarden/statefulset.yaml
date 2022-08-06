@@ -49,10 +49,10 @@ spec:
           httpGet:
             path: /
             port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
         volumeMounts:
         - name: data
           mountPath: /data
