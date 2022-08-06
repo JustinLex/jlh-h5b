@@ -30,7 +30,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: bitwarden
-        image: vaultwarden/server:1.25.2-alpine
+        image: vaultwarden/server
         ports:
         - containerPort: 8080
           name: http
