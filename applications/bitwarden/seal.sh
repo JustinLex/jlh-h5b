@@ -2,7 +2,6 @@
 kubectl create --dry-run=client -o json \
 secret generic database-url \
 --from-file DATABASE_URL=database-url \
--n my-namespace \
 | kubeseal -o yaml \
 --controller-name sealed-secrets \
 --controller-namespace sealed-secrets \
