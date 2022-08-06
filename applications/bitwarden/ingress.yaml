@@ -18,7 +18,7 @@ spec:
           service:
             name: bitwarden
             port:
-              number: 80
+              number: 8080
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

@@ -6,8 +6,8 @@ metadata:
     app: bitwarden
 spec:
   ports:
-  - port: 80
-    targetPort: 80
+  - port: 8080
+    targetPort: 8080
   selector:
     app: bitwarden
 ---
@@ -30,7 +30,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: bitwarden
-        image: vaultwarden/server
+        image: vaultwarden/server:1.25.2-alpine
         ports:
         - containerPort: 8080
           name: http
@@ -43,15 +43,26 @@ spec:
             cpu: "1"
             memory: "1Gi"
             ephemeral-storage: 2Gi
+        securityContext:
+          readOnlyRootFilesystem: true
         volumeMounts:
         - name: data
           mountPath: /data
         env:
+          - name: ROCKET_ADDRESS
+            value: "0.0.0.0"
+          - name: ROCKET_PORT
+            value: "8080"
+          - name: DOMAIN
+            value: "https://bitwarden.jlh.name"
           - name: DATABASE_URL
             valueFrom:
               secretKeyRef:
                 name: database-url
                 key: DATABASE_URL
+      securityContext:
+        runAsUser: 20000
+        runAsGroup: 20000
   volumeClaimTemplates:
   - metadata:
       name: data
