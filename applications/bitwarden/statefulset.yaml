@@ -62,10 +62,10 @@ spec:
           - name: DOMAIN
             value: "https://bitwarden.jlh.name"
           - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: database-url
-                  key: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: database-url
+                key: DATABASE_URL
       securityContext:
         runAsUser: 20000
         runAsGroup: 20000
