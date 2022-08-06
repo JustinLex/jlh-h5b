@@ -1,7 +1,7 @@
 apiVersion: kubegres.reactive-tech.io/v1
 kind: Kubegres
 metadata:
-  name: bitwarden
+  name: bitwarden-db
 spec:
   replicas: 3
   image: postgres:15beta1
