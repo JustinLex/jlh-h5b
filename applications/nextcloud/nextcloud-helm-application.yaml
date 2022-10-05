@@ -21,6 +21,7 @@ spec:
       # Having values inline here is a bit of a hack until values files are supported
       # https://github.com/argoproj/argo-cd/issues/2789
       values: |
+        replicaCount: 3
         image:
           tag: 24-fpm
         ingress:
@@ -49,9 +50,10 @@ spec:
         redis:
           enabled: true
         cronjob:
-          enabled: false
+          enabled: true
         persistence:
           enabled: true
           size: 2Ti
+          accessMode: ReadWriteMany
           nextcloudData:
             enabled: true
