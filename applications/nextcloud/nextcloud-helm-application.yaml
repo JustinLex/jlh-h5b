@@ -33,6 +33,11 @@ spec:
             secretName: nextcloud-secrets
             usernameKey: admin-username
             passwordKey: admin-password
+          extraEnv:
+          - name: PHP_MEMORY_LIMIT
+            value: "2G"
+          - name: PHP_UPLOAD_LIMIT
+            value: "100G"
         nginx:
           enabled: true
         internalDatabase:
