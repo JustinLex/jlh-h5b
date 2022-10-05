@@ -28,11 +28,11 @@ spec:
     limits:
       memory: "2Gi"
       cpu: "4"
-      ephemeral-storage: 2Gi
+      ephemeral-storage: 1Gi
     requests:
       memory: "200Mi"
       cpu: "100m"
-      ephemeral-storage: 2Gi
+      ephemeral-storage: 1Gi
   backup:
     schedule: "0 */4 * * *"
     pvcName: nextcloud-db-backup
