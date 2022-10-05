@@ -1,0 +1,50 @@
+apiVersion: kubegres.reactive-tech.io/v1
+kind: Kubegres
+metadata:
+  name: nextcloud-db
+spec:
+  replicas: 3
+  image: postgres:15beta1
+  database:
+    size: 10Gi
+  customConfig: kubegres-conf
+  env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+         secretKeyRef:
+            name: kubegres-passwords
+            key: superUserPassword
+    - name: POSTGRES_REPLICATION_PASSWORD
+      valueFrom:
+         secretKeyRef:
+            name: kubegres-passwords
+            key: replicationUserPassword
+    - name: POSTGRES_APP_PASSWORD
+      valueFrom:
+         secretKeyRef:
+            name: kubegres-passwords
+            key: appPassword
+  resources:
+    limits:
+      memory: "2Gi"
+      cpu: "4"
+      ephemeral-storage: 2Gi
+    requests:
+      memory: "200Mi"
+      cpu: "100m"
+      ephemeral-storage: 2Gi
+  backup:
+    schedule: "0 */4 * * *"
+    pvcName: nextcloud-db-backup
+    volumeMount: /var/lib/backup
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nextcloud-db-backup
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
