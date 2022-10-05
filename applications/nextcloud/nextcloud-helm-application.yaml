@@ -22,7 +22,6 @@ spec:
       # https://github.com/argoproj/argo-cd/issues/2789
       values: |
         image:
-          flavor: fpm
           tag: 24-fpm
         ingress:
           enabled: false
@@ -40,7 +39,8 @@ spec:
         externalDatabase:
           enabled: true
           type: postgresql
-          externalDatabase: "nextcloud-db:5432"
+          host: "nextcloud-db:5432"
+          database: nextcloud
           existingSecret:
             enabled: true
             secretName: kubegres-passwords
