@@ -6,7 +6,7 @@ spec:
   replicas: 3
   image: postgres:15beta1
   database:
-    size: 10Gi
+    size: 5Gi
   customConfig: kubegres-conf
   env:
     - name: POSTGRES_PASSWORD
@@ -34,7 +34,7 @@ spec:
       cpu: "100m"
       ephemeral-storage: 1Gi
   backup:
-    schedule: "0 */4 * * *"
+    schedule: "0 * * * *"
     pvcName: nextcloud-db-backup
     volumeMount: /var/lib/backup
 ---
@@ -47,4 +47,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 500Gi
