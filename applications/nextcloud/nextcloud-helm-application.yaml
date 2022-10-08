@@ -25,7 +25,11 @@ spec:
         image:
           tag: 20-fpm
         ingress:
-          enabled: false
+          enabled: true
+          tls:
+            - hosts:
+              - cloud.jlh.name
+              secretName: cloud-jlh-name-tls
         nextcloud:
           host: cloud.jlh.name
           existingSecret:

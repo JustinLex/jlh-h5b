@@ -9,14 +9,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cloud-external
-spec:
-  type: ExternalName
-  externalName: swablu.home.jlh.name
----
-apiVersion: v1
-kind: Service
-metadata:
   name: pve-external
 spec:
   type: ExternalName
@@ -34,9 +26,6 @@ metadata:
 spec:
   tls:
   - hosts:
-      - cloud.jlh.name
-    secretName: jlh-name-tls
-  - hosts:
       - smultronfeet.nu
     secretName: smultronfeet-nu-tls
   rules:
@@ -48,16 +37,6 @@ spec:
         backend:
           service:
             name: smultronfeet-external
-            port:
-              number: 80
-  - host: cloud.jlh.name
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: cloud-external
             port:
               number: 80
 ---
