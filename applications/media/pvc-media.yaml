@@ -1,0 +1,13 @@
+# Temporary PVC for media until Object storage is working
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Ti
