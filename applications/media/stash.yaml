@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stash
+spec:
+  selector:
+    matchLabels:
+      app: stash
+  serviceName: stash
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: stash
+    spec:
+      hostNetwork: true
+      containers:
+      - name: stash
+        image: stashapp/stash:0.16.1
+        env:
+          - name: TZ
+            value: "europe/stockholm"
+          - name: STASH_STASH
+            value: "/data/"
+          - name: STASH_GENERATED
+            value: "/generated/"
+          - name: STASH_METADATA
+            value: "metadata/"
+          - name: STASH_CACHE
+            value: "cache/"
+          - name: STASH_PORT
+            value: "9999"
+        ports:
+        - containerPort: 9999
+          name: http
+        volumeMounts:
+        - mountPath: /data
+          name: stash-library
+        - mountPath: /root/.stash
+          name: stash-config
+        - mountPath: /generated
+          name: stash-generated
+        - mountPath: /metadata
+          name: stash-metadata
+        - mountPath: /cache
+          name: stash-cache
+#        readinessProbe:
+#          httpGet:
+#            path: /api/v1/status
+#            port: http
+      volumes:
+      - name: stash-config
+        persistentVolumeClaim:
+          claimName: stash-config
+      - name: stash-library
+        persistentVolumeClaim:
+          claimName: stash-library
+      - name: stash-generated
+        persistentVolumeClaim:
+          claimName: stash-generated
+      - name: stash-metadata
+        persistentVolumeClaim:
+          claimName: stash-metadata
+      - name: stash-cache
+        persistentVolumeClaim:
+          claimName: stash-cache
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stash
+spec:
+  ports:
+  - name: http
+    port: 9999
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: stash
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stash-config
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stash-library
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stash-generated
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Ti
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stash-metadata
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stash-cache
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
