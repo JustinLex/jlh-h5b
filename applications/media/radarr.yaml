@@ -60,7 +60,7 @@ metadata:
 spec:
   storageClassName: nfs-freenas
   accessModes:
-    - ReadWriteonce
+    - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
