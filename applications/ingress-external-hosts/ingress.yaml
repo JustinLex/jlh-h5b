@@ -1,44 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: smultronfeet-external
-spec:
-  type: ExternalName
-  externalName: hitmonlee.home.jlh.name
----
-apiVersion: v1
-kind: Service
-metadata:
   name: pve-external
 spec:
   type: ExternalName
   externalName: pve.home.jlh.name
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: site
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: 100g
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-spec:
-  tls:
-  - hosts:
-      - smultronfeet.nu
-    secretName: smultronfeet-nu-tls
-  rules:
-  - host: smultronfeet.nu
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: smultronfeet-external
-            port:
-              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
