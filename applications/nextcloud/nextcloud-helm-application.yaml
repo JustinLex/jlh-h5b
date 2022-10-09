@@ -26,6 +26,10 @@ spec:
           tag: 20-fpm
         ingress:
           enabled: true
+          annotations:
+            - nginx.ingress.kubernetes.io/proxy-body-size: 100g
+            - nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+            - nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
           tls:
             - hosts:
               - cloud.jlh.name
