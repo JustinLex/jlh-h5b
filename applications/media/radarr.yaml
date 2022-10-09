@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: radarr
+spec:
+  selector:
+    matchLabels:
+      app: radarr
+  serviceName: radarr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+      - name: radarr
+        image: linuxserver/radarr:4.2.4
+        env:
+        - name: TZ
+          value: "europe/stockholm"
+        ports:
+        - containerPort: 7878
+          name: http
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /downloads
+          name: downloads
+#        readinessProbe:
+#          httpGet:
+#            path: /api/v1/status
+#            port: http
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: radarr-config
+      - name: downloads
+        persistentVolumeClaim:
+          claimName: downloads
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: radarr
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radarr-config
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteonce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
