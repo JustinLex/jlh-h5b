@@ -16,7 +16,7 @@ spec:
       hostNetwork: true
       containers:
       - name: stash
-        image: stashapp/stash:0.16.1
+        image: stashapp/stash:v0.16.1
         env:
           - name: TZ
             value: "europe/stockholm"
