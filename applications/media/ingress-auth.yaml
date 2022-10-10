@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: media
+  name: media-auth
   annotations:
     # type of authentication
     nginx.ingress.kubernetes.io/auth-type: basic

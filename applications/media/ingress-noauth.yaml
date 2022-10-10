@@ -1,0 +1,57 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: media-noauth
+spec:
+  tls:
+  - hosts:
+      - jellyfin.jlh.name
+    secretName: jellyfin-jlh-name-tls
+  - hosts:
+      - stash.jlh.name
+    secretName: stash-jlh-name-tls
+  rules:
+  - host: jellyfin.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jellyfin
+            port:
+              name: web
+  - host: stash.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stash
+            port:
+              name: http
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: jellyfin-jlh-name
+spec:
+  secretName: jellyfin-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+  - jellyfin.jlh.name
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: stash-jlh-name
+spec:
+  secretName: stash-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+  - stash.jlh.name
