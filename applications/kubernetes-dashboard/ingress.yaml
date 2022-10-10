@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard
+spec:
+  tls:
+  - hosts:
+      - dash.jlh.name
+    secretName: dash-jlh=name-tls
+  rules:
+  - host: dash.jlh.name
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: website
+            port:
+              number: 8080
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dash-jlh=name
+spec:
+  secretName: dash-jlh=name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+  - dash.jlh.name
