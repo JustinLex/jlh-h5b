@@ -23,7 +23,7 @@ spec:
       values: |
         replicaCount: 3
         image:
-          tag: 22-fpm
+          tag: 23-fpm
         ingress:
           enabled: true
           annotations:
