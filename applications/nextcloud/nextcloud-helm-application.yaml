@@ -21,7 +21,7 @@ spec:
       # Having values inline here is a bit of a hack until values files are supported
       # https://github.com/argoproj/argo-cd/issues/2789
       values: |
-        replicaCount: 3
+        replicaCount: 5
         image:
           tag: 24-fpm
         ingress:
