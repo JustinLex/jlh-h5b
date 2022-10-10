@@ -70,5 +70,6 @@ spec:
           accessMode: ReadWriteMany
           nextcloudData:
             enabled: true
-        startupProbe:
-          enabled: true
+        livenessProbe:
+          initialDelaySeconds: 300
+          timeOutSeconds: 10
