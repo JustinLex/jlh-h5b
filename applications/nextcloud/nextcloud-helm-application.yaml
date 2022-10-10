@@ -70,3 +70,5 @@ spec:
           accessMode: ReadWriteMany
           nextcloudData:
             enabled: true
+        startupProbe:
+          enabled: true
