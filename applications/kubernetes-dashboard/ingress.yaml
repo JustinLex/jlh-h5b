@@ -6,7 +6,7 @@ spec:
   tls:
   - hosts:
       - dash.jlh.name
-    secretName: dash-jlh=name-tls
+    secretName: dash-jlh-name-tls
   rules:
   - host: dash.jlh.name
     http:
@@ -22,9 +22,9 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: dash-jlh=name
+  name: dash-jlh-name
 spec:
-  secretName: dash-jlh=name-tls
+  secretName: dash-jlh-name-tls
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
