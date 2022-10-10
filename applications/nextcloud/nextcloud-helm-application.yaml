@@ -23,7 +23,7 @@ spec:
       values: |
         replicaCount: 3
         image:
-          tag: 20-fpm-alpine
+          tag: 20-fpm
         ingress:
           enabled: true
           annotations:
