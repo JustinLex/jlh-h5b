@@ -24,6 +24,8 @@ spec:
         replicaCount: 3
         image:
           tag: 21-fpm
+        securityContext:
+          runAsUser: 33
         ingress:
           enabled: true
           annotations:
@@ -36,6 +38,7 @@ spec:
               secretName: cloud-jlh-name-tls
         nextcloud:
           host: cloud.jlh.name
+          containerPort: 8080
           existingSecret:
             enabled: true
             secretName: nextcloud-secrets
