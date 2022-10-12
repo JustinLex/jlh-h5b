@@ -64,6 +64,13 @@ spec:
           enabled: true
         cronjob:
           enabled: true
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "64Mi"
+            limits:
+              cpu: "1"
+              memory: "512Mi"
         persistence:
           enabled: true
           size: 2Ti
