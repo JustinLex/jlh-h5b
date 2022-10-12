@@ -48,6 +48,13 @@ spec:
 #          httpGet:
 #            path: /api/v1/status
 #            port: http
+        resources:
+          requests:
+            cpu: "3"
+            memory: 10Gi
+          limits:
+            cpu: "10"
+            memory: 20Gi
       volumes:
       - name: stash-config
         persistentVolumeClaim:
