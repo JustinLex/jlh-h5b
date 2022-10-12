@@ -51,10 +51,10 @@ spec:
         resources:
           requests:
             cpu: "3"
-            memory: 10Gi
+            memory: 2Gi
           limits:
             cpu: "10"
-            memory: 20Gi
+            memory: 4Gi
       volumes:
       - name: stash-config
         persistentVolumeClaim:
