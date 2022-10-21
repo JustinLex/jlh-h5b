@@ -44,5 +44,9 @@ spec:
               cpu: 6
               memory: 10Gi
           ports:
-            - containerPort: 27015 # Think this is the tcp port
-            - containerPort: 34197 # Think this is the UDP port
+            - name: steam-discovery
+              containerPort: 27015
+              protocol: TCP
+            - name: factorio
+              containerPort: 34197
+              protocol: UDP
