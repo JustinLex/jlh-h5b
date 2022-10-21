@@ -6,6 +6,6 @@ spec:
   selector:
     app: factorio
   ports:
-    - port: factorio
-    - port: steam-discovery
+    - name: factorio
+    - name: steam-discovery
   type: LoadBalancer
