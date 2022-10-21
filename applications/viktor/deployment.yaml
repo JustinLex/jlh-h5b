@@ -50,3 +50,10 @@ spec:
             - name: factorio
               containerPort: 34197
               protocol: UDP
+          volumeMounts:
+            - mountPath: "/factorio"
+              name: factorio
+        volumes:
+          - name: factorio
+            persistentVolumeClaim:
+              claimName: viktor
