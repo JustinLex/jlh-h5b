@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: factorio
+  labels:
+    app: factorio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factorio
+  template:
+    metadata:
+      labels:
+        app: factorio
+    spec:
+      containers:
+        - name: factorio
+          image: factoriotools/factorio:stable
+          env:
+            - name: LOAD_LATEST_SAVE # BOOL
+              value: "true"
+            - name: UPDATE_MODS_ON_START
+              value: "true"
+            - name: USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                  name: factorio-config
+                  # Specify the key associated with the value
+                  key: username
+            - name: TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  # The ConfigMap containing the value you want to assign to SPECIAL_LEVEL_KEY
+                  name: factorio-config
+                  # Specify the key associated with the value
+                  key: token
+          ports:
+            - containerPort: 27015 # Think this is the tcp port
+            - containerPort: 34197 # Think this is the UDP port
