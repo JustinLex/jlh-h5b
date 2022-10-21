@@ -36,6 +36,13 @@ spec:
                   name: factorio-config
                   # Specify the key associated with the value
                   key: token
+          resources:
+            requests:
+              cpu: 2
+              memory: 5Gi
+            limits:
+              cpu: 6
+              memory: 10Gi
           ports:
             - containerPort: 27015 # Think this is the tcp port
             - containerPort: 34197 # Think this is the UDP port
