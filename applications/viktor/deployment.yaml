@@ -53,7 +53,7 @@ spec:
           volumeMounts:
             - mountPath: "/factorio"
               name: factorio
-        volumes:
-          - name: factorio
-            persistentVolumeClaim:
-              claimName: viktor
+      volumes:
+        - name: factorio
+          persistentVolumeClaim:
+            claimName: viktor
