@@ -6,7 +6,7 @@
 echo enter username
 read -r username
 
-openssl ecparam -name prime256v1 -genkey -noout -out private-key.pem
+openssl ecparam -name prime256v1 -genkey -noout -out "$username.key"
 openssl ec -in private-key.pem -pubout -out public-key.pem
 openssl req -new -key private-key.pem -out "$username.csr" -subj "/CN=$username"
 
@@ -28,3 +28,6 @@ kubectl certificate approve $username
 kubectl get csr $username -o jsonpath='{.status.certificate}'  | base64 -d > $username.crt
 
 base64 -w 0 < $username.crt
+echo
+base64 -w 0 < $username.key
+echo
