@@ -23,7 +23,7 @@ subjects:
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: gh-actions-deploy
+  name: viktor
   apiGroup: rbac.authorization.k8s.io
 
 # Note: you can test the rbac with the following command:
