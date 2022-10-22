@@ -7,7 +7,7 @@ rules:
   resources: ["events"]
   verbs: ["get", "list", "watch"]
 - apiGroups: [""] # "" indicates the core API group
-  resources: ["pods", "pods/log", "pods/portforward", "services", "configmaps"]
+  resources: ["pods", "pods/log", "pods/exec", "pods/portforward", "services", "configmaps"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["apps"]
   resources: ["deployments"]
