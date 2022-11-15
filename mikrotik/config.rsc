@@ -400,9 +400,13 @@ set ddns-enabled=no ddns-update-interval=none update-time=yes
 /ip cloud advanced
 set use-local-address=no
 /ip dhcp-client
-add add-default-route=yes comment=defconf default-route-distance=1 \
-    dhcp-options=hostname,clientid disabled=no interface=ether1 use-peer-dns=\
-    yes use-peer-ntp=yes
+
+# Configure WAN DHCP client
+# Might want to set add-default-route to special-classless if Bahnhof is sending us option 121 routes that don't follow RFC spec
+# client id is old mac address I initially set up the Bahnhof connection with
+add add-default-route=yes clientid=68:7f:74:22:1c:23 comment=defconf default-route-distance=1 \
+    disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no
+
 /ip dhcp-server config
 set accounting=yes interim-update=0s radius-password=empty store-leases-disk=\
     5m
