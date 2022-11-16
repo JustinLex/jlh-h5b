@@ -401,26 +401,49 @@ set ddns-enabled=no ddns-update-interval=none update-time=yes
 set use-local-address=no
 /ip dhcp-client
 
-# Configure WAN DHCP client
+# Configure WAN DHCP client https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-DHCPClient
 # Might want to set add-default-route to special-classless if Bahnhof is sending us option 121 routes that don't follow RFC spec
 # client id is old mac address I initially set up the Bahnhof connection with
 add add-default-route=yes clientid=68:7f:74:22:1c:23 comment=defconf default-route-distance=1 \
     disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no
 
+# DHCP lease persistence https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-StoreConfiguration
 /ip dhcp-server config
-set accounting=yes interim-update=0s radius-password=empty store-leases-disk=\
-    5m
+set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
+
+# DHCP servers https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-Network
+#TODO: set up an NTP server
 /ip dhcp-server network
-add address=192.168.88.0/24 caps-manager="" comment=defconf dhcp-option="" \
-    dns-server=192.168.88.1 gateway=192.168.88.1 !next-server ntp-server="" \
-    wins-server=""
+add address=10.2.0.0/16 netmask=16 gateway=10.2.0.1 comment=Workstations dhcp-option="" domain="home" !next-server \
+    dns-server=10.2.0.1 ntp-server=""
+add address=10.3.0.0/16 netmask=16 gateway=10.3.0.1 comment=VPN dhcp-option="" domain="home" !next-server \
+    dns-server=10.3.0.1 ntp-server=""
+add address=10.4.0.0/16 netmask=16 gateway=10.4.0.1 comment=Media dhcp-option="" domain="home" !next-server \
+    dns-server=10.4.0.1 ntp-server=""
+add address=10.5.0.0/16 netmask=16 gateway=10.5.0.1 comment=Gaming dhcp-option="" domain="home" !next-server \
+    dns-server=10.5.0.1 ntp-server=""
+add address=10.16.0.0/16 netmask=16 gateway=10.16.0.1 comment=Servers dhcp-option="" domain="home" !next-server \
+    dns-server=10.16.0.1 ntp-server=""
+add address=10.17.0.0/16 netmask=16 gateway=10.17.0.1 comment=Management dhcp-option="" domain="home" !next-server \
+    dns-server=10.17.0.1 ntp-server=""
+add address=10.48.0.0/16 netmask=16 gateway=10.48.0.1 comment=Guest dhcp-option="" domain="home" !next-server \
+    dns-server=10.48.0.1 ntp-server=""
+add address=10.64.0.0/16 netmask=16 gateway=10.64.0.1 comment=IoT dhcp-option="" domain="home" !next-server \
+    dns-server=10.64.0.1 ntp-server=""
+
+# DNS resolver
+# Install cloudflare cert
+/certificate import file-name=cloudflare-dns-com.pem
 /ip dns
-set allow-remote-requests=yes cache-max-ttl=1w cache-size=2048KiB \
+set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes \
+    servers=2606:4700:4700::1111,2606:4700:4700::1001,1.1.1.1,1.0.0.1 \
+    allow-remote-requests=yes cache-max-ttl=2w cache-size=10240KiB \
     max-concurrent-queries=100 max-concurrent-tcp-sessions=20 \
     max-udp-packet-size=4096 query-server-timeout=2s query-total-timeout=10s \
-    servers="" use-doh-server="" verify-doh-cert=no
+
 /ip dns static
-add address=192.168.88.1 comment=defconf disabled=no name=router.lan ttl=1d
+add address=10.2.0.1 disabled=no name=router.home ttl=1d
+
 /ip firewall filter
 add action=accept chain=input comment=\
     "defconf: accept established,related,untracked" connection-state=\
