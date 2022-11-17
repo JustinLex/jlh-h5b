@@ -218,6 +218,14 @@ set detect-interface-list=none internet-interface-list=none \
 
 /interface list member
 add comment=defconf disabled=no interface=bridge list=LAN
+add comment=defconf disabled=no interface=workstations list=LAN
+add comment=defconf disabled=no interface=vpn list=LAN
+add comment=defconf disabled=no interface=media list=LAN
+add comment=defconf disabled=no interface=gaming list=LAN
+add comment=defconf disabled=no interface=servers list=LAN
+add comment=defconf disabled=no interface=management list=LAN
+add comment=defconf disabled=no interface=guest list=LAN
+add comment=defconf disabled=no interface=iot list=LAN
 add comment=defconf disabled=no interface=ether1 list=WAN
 
 
