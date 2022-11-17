@@ -15,76 +15,62 @@ set [ find default-name=ether1 ] advertise=\
     power-cycle-interval=none !power-cycle-ping-address \
     power-cycle-ping-enabled=no !power-cycle-ping-timeout rx-flow-control=off \
     speed=2.5Gbps tx-flow-control=off
-set [ find default-name=ether2 ] advertise=\
-    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
-    arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:28 mtu=1500 name=ether2 orig-mac-address=18:FD:74:7B:01:28 \
-    poe-out=auto-on poe-priority=10 poe-voltage=auto power-cycle-interval=\
-    none !power-cycle-ping-address power-cycle-ping-enabled=no \
-    !power-cycle-ping-timeout rx-flow-control=off speed=1Gbps \
-    tx-flow-control=off
-set [ find default-name=ether3 ] advertise=\
-    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
-    arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:29 mtu=1500 name=ether3 orig-mac-address=18:FD:74:7B:01:29 \
-    poe-out=auto-on poe-priority=10 poe-voltage=auto power-cycle-interval=\
-    none !power-cycle-ping-address power-cycle-ping-enabled=no \
-    !power-cycle-ping-timeout rx-flow-control=off speed=1Gbps \
-    tx-flow-control=off
-set [ find default-name=ether4 ] advertise=\
-    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
-    arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:2A mtu=1500 name=ether4 orig-mac-address=18:FD:74:7B:01:2A \
-    poe-out=auto-on poe-priority=10 poe-voltage=auto power-cycle-interval=\
-    none !power-cycle-ping-address power-cycle-ping-enabled=no \
-    !power-cycle-ping-timeout rx-flow-control=off speed=1Gbps \
-    tx-flow-control=off
-set [ find default-name=ether5 ] advertise=\
-    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
-    arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:2B mtu=1500 name=ether5 orig-mac-address=18:FD:74:7B:01:2B \
-    poe-out=auto-on poe-priority=10 poe-voltage=auto power-cycle-interval=\
-    none !power-cycle-ping-address power-cycle-ping-enabled=no \
-    !power-cycle-ping-timeout rx-flow-control=off speed=1Gbps \
-    tx-flow-control=off
-set [ find default-name=ether6 ] advertise=\
-    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
-    arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:2C mtu=1500 name=ether6 orig-mac-address=18:FD:74:7B:01:2C \
-    poe-out=auto-on poe-priority=10 poe-voltage=auto power-cycle-interval=\
-    none !power-cycle-ping-address power-cycle-ping-enabled=no \
-    !power-cycle-ping-timeout rx-flow-control=off speed=1Gbps \
-    tx-flow-control=off
-set [ find default-name=ether7 ] advertise=\
-    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
-    arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:2D mtu=1500 name=ether7 orig-mac-address=18:FD:74:7B:01:2D \
-    poe-out=auto-on poe-priority=10 poe-voltage=auto power-cycle-interval=\
-    none !power-cycle-ping-address power-cycle-ping-enabled=no \
-    !power-cycle-ping-timeout rx-flow-control=off speed=1Gbps \
-    tx-flow-control=off
-set [ find default-name=ether8 ] advertise=\
-    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
-    arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:2E mtu=1500 name=ether8 orig-mac-address=18:FD:74:7B:01:2E \
-    poe-out=auto-on poe-priority=10 poe-voltage=auto power-cycle-interval=\
-    none !power-cycle-ping-address power-cycle-ping-enabled=no \
-    !power-cycle-ping-timeout rx-flow-control=off speed=1Gbps \
-    tx-flow-control=off
+set [ find default-name=ether2 ] name=ether2 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:28 orig-mac-address=18:FD:74:7B:01:28 \
+    poe-out=auto-on poe-priority=10 poe-voltage=auto \
+    power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether3 ] name=ether3 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:29 orig-mac-address=18:FD:74:7B:01:29 \
+    poe-out=auto-on poe-priority=10 poe-voltage=auto \
+    power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether4 ] name=ether4 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:2A orig-mac-address=18:FD:74:7B:01:2A \
+    poe-out=auto-on poe-priority=10 poe-voltage=auto \
+    power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether5 ] name=ether5 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:2B orig-mac-address=18:FD:74:7B:01:2B \
+    poe-out=auto-on poe-priority=10 poe-voltage=auto \
+    power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether6 ] name=ether6 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:2C orig-mac-address=18:FD:74:7B:01:2C \
+    poe-out=auto-on poe-priority=10 poe-voltage=auto \
+    power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether7 ] name=ether7 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:2D orig-mac-address=18:FD:74:7B:01:2D \
+    poe-out=auto-on poe-priority=10 poe-voltage=auto \
+    power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
+set [ find default-name=ether8 ] name=ether8 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:2E orig-mac-address=18:FD:74:7B:01:2E \
+    poe-out=auto-on poe-priority=10 poe-voltage=auto \
+    power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
+    rx-flow-control=off speed=1Gbps tx-flow-control=off
 set [ find default-name=sfp-sfpplus1 ] advertise="" arp=enabled arp-timeout=\
     auto auto-negotiation=yes bandwidth=unlimited/unlimited disabled=no \
     full-duplex=yes l2mtu=1514 loop-protect=default \
