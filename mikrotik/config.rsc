@@ -3,15 +3,8 @@
 #
 # model = RB5009UPr+S+
 
-# Layer 2
-/interface bridge
-add admin-mac=18:FD:74:7B:01:28 ageing-time=5m arp=enabled arp-timeout=auto \
-    auto-mac=no comment=defconf dhcp-snooping=no disabled=no fast-forward=yes \
-    forward-delay=15s igmp-snooping=no max-message-age=20s mtu=auto name=\
-    bridge priority=0x8000 protocol-mode=rstp transmit-hold-count=6 \
-    vlan-filtering=no
+# Layer 1
 /interface ethernet
-# poe-out status: short_circuit
 set [ find default-name=ether1 ] advertise=\
     10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full,2500M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=\
@@ -22,7 +15,6 @@ set [ find default-name=ether1 ] advertise=\
     power-cycle-interval=none !power-cycle-ping-address \
     power-cycle-ping-enabled=no !power-cycle-ping-timeout rx-flow-control=off \
     speed=2.5Gbps tx-flow-control=off
-# poe-out status: short_circuit
 set [ find default-name=ether2 ] advertise=\
     10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full arp=enabled \
     arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
@@ -100,8 +92,7 @@ set [ find default-name=sfp-sfpplus1 ] advertise="" arp=enabled arp-timeout=\
     18:FD:74:7B:01:2F mtu=1500 name=sfp-sfpplus1 orig-mac-address=\
     18:FD:74:7B:01:2F rx-flow-control=off sfp-rate-select=high \
     sfp-shutdown-temperature=95C speed=10Gbps tx-flow-control=off
-/queue interface
-set bridge queue=no-queue
+
 /interface ethernet switch
 set 0 cpu-flow-control=yes mirror-egress-target=none name=switch1
 /interface ethernet switch port
@@ -125,50 +116,16 @@ set 8 !egress-rate !ingress-rate mirror-egress=no mirror-ingress=no \
     mirror-ingress-target=none
 set 9 !egress-rate !ingress-rate mirror-egress=no mirror-ingress=no \
     mirror-ingress-target=none
-/interface list
-set [ find name=all ] comment="contains all interfaces" exclude="" include="" \
-    name=all
-set [ find name=none ] comment="contains no interfaces" exclude="" include="" \
-    name=none
-set [ find name=dynamic ] comment="contains dynamic interfaces" exclude="" \
-    include="" name=dynamic
-set [ find name=static ] comment="contains static interfaces" exclude="" \
-    include="" name=static
-add comment=defconf exclude="" include="" name=WAN
-add comment=defconf exclude="" include="" name=LAN
+/interface ethernet poe settings
+set psu1-max-power=96W psu2-max-power=150W
 
-/queue type
-set 0 kind=pfifo name=default pfifo-limit=50
-set 1 kind=pfifo name=ethernet-default pfifo-limit=50
-set 2 kind=sfq name=wireless-default sfq-allot=1514 sfq-perturb=5
-set 3 kind=red name=synchronous-default red-avg-packet=1000 red-burst=20 \
-    red-limit=60 red-max-threshold=50 red-min-threshold=10
-set 4 kind=sfq name=hotspot-default sfq-allot=1514 sfq-perturb=5
-set 5 kind=pcq name=pcq-upload-default pcq-burst-rate=0 pcq-burst-threshold=0 \
-    pcq-burst-time=10s pcq-classifier=src-address pcq-dst-address-mask=32 \
-    pcq-dst-address6-mask=128 pcq-limit=50KiB pcq-rate=0 \
-    pcq-src-address-mask=32 pcq-src-address6-mask=128 pcq-total-limit=2000KiB
-set 6 kind=pcq name=pcq-download-default pcq-burst-rate=0 \
-    pcq-burst-threshold=0 pcq-burst-time=10s pcq-classifier=dst-address \
-    pcq-dst-address-mask=32 pcq-dst-address6-mask=128 pcq-limit=50KiB \
-    pcq-rate=0 pcq-src-address-mask=32 pcq-src-address6-mask=128 \
-    pcq-total-limit=2000KiB
-set 7 kind=none name=only-hardware-queue
-set 8 kind=mq-pfifo mq-pfifo-limit=50 name=multi-queue-ethernet-default
-set 9 kind=pfifo name=default-small pfifo-limit=10
-/queue interface
-# poe-out status: short_circuit
-set ether1 queue=only-hardware-queue
-# poe-out status: short_circuit
-set ether2 queue=only-hardware-queue
-set ether3 queue=only-hardware-queue
-set ether4 queue=only-hardware-queue
-set ether5 queue=only-hardware-queue
-set ether6 queue=only-hardware-queue
-set ether7 queue=only-hardware-queue
-set ether8 queue=only-hardware-queue
-set sfp-sfpplus1 queue=only-hardware-queue
-
+# Layer 2
+/interface bridge
+add admin-mac=18:FD:74:7B:01:28 ageing-time=5m arp=enabled arp-timeout=auto \
+    auto-mac=no comment=defconf dhcp-snooping=no disabled=no fast-forward=yes \
+    forward-delay=15s igmp-snooping=no max-message-age=20s mtu=auto name=\
+    bridge priority=0x8000 protocol-mode=rstp transmit-hold-count=6 \
+    vlan-filtering=no
 /interface bridge port
 add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
     defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
@@ -236,6 +193,59 @@ set control-ports="" excluded-ports="" switch=none
 set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no \
     use-ip-firewall-for-vlan=no
 
+# Packet queues
+/queue type
+set 0 kind=pfifo name=default pfifo-limit=50
+set 1 kind=pfifo name=ethernet-default pfifo-limit=50
+set 2 kind=sfq name=wireless-default sfq-allot=1514 sfq-perturb=5
+set 3 kind=red name=synchronous-default red-avg-packet=1000 red-burst=20 \
+    red-limit=60 red-max-threshold=50 red-min-threshold=10
+set 4 kind=sfq name=hotspot-default sfq-allot=1514 sfq-perturb=5
+set 5 kind=pcq name=pcq-upload-default pcq-burst-rate=0 pcq-burst-threshold=0 \
+    pcq-burst-time=10s pcq-classifier=src-address pcq-dst-address-mask=32 \
+    pcq-dst-address6-mask=128 pcq-limit=50KiB pcq-rate=0 \
+    pcq-src-address-mask=32 pcq-src-address6-mask=128 pcq-total-limit=2000KiB
+set 6 kind=pcq name=pcq-download-default pcq-burst-rate=0 \
+    pcq-burst-threshold=0 pcq-burst-time=10s pcq-classifier=dst-address \
+    pcq-dst-address-mask=32 pcq-dst-address6-mask=128 pcq-limit=50KiB \
+    pcq-rate=0 pcq-src-address-mask=32 pcq-src-address6-mask=128 \
+    pcq-total-limit=2000KiB
+set 7 kind=none name=only-hardware-queue
+set 8 kind=mq-pfifo mq-pfifo-limit=50 name=multi-queue-ethernet-default
+set 9 kind=pfifo name=default-small pfifo-limit=10
+/queue interface
+set ether1 queue=only-hardware-queue
+set ether2 queue=only-hardware-queue
+set ether3 queue=only-hardware-queue
+set ether4 queue=only-hardware-queue
+set ether5 queue=only-hardware-queue
+set ether6 queue=only-hardware-queue
+set ether7 queue=only-hardware-queue
+set ether8 queue=only-hardware-queue
+set sfp-sfpplus1 queue=only-hardware-queue
+set bridge queue=no-queue
+
+/interface list
+set [ find name=all ] comment="contains all interfaces" exclude="" include="" \
+    name=all
+set [ find name=none ] comment="contains no interfaces" exclude="" include="" \
+    name=none
+set [ find name=dynamic ] comment="contains dynamic interfaces" exclude="" \
+    include="" name=dynamic
+set [ find name=static ] comment="contains static interfaces" exclude="" \
+    include="" name=static
+add comment=defconf exclude="" include="" name=WAN
+add comment=defconf exclude="" include="" name=LAN
+
+/interface detect-internet
+set detect-interface-list=none internet-interface-list=none \
+    lan-interface-list=none wan-interface-list=none
+
+/interface list member
+add comment=defconf disabled=no interface=bridge list=LAN
+add comment=defconf disabled=no interface=ether1 list=WAN
+
+
 /ip firewall connection tracking
 set enabled=auto generic-timeout=10m icmp-timeout=10s loose-tcp-tracking=yes \
     tcp-close-timeout=10s tcp-close-wait-timeout=10s tcp-established-timeout=\
@@ -257,17 +267,6 @@ set accept-redirects=no accept-source-route=no allow-fast-path=yes \
 set accept-redirects=yes-if-forwarding-disabled accept-router-advertisements=\
     yes-if-forwarding-disabled disable-ipv6=no forward=yes \
     max-neighbor-entries=16384
-
-/interface detect-internet
-set detect-interface-list=none internet-interface-list=none \
-    lan-interface-list=none wan-interface-list=none
-
-/interface ethernet poe settings
-set psu1-max-power=96W psu2-max-power=150W
-
-/interface list member
-add comment=defconf disabled=no interface=bridge list=LAN
-add comment=defconf disabled=no interface=ether1 list=WAN
 
 /ip cloud
 set ddns-enabled=no ddns-update-interval=none update-time=yes
