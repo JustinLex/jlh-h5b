@@ -9,7 +9,6 @@ set [ find default-name=ether1 ] name=ether1
     advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full,2500M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:27 orig-mac-address=18:FD:74:7B:01:27 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -17,7 +16,6 @@ set [ find default-name=ether1 ] name=ether1
 set [ find default-name=ether2 ] name=ether2 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:28 orig-mac-address=18:FD:74:7B:01:28 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -25,7 +23,6 @@ set [ find default-name=ether2 ] name=ether2 advertise=10M-half,10M-full,100M-ha
 set [ find default-name=ether3 ] name=ether3 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:29 orig-mac-address=18:FD:74:7B:01:29 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -33,7 +30,6 @@ set [ find default-name=ether3 ] name=ether3 advertise=10M-half,10M-full,100M-ha
 set [ find default-name=ether4 ] name=ether4 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:2A orig-mac-address=18:FD:74:7B:01:2A \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -41,7 +37,6 @@ set [ find default-name=ether4 ] name=ether4 advertise=10M-half,10M-full,100M-ha
 set [ find default-name=ether5 ] name=ether5 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:2B orig-mac-address=18:FD:74:7B:01:2B \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -49,7 +44,6 @@ set [ find default-name=ether5 ] name=ether5 advertise=10M-half,10M-full,100M-ha
 set [ find default-name=ether6 ] name=ether6 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:2C orig-mac-address=18:FD:74:7B:01:2C \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -57,7 +51,6 @@ set [ find default-name=ether6 ] name=ether6 advertise=10M-half,10M-full,100M-ha
 set [ find default-name=ether7 ] name=ether7 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:2D orig-mac-address=18:FD:74:7B:01:2D \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -65,7 +58,6 @@ set [ find default-name=ether7 ] name=ether7 advertise=10M-half,10M-full,100M-ha
 set [ find default-name=ether8 ] name=ether8 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:2E orig-mac-address=18:FD:74:7B:01:2E \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
@@ -73,13 +65,14 @@ set [ find default-name=ether8 ] name=ether8 advertise=10M-half,10M-full,100M-ha
 set [ find default-name=sfp-sfpplus1 ] name=sfp-sfpplus1 advertise="" \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
     mac-address=18:FD:74:7B:01:2F orig-mac-address=18:FD:74:7B:01:2F \
     rx-flow-control=off speed=10Gbps tx-flow-control=off\
     sfp-rate-select=high sfp-shutdown-temperature=95C
 
 /interface ethernet switch
-set 0 cpu-flow-control=yes mirror-egress-target=none name=switch1
+set 0 name=switch1 cpu-flow-control=yes mirror-egress-target=none
+
+# This can be used to set TX/RX rate limits on the ports
 /interface ethernet switch port
 set 0 !egress-rate !ingress-rate mirror-egress=no mirror-ingress=no \
     mirror-ingress-target=none
