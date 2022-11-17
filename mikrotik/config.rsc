@@ -115,35 +115,35 @@ set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-f
 
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-PortSettings
 /interface bridge port
-add interface=ether2 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+add interface=ether1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+    frame-types=admit-only-vlan-tagged ingress-filtering=yes pvid=1 tag-stacking=no
 add interface=ether3 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=3 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=ether4 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
     frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=4 tag-stacking=no
 add interface=ether5 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=5 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=ether6 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=16 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=ether7 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=17 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=ether8 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=48 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=5 tag-stacking=no
 
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeVLANtable
 # https://help.mikrotik.com/docs/display/ROS/Bridge+VLAN+Table
 # https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching
-# bridge ports with the correspondig PVID are autmatically added as untagged ports in this table
+# bridge ports with the corresponding PVID are automatically added as untagged ports in this table
 /interface bridge vlan
 add bridge=bridge tagged=bridge vlan-ids=2
 add bridge=bridge tagged=bridge vlan-ids=3
@@ -226,7 +226,7 @@ add comment=defconf disabled=no interface=servers list=LAN
 add comment=defconf disabled=no interface=management list=LAN
 add comment=defconf disabled=no interface=guest list=LAN
 add comment=defconf disabled=no interface=iot list=LAN
-add comment=defconf disabled=no interface=ether1 list=WAN
+add comment=defconf disabled=no interface=ether2 list=WAN
 
 
 /ip firewall connection tracking
@@ -265,7 +265,7 @@ set hostname code=12 name=hostname value="\$(HOSTNAME)"
 # Might want to set add-default-route to special-classless if Bahnhof is sending us option 121 routes that don't follow RFC spec
 # client id is old mac address I initially set up the Bahnhof connection with
 /ip dhcp-client
-add add-default-route=yes default-route-distance=1 disabled=no interface=ether1 use-peer-dns=no use-peer-ntp=no
+add add-default-route=yes default-route-distance=1 disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no
 
 # DHCP server configuration
 # https://wiki.mikrotik.com/wiki/Manual:IP/DHCP_Server
