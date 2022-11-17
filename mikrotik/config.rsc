@@ -521,10 +521,7 @@ set contact="" enabled=no engine-id="" location="" src-address=:: \
     trap-version=1 vrf=main
 
 /system clock
-set time-zone-autodetect=yes time-zone-name=Europe/Stockholm
-/system clock manual
-set dst-delta=+00:00 dst-end="jan/01/1970 00:00:00" dst-start=\
-    "jan/01/1970 00:00:00" time-zone=+00:00
+set time-zone-autodetect=yes time-zone-name=Europe/Stockholm date=nov/17/2022 time=12:00:00
 
 /system identity
 set name=MikroTik
@@ -544,8 +541,8 @@ set 3 action=echo disabled=no prefix="" topics=critical
 /system note
 set note="" show-at-login=yes
 
-# /system ntp client
-# set enabled=yes mode=unicast server-dns-names=0.se.pool.ntp.org,1.se.pool.ntp.org,2.se.pool.ntp.org,3.se.pool.ntp.org
+/system ntp client
+set enabled=yes mode=unicast servers=0.se.pool.ntp.org,1.se.pool.ntp.org,2.se.pool.ntp.org,3.se.pool.ntp.org
 /system ntp server
 set auth-key=none broadcast=no broadcast-addresses="" enabled=no \
     local-clock-stratum=5 manycast=no multicast=no use-local-clock=no vrf=\
