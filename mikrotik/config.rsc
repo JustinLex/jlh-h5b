@@ -135,7 +135,7 @@ add interface=ether7 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=17 tag-stacking=no
 add interface=ether8 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=48 tag-stacking=no
 add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
     frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
