@@ -169,35 +169,6 @@ set ether7 queue=only-hardware-queue
 set ether8 queue=only-hardware-queue
 set sfp-sfpplus1 queue=only-hardware-queue
 
-/routing bgp template
-set default as=65530 name=default
-
-/snmp community
-set [ find default=yes ] addresses=::/0 authentication-protocol=MD5 disabled=\
-    no encryption-protocol=DES name=public read-access=yes security=none \
-    write-access=no
-
-/system logging action
-set 0 memory-lines=1000 memory-stop-on-full=no name=memory target=memory
-set 1 disk-file-count=2 disk-file-name=log disk-lines-per-file=1000 \
-    disk-stop-on-full=no name=disk target=disk
-set 2 name=echo remember=yes target=echo
-set 3 bsd-syslog=no name=remote remote=0.0.0.0 remote-port=514 src-address=\
-    0.0.0.0 syslog-facility=daemon syslog-severity=auto syslog-time-format=\
-    bsd-syslog target=remote
-
-/user group
-set read name=read policy="local,telnet,ssh,reboot,read,test,winbox,password,w\
-    eb,sniff,sensitive,api,romon,rest-api,!ftp,!write,!policy" skin=default
-set write name=write policy="local,telnet,ssh,reboot,read,write,test,winbox,pa\
-    ssword,web,sniff,sensitive,api,romon,rest-api,!ftp,!policy" skin=default
-set full name=full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,\
-    winbox,password,web,sniff,sensitive,api,romon,rest-api" skin=default
-
-
-/certificate settings
-set crl-download=no crl-store=ram crl-use=no
-
 /interface bridge port
 add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
     defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
@@ -598,6 +569,36 @@ set enabled=no mode=unicast servers="" vrf=main
 set auth-key=none broadcast=no broadcast-addresses="" enabled=no \
     local-clock-stratum=5 manycast=no multicast=no use-local-clock=no vrf=\
     main
+
+
+/routing bgp template
+set default as=65530 name=default
+
+/snmp community
+set [ find default=yes ] addresses=::/0 authentication-protocol=MD5 disabled=\
+    no encryption-protocol=DES name=public read-access=yes security=none \
+    write-access=no
+
+/system logging action
+set 0 memory-lines=1000 memory-stop-on-full=no name=memory target=memory
+set 1 disk-file-count=2 disk-file-name=log disk-lines-per-file=1000 \
+    disk-stop-on-full=no name=disk target=disk
+set 2 name=echo remember=yes target=echo
+set 3 bsd-syslog=no name=remote remote=0.0.0.0 remote-port=514 src-address=\
+    0.0.0.0 syslog-facility=daemon syslog-severity=auto syslog-time-format=\
+    bsd-syslog target=remote
+
+/user group
+set read name=read policy="local,telnet,ssh,reboot,read,test,winbox,password,w\
+    eb,sniff,sensitive,api,romon,rest-api,!ftp,!write,!policy" skin=default
+set write name=write policy="local,telnet,ssh,reboot,read,write,test,winbox,pa\
+    ssword,web,sniff,sensitive,api,romon,rest-api,!ftp,!policy" skin=default
+set full name=full policy="local,telnet,ssh,ftp,reboot,read,write,policy,test,\
+    winbox,password,web,sniff,sensitive,api,romon,rest-api" skin=default
+
+
+/certificate settings
+set crl-download=no crl-store=ram crl-use=no
 
 /system resource irq
 set 0 cpu=auto
