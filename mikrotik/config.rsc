@@ -98,78 +98,45 @@ set 9 !egress-rate !ingress-rate mirror-egress=no mirror-ingress=no \
 set psu1-max-power=96W psu2-max-power=150W
 
 # Layer 2
+
+# Switch features:
+# https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeHardwareOffloading
+# Note: QinQ not supported by hardware offload
+
 /interface bridge
-add admin-mac=18:FD:74:7B:01:28 ageing-time=5m arp=enabled arp-timeout=auto \
-    auto-mac=no comment=defconf dhcp-snooping=no disabled=no fast-forward=yes \
-    forward-delay=15s igmp-snooping=no max-message-age=20s mtu=auto name=\
-    bridge priority=0x8000 protocol-mode=rstp transmit-hold-count=6 \
-    vlan-filtering=no
-/interface bridge port
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=ether2 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=ether3 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=ether4 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=ether5 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=ether6 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=ether7 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=ether8 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-add auto-isolate=no bpdu-guard=no bridge=bridge broadcast-flood=yes comment=\
-    defconf disabled=no edge=auto fast-leave=no frame-types=admit-all \
-    horizon=none hw=yes ingress-filtering=yes interface=sfp-sfpplus1 \
-    internal-path-cost=10 learn=auto multicast-router=temporary-query \
-    path-cost=10 point-to-point=auto priority=0x80 pvid=1 restricted-role=no \
-    restricted-tcn=no tag-stacking=no trusted=no unknown-multicast-flood=yes \
-    unknown-unicast-flood=yes
-/interface bridge port-controller
-# disabled
-set bridge=none cascade-ports="" switch=none
-/interface bridge port-extender
-# disabled
-set control-ports="" excluded-ports="" switch=none
+add name=bridge auto-mac=yes ageing-time=5m arp=enabled arp-timeout=auto \
+    dhcp-snooping=no disabled=no fast-forward=yes forward-delay=15s igmp-snooping=no \
+    mtu=auto protocol-mode=none
+#    vlan-filtering=yes ether-type=0x8100 ingress-filtering=yes
 /interface bridge settings
-set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no \
-    use-ip-firewall-for-vlan=no
+set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
+
+# https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-PortSettings
+/interface bridge port
+add interface=ether2 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+add interface=ether3 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+add interface=ether4 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+add interface=ether5 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+add interface=ether6 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+add interface=ether7 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+add interface=ether8 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
 
 # Packet queues
 /queue type
