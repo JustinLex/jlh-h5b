@@ -209,14 +209,6 @@ set sfp-sfpplus1 queue=only-hardware-queue
 set bridge queue=no-queue
 
 /interface list
-set [ find name=all ] comment="contains all interfaces" exclude="" include="" \
-    name=all
-set [ find name=none ] comment="contains no interfaces" exclude="" include="" \
-    name=none
-set [ find name=dynamic ] comment="contains dynamic interfaces" exclude="" \
-    include="" name=dynamic
-set [ find name=static ] comment="contains static interfaces" exclude="" \
-    include="" name=static
 add comment=defconf exclude="" include="" name=WAN
 add comment=defconf exclude="" include="" name=LAN
 
@@ -343,7 +335,7 @@ set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
 set autonomous=yes preferred-lifetime=1w valid-lifetime=4w2d
 
 # Install cloudflare cert
-/certificate import file-name=cloudflare-dns-com.pem
+/certificate import file-name=cloudflare-dns-com.pem passphrase=""
 
 # DNS resolver
 # Not well documented, see /ip dns print
@@ -352,7 +344,7 @@ set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes \
     servers=2606:4700:4700::1111,2606:4700:4700::1001,1.1.1.1,1.0.0.1 \
     allow-remote-requests=yes cache-max-ttl=2w cache-size=10240KiB \
     max-concurrent-queries=1000 max-concurrent-tcp-sessions=50 \
-    max-udp-packet-size=4096 query-server-timeout=2s query-total-timeout=10s \
+    max-udp-packet-size=4096 query-server-timeout=2s query-total-timeout=10s
 
 /ip dns static
 add address=10.2.0.1 disabled=no name=router.home ttl=1d
