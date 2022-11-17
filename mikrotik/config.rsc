@@ -4,6 +4,8 @@
 # model = RB5009UPr+S+
 
 # Layer 1
+# https://help.mikrotik.com/docs/display/ROS/Ethernet
+# https://help.mikrotik.com/docs/display/ROS/PoE-Out
 /interface ethernet
 set [ find default-name=ether1 ] name=ether1
     advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full,2500M-full \
@@ -115,28 +117,64 @@ set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-f
 /interface bridge port
 add interface=ether2 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=ether3 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=3 tag-stacking=no
 add interface=ether4 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=4 tag-stacking=no
 add interface=ether5 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=5 tag-stacking=no
 add interface=ether6 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=16 tag-stacking=no
 add interface=ether7 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=17 tag-stacking=no
 add interface=ether8 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
     frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
 add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
     frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
+
+# https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeVLANtable
+# https://help.mikrotik.com/docs/display/ROS/Bridge+VLAN+Table
+# https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching
+# bridge ports with the correspondig PVID are autmatically added as untagged ports in this table
+/interface bridge vlan
+add bridge=bridge vlan-ids=2
+add bridge=bridge vlan-ids=3
+add bridge=bridge vlan-ids=4
+add bridge=bridge vlan-ids=5
+add bridge=bridge vlan-ids=6
+add bridge=bridge vlan-ids=16
+add bridge=bridge vlan-ids=17
+add bridge=bridge vlan-ids=48
+add bridge=bridge vlan-ids=64
+
+# Configure CPU ports and static ips
+# https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-Managementaccessconfiguration
+/interface vlan
+add interface=bridge vlan-id=2 name=workstations
+add interface=bridge vlan-id=3 name=vpn
+add interface=bridge vlan-id=4 name=media
+add interface=bridge vlan-id=5 name=gaming
+add interface=bridge vlan-id=16 name=servers
+add interface=bridge vlan-id=17 name=management
+add interface=bridge vlan-id=48 name=guest
+add interface=bridge vlan-id=64 name=iot
+/ip address
+add address=10.2.0.1/16 interface=workstations
+add address=10.3.0.1/16 interface=vpn
+add address=10.4.0.1/16 interface=media
+add address=10.5.0.1/16 interface=gaming
+add address=10.16.0.1/16 interface=servers
+add address=10.17.0.1/16 interface=management
+add address=10.48.0.1/16 interface=guest
+add address=10.64.0.1/16 interface=iot
 
 # Packet queues
 /queue type
