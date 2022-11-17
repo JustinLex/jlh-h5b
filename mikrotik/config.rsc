@@ -536,8 +536,8 @@ set 3 action=echo disabled=no prefix="" topics=critical
 /system note
 set note="" show-at-login=yes
 
-/system ntp client
-set enabled=yes mode=unicast server-dns-names=0.se.pool.ntp.org,1.se.pool.ntp.org,2.se.pool.ntp.org,3.se.pool.ntp.org,
+# /system ntp client
+# set enabled=yes mode=unicast server-dns-names=0.se.pool.ntp.org,1.se.pool.ntp.org,2.se.pool.ntp.org,3.se.pool.ntp.org
 /system ntp server
 set auth-key=none broadcast=no broadcast-addresses="" enabled=no \
     local-clock-stratum=5 manycast=no multicast=no use-local-clock=no vrf=\
