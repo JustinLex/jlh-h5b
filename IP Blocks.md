@@ -50,7 +50,7 @@ This still leaves 256 /40s completely unused, which can be used for future IPv6-
   * Wifi network: Celadon
 
 
-* Servers and Rasperry Pis
+* Servers and Raspberry Pis
   * Kubernetes hosts, and IoT RasPis like my 3d printer and my Zigbee2MQTT server.
   * 10.16.0.0/16
   * xxxx:xxxx:xxxx:0010::/64
