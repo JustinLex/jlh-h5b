@@ -145,15 +145,15 @@ add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no
 # https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching
 # bridge ports with the correspondig PVID are autmatically added as untagged ports in this table
 /interface bridge vlan
-add bridge=bridge vlan-ids=2
-add bridge=bridge vlan-ids=3
-add bridge=bridge vlan-ids=4
-add bridge=bridge vlan-ids=5
-add bridge=bridge vlan-ids=6
-add bridge=bridge vlan-ids=16
-add bridge=bridge vlan-ids=17
-add bridge=bridge vlan-ids=48
-add bridge=bridge vlan-ids=64
+add bridge=bridge tagged=bridge vlan-ids=2
+add bridge=bridge tagged=bridge vlan-ids=3
+add bridge=bridge tagged=bridge vlan-ids=4
+add bridge=bridge tagged=bridge vlan-ids=5
+add bridge=bridge tagged=bridge vlan-ids=6
+add bridge=bridge tagged=bridge vlan-ids=16
+add bridge=bridge tagged=bridge vlan-ids=17
+add bridge=bridge tagged=bridge vlan-ids=48
+add bridge=bridge tagged=bridge vlan-ids=64
 
 # Configure CPU ports and static ips
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-Managementaccessconfiguration
@@ -282,29 +282,29 @@ add name=dhcp-iot          ranges=10.64.0.2-10.64.255.254
 
 /ip dhcp-server
 add add-arp=no address-pool=dhcp-workstations allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=workstations \
+client-mac-limit=unlimited conflict-detection=yes interface=workstations lease-time=10m name=workstations \
 relay=0.0.0.0 use-radius=no
 # TODO: Not sure if I'm supposed to add a DHCP server here for VPN clients
 # add add-arp=no address-pool=dhcp-vpn allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-# client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=vpn \
+# client-mac-limit=unlimited conflict-detection=yes interface=vpn lease-time=10m name=vpn \
 # relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-media allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=media \
+client-mac-limit=unlimited conflict-detection=yes interface=media lease-time=10m name=media \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-gaming allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=gaming \
+client-mac-limit=unlimited conflict-detection=yes interface=gaming lease-time=10m name=gaming \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-servers allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=servers \
+client-mac-limit=unlimited conflict-detection=yes interface=servers lease-time=10m name=servers \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-management allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=management \
+client-mac-limit=unlimited conflict-detection=yes interface=management lease-time=10m name=management \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-guest allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=guest \
+client-mac-limit=unlimited conflict-detection=yes interface=guest lease-time=10m name=guest \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-iot allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=iot \
+client-mac-limit=unlimited conflict-detection=yes interface=iot lease-time=10m name=iot \
 relay=0.0.0.0 use-radius=no
 
 #TODO: set up an NTP server
