@@ -6,6 +6,6 @@
 # Mikrotik pls
 
 echo uploading config...
-scp config.rsc admin@router.home:/
+scp -o StrictHostKeyChecking=no config.rsc admin@router.home:/
 echo applying config...
-ssh admin@router.home '/system reset-configuration keep-users=yes no-defaults=yes run-after-reset=config.rsc'
+ssh -o StrictHostKeyChecking=no admin@router.home '/system reset-configuration keep-users=yes no-defaults=yes run-after-reset=config.rsc'
