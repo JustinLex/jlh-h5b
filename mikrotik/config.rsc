@@ -70,13 +70,13 @@ set [ find default-name=ether8 ] name=ether8 advertise=10M-half,10M-full,100M-ha
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
     rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=sfp-sfpplus1 ] advertise="" arp=enabled arp-timeout=\
-    auto auto-negotiation=yes bandwidth=unlimited/unlimited disabled=no \
-    full-duplex=yes l2mtu=1514 loop-protect=default \
-    loop-protect-disable-time=5m loop-protect-send-interval=5s mac-address=\
-    18:FD:74:7B:01:2F mtu=1500 name=sfp-sfpplus1 orig-mac-address=\
-    18:FD:74:7B:01:2F rx-flow-control=off sfp-rate-select=high \
-    sfp-shutdown-temperature=95C speed=10Gbps tx-flow-control=off
+set [ find default-name=sfp-sfpplus1 ] name=sfp-sfpplus1 advertise="" \
+    arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
+    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    loop-protect=default loop-protect-disable-time=5m loop-protect-send-interval=5s \
+    mac-address=18:FD:74:7B:01:2F orig-mac-address=18:FD:74:7B:01:2F \
+    rx-flow-control=off speed=10Gbps tx-flow-control=off\
+    sfp-rate-select=high sfp-shutdown-temperature=95C
 
 /interface ethernet switch
 set 0 cpu-flow-control=yes mirror-egress-target=none name=switch1
