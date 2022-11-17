@@ -108,8 +108,8 @@ set psu1-max-power=96W psu2-max-power=150W
 /interface bridge
 add name=bridge auto-mac=yes ageing-time=5m arp=enabled arp-timeout=auto \
     dhcp-snooping=no disabled=no fast-forward=yes forward-delay=15s igmp-snooping=no \
-    mtu=auto protocol-mode=none
-#    vlan-filtering=yes ether-type=0x8100 ingress-filtering=yes
+    mtu=auto protocol-mode=none \
+    vlan-filtering=yes ether-type=0x8100 ingress-filtering=yes
 /interface bridge settings
 set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-firewall-for-vlan=no
 
