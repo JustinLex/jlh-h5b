@@ -145,15 +145,14 @@ add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no
 # https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching
 # bridge ports with the corresponding PVID are automatically added as untagged ports in this table
 /interface bridge vlan
-add bridge=bridge tagged=bridge vlan-ids=2
+add bridge=bridge tagged=bridge,ether1 vlan-ids=2
 add bridge=bridge tagged=bridge vlan-ids=3
-add bridge=bridge tagged=bridge vlan-ids=4
-add bridge=bridge tagged=bridge vlan-ids=5
-add bridge=bridge tagged=bridge vlan-ids=6
+add bridge=bridge tagged=bridge,ether1 vlan-ids=4
+add bridge=bridge tagged=bridge,ether1 vlan-ids=5
 add bridge=bridge tagged=bridge vlan-ids=16
-add bridge=bridge tagged=bridge vlan-ids=17
-add bridge=bridge tagged=bridge vlan-ids=48
-add bridge=bridge tagged=bridge vlan-ids=64
+add bridge=bridge tagged=bridge,ether1 vlan-ids=17
+add bridge=bridge tagged=bridge,ether1 vlan-ids=48
+add bridge=bridge tagged=bridge,ether1 vlan-ids=64
 
 # Configure CPU ports and static ips
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-Managementaccessconfiguration
