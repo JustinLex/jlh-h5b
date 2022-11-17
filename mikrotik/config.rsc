@@ -137,18 +137,6 @@ set [ find name=static ] comment="contains static interfaces" exclude="" \
 add comment=defconf exclude="" include="" name=WAN
 add comment=defconf exclude="" include="" name=LAN
 
-/ip dhcp-client option
-set clientid_duid code=61 name=clientid_duid value="0xff\$(CLIENT_DUID)"
-set clientid code=61 name=clientid value="0x01\$(CLIENT_MAC)"
-set hostname code=12 name=hostname value="\$(HOSTNAME)"
-
-
-/ip pool
-add name=default-dhcp ranges=192.168.88.10-192.168.88.254
-/ip dhcp-server
-add address-pool=default-dhcp authoritative=yes disabled=no interface=bridge \
-    lease-script="" lease-time=10m name=defconf use-radius=no
-
 /queue type
 set 0 kind=pfifo name=default pfifo-limit=50
 set 1 kind=pfifo name=ethernet-default pfifo-limit=50
@@ -314,25 +302,66 @@ add comment=defconf disabled=no interface=ether1 list=WAN
 set ddns-enabled=no ddns-update-interval=none update-time=yes
 /ip cloud advanced
 set use-local-address=no
-/ip dhcp-client
 
 # Configure WAN DHCP client https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-DHCPClient
+/ip dhcp-client option
+set clientid_duid code=61 name=clientid_duid value="0xff\$(CLIENT_DUID)"
+set clientid code=61 name=clientid value="0x01\$(CLIENT_MAC)"
+set hostname code=12 name=hostname value="\$(HOSTNAME)"
+
 # Might want to set add-default-route to special-classless if Bahnhof is sending us option 121 routes that don't follow RFC spec
 # client id is old mac address I initially set up the Bahnhof connection with
+/ip dhcp-client
 add add-default-route=yes clientid=68:7f:74:22:1c:23 comment=defconf default-route-distance=1 \
     disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no
 
-# DHCP lease persistence https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-StoreConfiguration
-/ip dhcp-server config
-set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
+# DHCP server configuration
+# https://wiki.mikrotik.com/wiki/Manual:IP/DHCP_Server
+# https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-Network
+/ip pool
+add name=dhcp-workstations ranges=10.2.0.2-10.2.255.254
+add name=dhcp-vpn          ranges=10.3.0.2-10.3.255.254
+add name=dhcp-media        ranges=10.4.0.2-10.4.255.254
+add name=dhcp-gaming       ranges=10.5.0.2-10.5.255.254
+add name=dhcp-servers      ranges=10.16.0.2-10.16.255.254
+add name=dhcp-management   ranges=10.17.0.2-10.17.255.254
+add name=dhcp-guest        ranges=10.48.0.2-10.48.255.254
+add name=dhcp-iot          ranges=10.64.0.2-10.64.255.254
 
-# DHCP servers https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-Network
+/ip dhcp-server
+add add-arp=no address-pool=dhcp-workstations allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=workstations \
+relay=0.0.0.0 use-radius=no
+# TODO: Not sure if I'm supposed to add a DHCP server here for VPN clients
+# add add-arp=no address-pool=dhcp-vpn allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+# client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=vpn \
+# relay=0.0.0.0 use-radius=no
+add add-arp=no address-pool=dhcp-media allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=media \
+relay=0.0.0.0 use-radius=no
+add add-arp=no address-pool=dhcp-gaming allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=gaming \
+relay=0.0.0.0 use-radius=no
+add add-arp=no address-pool=dhcp-servers allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=servers \
+relay=0.0.0.0 use-radius=no
+add add-arp=no address-pool=dhcp-management allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=management \
+relay=0.0.0.0 use-radius=no
+add add-arp=no address-pool=dhcp-guest allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=guest \
+relay=0.0.0.0 use-radius=no
+add add-arp=no address-pool=dhcp-iot allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=10m name=iot \
+relay=0.0.0.0 use-radius=no
+
 #TODO: set up an NTP server
 /ip dhcp-server network
 add address=10.2.0.0/16 netmask=16 gateway=10.2.0.1 comment=Workstations dhcp-option="" domain="home" !next-server \
     dns-server=10.2.0.1 ntp-server=""
-add address=10.3.0.0/16 netmask=16 gateway=10.3.0.1 comment=VPN dhcp-option="" domain="home" !next-server \
-    dns-server=10.3.0.1 ntp-server=""
+# TODO: Not sure if I'm supposed to add a DHCP server here for VPN clients
+# add address=10.3.0.0/16 netmask=16 gateway=10.3.0.1 comment=VPN dhcp-option="" domain="home" !next-server \
+#     dns-server=10.3.0.1 ntp-server=""
 add address=10.4.0.0/16 netmask=16 gateway=10.4.0.1 comment=Media dhcp-option="" domain="home" !next-server \
     dns-server=10.4.0.1 ntp-server=""
 add address=10.5.0.0/16 netmask=16 gateway=10.5.0.1 comment=Gaming dhcp-option="" domain="home" !next-server \
@@ -346,14 +375,31 @@ add address=10.48.0.0/16 netmask=16 gateway=10.48.0.1 comment=Guest dhcp-option=
 add address=10.64.0.0/16 netmask=16 gateway=10.64.0.1 comment=IoT dhcp-option="" domain="home" !next-server \
     dns-server=10.64.0.1 ntp-server=""
 
-# DNS resolver
+# DHCP lease persistence https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-StoreConfiguration
+/ip dhcp-server config
+set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
+
+# SLAAC configuration
+# TODO write a script like ipv6neigh to do DDNS by pulling nodes from /ipv6 neighbor and adding them to DNS
+/ipv6 nd
+set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
+    disabled=no dns="" hop-limit=unspecified interface=all \
+    managed-address-configuration=no mtu=unspecified other-configuration=no \
+    ra-delay=3s ra-interval=3m20s-10m ra-lifetime=30m ra-preference=medium \
+    reachable-time=unspecified retransmit-interval=unspecified
+/ipv6 nd prefix default
+set autonomous=yes preferred-lifetime=1w valid-lifetime=4w2d
+
 # Install cloudflare cert
 /certificate import file-name=cloudflare-dns-com.pem
+
+# DNS resolver
+# Not well documented, see /ip dns print
 /ip dns
 set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes \
     servers=2606:4700:4700::1111,2606:4700:4700::1001,1.1.1.1,1.0.0.1 \
     allow-remote-requests=yes cache-max-ttl=2w cache-size=10240KiB \
-    max-concurrent-queries=100 max-concurrent-tcp-sessions=20 \
+    max-concurrent-queries=1000 max-concurrent-tcp-sessions=50 \
     max-udp-packet-size=4096 query-server-timeout=2s query-total-timeout=10s \
 
 /ip dns static
@@ -513,14 +559,6 @@ add action=accept chain=forward comment=\
 add action=drop chain=forward comment=\
     "defconf: drop everything else not coming from LAN" in-interface-list=\
     !LAN
-/ipv6 nd
-set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
-    disabled=no dns="" hop-limit=unspecified interface=all \
-    managed-address-configuration=no mtu=unspecified other-configuration=no \
-    ra-delay=3s ra-interval=3m20s-10m ra-lifetime=30m ra-preference=medium \
-    reachable-time=unspecified retransmit-interval=unspecified
-/ipv6 nd prefix default
-set autonomous=yes preferred-lifetime=1w valid-lifetime=4w2d
 
 /routing igmp-proxy
 set query-interval=2m5s query-response-interval=10s quick-leave=no
