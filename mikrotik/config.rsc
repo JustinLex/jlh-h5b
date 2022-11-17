@@ -7,11 +7,11 @@
 # https://help.mikrotik.com/docs/display/ROS/Ethernet
 # https://help.mikrotik.com/docs/display/ROS/PoE-Out
 /interface ethernet
-set [ find default-name=ether1 ] name=ether1
+set [ find default-name=ether1 ] name=ether1 \
     advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full,2500M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    mac-address=18:FD:74:7B:01:27 orig-mac-address=18:FD:74:7B:01:27 \
+    mac-address=68:7f:74:22:1c:23 orig-mac-address=18:FD:74:7B:01:27 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
     rx-flow-control=off speed=2.5Gbps tx-flow-control=off
@@ -265,8 +265,7 @@ set hostname code=12 name=hostname value="\$(HOSTNAME)"
 # Might want to set add-default-route to special-classless if Bahnhof is sending us option 121 routes that don't follow RFC spec
 # client id is old mac address I initially set up the Bahnhof connection with
 /ip dhcp-client
-add add-default-route=yes clientid=68:7f:74:22:1c:23 comment=defconf default-route-distance=1 \
-    disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no
+add add-default-route=yes default-route-distance=1 disabled=no interface=ether1 use-peer-dns=no use-peer-ntp=no
 
 # DHCP server configuration
 # https://wiki.mikrotik.com/wiki/Manual:IP/DHCP_Server
