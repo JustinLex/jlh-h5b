@@ -281,29 +281,29 @@ add name=dhcp-iot          ranges=10.64.0.2-10.64.255.254
 
 /ip dhcp-server
 add add-arp=no address-pool=dhcp-workstations allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=workstations lease-time=10m name=workstations \
+client-mac-limit=unlimited conflict-detection=yes interface=workstations lease-time=12h name=workstations \
 relay=0.0.0.0 use-radius=no
 # TODO: Not sure if I'm supposed to add a DHCP server here for VPN clients
 # add add-arp=no address-pool=dhcp-vpn allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-# client-mac-limit=unlimited conflict-detection=yes interface=vpn lease-time=10m name=vpn \
+# client-mac-limit=unlimited conflict-detection=yes interface=vpn lease-time=12h name=vpn \
 # relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-media allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=media lease-time=10m name=media \
+client-mac-limit=unlimited conflict-detection=yes interface=media lease-time=12h name=media \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-gaming allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=gaming lease-time=10m name=gaming \
+client-mac-limit=unlimited conflict-detection=yes interface=gaming lease-time=12h name=gaming \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-servers allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=servers lease-time=10m name=servers \
+client-mac-limit=unlimited conflict-detection=yes interface=servers lease-time=12h name=servers \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-management allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=management lease-time=10m name=management \
+client-mac-limit=unlimited conflict-detection=yes interface=management lease-time=12h name=management \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-guest allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=guest lease-time=10m name=guest \
+client-mac-limit=unlimited conflict-detection=yes interface=guest lease-time=12h name=guest \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-iot allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=iot lease-time=10m name=iot \
+client-mac-limit=unlimited conflict-detection=yes interface=iot lease-time=12h name=iot \
 relay=0.0.0.0 use-radius=no
 
 #TODO: set up an NTP server
