@@ -330,6 +330,11 @@ add address=10.64.0.0/16 netmask=16 gateway=10.64.0.1 comment=IoT dhcp-option=""
 /ip dhcp-server config
 set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
 
+# Static DHCP leases
+/ip dhcp-server lease
+# Temporary static lease here for Cloyster
+add mac-address=a6:9b:d3:a4:4e:ac address=10.1.15.248 server=workstations
+
 # SLAAC configuration
 # TODO write a script like ipv6neigh to do DDNS by pulling nodes from /ipv6 neighbor and adding them to DNS
 /ipv6 nd
