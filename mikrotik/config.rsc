@@ -389,6 +389,18 @@ add action=drop chain=forward comment=\
 /ip firewall nat
 add action=masquerade chain=srcnat comment="defconf: masquerade" \
     ipsec-policy=out,none out-interface-list=WAN !to-addresses !to-ports
+
+# Port forwarding
+add action=dst-nat chain=dstnat comment="Kubernetes API" in-interface-list=WAN \
+    protocol=6 dst-port=6443 to-addresses=10.1.15.248 to-ports=6616
+add action=dst-nat chain=dstnat comment="Ingress HTTP" in-interface-list=WAN \
+    protocol=6 dst-port=80 to-addresses=10.1.16.0 to-ports=80
+add action=dst-nat chain=dstnat comment="Ingress HTTPS" in-interface-list=WAN \
+    protocol=6 dst-port=443 to-addresses=10.1.16.0 to-ports=443
+add action=dst-nat chain=dstnat comment="Viktor Factorio" in-interface-list=WAN \
+    protocol=6 dst-port=34197 to-addresses=10.1.16.2 to-ports=34197
+
+
 /ip firewall service-port
 set ftp disabled=no ports=21
 set tftp disabled=no ports=69
