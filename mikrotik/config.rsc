@@ -271,17 +271,16 @@ add add-default-route=yes default-route-distance=1 disabled=no interface=ether2 
 name=he-tunnel remote-address=216.66.80.90
 /interface list member add comment="IPv6 tunnel" disabled=no interface=he-tunnel list=WAN
 
-/ipv6 route add comment="" disabled=no distance=1 dst-address=2000::/3 gateway=2001:470:27:6e0::1 scope=30 target-scope=10
-/ipv6 address add address=2001:470:27:6e0::2/64 advertise=no disabled=no eui-64=no interface=he-tunnel
-/ipv6 address add address=2001:470:28:6e0::2 interface=workstations advertise=yes
-# Adding more interfaces to the same prefix causes routing issues
-#/ipv6 address add address=2001:470:28:6e0::2 interface=vpn advertise=yes
-#/ipv6 address add address=2001:470:28:6e0::2 interface=media advertise=yes
-#/ipv6 address add address=2001:470:28:6e0::2 interface=gaming advertise=yes
-#/ipv6 address add address=2001:470:28:6e0::2 interface=servers advertise=yes
-#/ipv6 address add address=2001:470:28:6e0::2 interface=management advertise=yes
-#/ipv6 address add address=2001:470:28:6e0::2 interface=guest advertise=yes
-#/ipv6 address add address=2001:470:28:6e0::2 interface=iot advertise=yes
+/ipv6 route add comment="" disabled=no distance=1 dst-address=2000::/3 gateway=2600:70ff:b04f::1 scope=30 target-scope=10
+/ipv6 address add address=2600:70ff:b04f::2/48 advertise=no disabled=no eui-64=no interface=he-tunnel
+/ipv6 address add address=2600:70ff:b04f:2::2/64 interface=workstations advertise=yes
+/ipv6 address add address=2600:70ff:b04f:3::2/64 interface=vpn advertise=yes
+/ipv6 address add address=2600:70ff:b04f:4::2/64 interface=media advertise=yes
+/ipv6 address add address=2600:70ff:b04f:5::2/64 interface=gaming advertise=yes
+/ipv6 address add address=2600:70ff:b04f:10::2/64 interface=servers advertise=yes
+/ipv6 address add address=2600:70ff:b04f:11::2/64 interface=management advertise=yes
+/ipv6 address add address=2600:70ff:b04f:30::2/64 interface=guest advertise=yes
+/ipv6 address add address=2600:70ff:b04f:40::2/64 interface=iot advertise=yes
 
 # DHCP server configuration
 # https://wiki.mikrotik.com/wiki/Manual:IP/DHCP_Server
