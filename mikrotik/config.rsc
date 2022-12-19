@@ -11,14 +11,14 @@ set [ find default-name=ether1 ] name=ether1 \
     advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full,2500M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    mac-address=68:7f:74:22:1c:23 orig-mac-address=18:FD:74:7B:01:27 \
+    mac-address=18:FD:74:7B:01:27 orig-mac-address=18:FD:74:7B:01:27 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
     rx-flow-control=off speed=2.5Gbps tx-flow-control=off
 set [ find default-name=ether2 ] name=ether2 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
     disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
-    mac-address=18:FD:74:7B:01:28 orig-mac-address=18:FD:74:7B:01:28 \
+    mac-address=68:7f:74:22:1c:23 orig-mac-address=18:FD:74:7B:01:28 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
     rx-flow-control=off speed=1Gbps tx-flow-control=off
