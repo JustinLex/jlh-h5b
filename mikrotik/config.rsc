@@ -365,7 +365,7 @@ add mac-address=a6:9b:d3:a4:4e:ac address=10.2.15.248 server=workstations
 # TODO write a script like ipv6neigh to do DDNS by pulling nodes from /ipv6 neighbor and adding them to DNS
 /ipv6 nd
 set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
-    disabled=no dns="" hop-limit=unspecified interface=all \
+    disabled=no dns="2600:70ff:b04f::2" hop-limit=unspecified interface=all \
     managed-address-configuration=no mtu=unspecified other-configuration=no \
     ra-delay=3s ra-interval=3m20s-10m ra-lifetime=30m ra-preference=medium \
     reachable-time=unspecified retransmit-interval=unspecified
