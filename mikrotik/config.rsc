@@ -145,7 +145,7 @@ add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no
     frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=trunk-bond bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-only-vlan-tagged ingress-filtering=yes pvid=1 tag-stacking=no
 
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeVLANtable
 # https://help.mikrotik.com/docs/display/ROS/Bridge+VLAN+Table
