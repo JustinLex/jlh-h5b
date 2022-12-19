@@ -333,7 +333,7 @@ set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
 # Static DHCP leases
 /ip dhcp-server lease
 # Temporary static lease here for Cloyster
-add mac-address=a6:9b:d3:a4:4e:ac address=10.1.15.248 server=workstations
+add mac-address=a6:9b:d3:a4:4e:ac address=10.2.15.248 server=workstations
 
 # SLAAC configuration
 # TODO write a script like ipv6neigh to do DDNS by pulling nodes from /ipv6 neighbor and adding them to DNS
@@ -392,13 +392,13 @@ add action=masquerade chain=srcnat comment="defconf: masquerade" \
 
 # Port forwarding
 add action=dst-nat chain=dstnat comment="Kubernetes API" in-interface-list=WAN \
-    protocol=6 dst-port=6443 to-addresses=10.1.15.248 to-ports=6616
+    protocol=6 dst-port=6443 to-addresses=10.2.15.248 to-ports=6616
 add action=dst-nat chain=dstnat comment="Ingress HTTP" in-interface-list=WAN \
-    protocol=6 dst-port=80 to-addresses=10.1.16.0 to-ports=80
+    protocol=6 dst-port=80 to-addresses=10.2.16.0 to-ports=80
 add action=dst-nat chain=dstnat comment="Ingress HTTPS" in-interface-list=WAN \
-    protocol=6 dst-port=443 to-addresses=10.1.16.0 to-ports=443
+    protocol=6 dst-port=443 to-addresses=10.2.16.0 to-ports=443
 add action=dst-nat chain=dstnat comment="Viktor Factorio" in-interface-list=WAN \
-    protocol=6 dst-port=34197 to-addresses=10.1.16.2 to-ports=34197
+    protocol=6 dst-port=34197 to-addresses=10.2.16.2 to-ports=34197
 
 
 /ip firewall service-port
