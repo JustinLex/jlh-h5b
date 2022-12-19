@@ -266,6 +266,23 @@ set hostname code=12 name=hostname value="\$(HOSTNAME)"
 /ip dhcp-client
 add add-default-route=yes default-route-distance=1 disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no
 
+# 6to4 Tunnel configuration
+/interface 6to4 add comment="Hurricane Electric IPv6 Tunnel Broker" disabled=no local-address=158.174.30.59 mtu=1280 \
+name=he-tunnel remote-address=216.66.80.90
+/interface list member add comment="IPv6 tunnel" disabled=no interface=he-tunnel list=WAN
+
+/ipv6 route add comment="" disabled=no distance=1 dst-address=2000::/3 gateway=2001:470:27:6e0::1 scope=30 target-scope=10
+/ipv6 address add address=2001:470:27:6e0::2/64 advertise=no disabled=no eui-64=no interface=he-tunnel
+/ipv6 address add address=2001:470:28:6e0::2 interface=workstations advertise=yes
+# Adding more interfaces to the same prefix causes routing issues
+#/ipv6 address add address=2001:470:28:6e0::2 interface=vpn advertise=yes
+#/ipv6 address add address=2001:470:28:6e0::2 interface=media advertise=yes
+#/ipv6 address add address=2001:470:28:6e0::2 interface=gaming advertise=yes
+#/ipv6 address add address=2001:470:28:6e0::2 interface=servers advertise=yes
+#/ipv6 address add address=2001:470:28:6e0::2 interface=management advertise=yes
+#/ipv6 address add address=2001:470:28:6e0::2 interface=guest advertise=yes
+#/ipv6 address add address=2001:470:28:6e0::2 interface=iot advertise=yes
+
 # DHCP server configuration
 # https://wiki.mikrotik.com/wiki/Manual:IP/DHCP_Server
 # https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-Network
