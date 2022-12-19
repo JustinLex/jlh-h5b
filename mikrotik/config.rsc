@@ -101,6 +101,10 @@ set psu1-max-power=96W psu2-max-power=150W
 
 # Layer 2
 
+# Bonding
+/interface bonding
+add slaves=ether3,ether4,ether5,ether6,ether7,ether8 mode=802.3ad transmit-hash-policy=layer-3-and-4 name=trunk-bond
+
 # Switch features:
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeHardwareOffloading
 # Note: QinQ not supported by hardware offload
@@ -141,21 +145,21 @@ add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no
     frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=trunk-bond bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=1 tag-stacking=no
 
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeVLANtable
 # https://help.mikrotik.com/docs/display/ROS/Bridge+VLAN+Table
 # https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching
 # bridge ports with the corresponding PVID are automatically added as untagged ports in this table
 /interface bridge vlan
-add bridge=bridge tagged=bridge,ether1 vlan-ids=2
-add bridge=bridge tagged=bridge vlan-ids=3
-add bridge=bridge tagged=bridge,ether1 vlan-ids=4
-add bridge=bridge tagged=bridge,ether1 vlan-ids=5
-add bridge=bridge tagged=bridge vlan-ids=16
-add bridge=bridge tagged=bridge,ether1 vlan-ids=17
-add bridge=bridge tagged=bridge,ether1 vlan-ids=48
-add bridge=bridge tagged=bridge,ether1 vlan-ids=64
+add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=2
+add bridge=bridge tagged=bridge,trunk-bond vlan-ids=3
+add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=4
+add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=5
+add bridge=bridge tagged=bridge,trunk-bond vlan-ids=16
+add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=17
+add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=48
+add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=64
 
 # Configure CPU ports and static ips
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-Managementaccessconfiguration
