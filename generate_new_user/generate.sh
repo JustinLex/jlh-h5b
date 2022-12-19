@@ -7,8 +7,8 @@ echo enter username
 read -r username
 
 openssl ecparam -name prime256v1 -genkey -noout -out "$username.key"
-openssl ec -in private-key.pem -pubout -out public-key.pem
-openssl req -new -key private-key.pem -out "$username.csr" -subj "/CN=$username"
+openssl ec -in "$username.key" -pubout -out public-key.pem
+openssl req -new -key "$username.key" -out "$username.csr" -subj "/CN=$username"
 
 cat <<EOF | kubectl apply -f -
 apiVersion: certificates.k8s.io/v1
