@@ -403,7 +403,7 @@ add action=masquerade chain=srcnat dst-address=10.2.16.2 out-interface=workstati
 
 # Port forwarding
 add action=dst-nat chain=dstnat comment="Kubernetes API" in-interface-list=WAN \
-    protocol=6 dst-port=6443 to-addresses=10.2.15.248 to-ports=6616
+    protocol=6 dst-port=6616 to-addresses=10.2.15.248 to-ports=6443
 add action=dst-nat chain=dstnat comment="Ingress HTTP" in-interface-list=WAN \
     protocol=6 dst-port=80 to-addresses=10.2.16.0 to-ports=80
 add action=dst-nat chain=dstnat comment="Ingress HTTPS" in-interface-list=WAN \
