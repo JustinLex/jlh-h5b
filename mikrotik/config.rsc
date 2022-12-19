@@ -396,6 +396,11 @@ add action=drop chain=forward comment=\
 add action=masquerade chain=srcnat comment="defconf: masquerade" \
     ipsec-policy=out,none out-interface-list=WAN !to-addresses !to-ports
 
+# Hairpin NAT (aka NAT reflection)
+add action=masquerade chain=srcnat dst-address=10.2.15.248 out-interface=workstations protocol=tcp src-address=10.0.0.0/8
+add action=masquerade chain=srcnat dst-address=10.2.16.0 out-interface=workstations protocol=tcp src-address=10.0.0.0/8
+add action=masquerade chain=srcnat dst-address=10.2.16.2 out-interface=workstations protocol=tcp src-address=10.0.0.0/8
+
 # Port forwarding
 add action=dst-nat chain=dstnat comment="Kubernetes API" in-interface-list=WAN \
     protocol=6 dst-port=6443 to-addresses=10.2.15.248 to-ports=6616
