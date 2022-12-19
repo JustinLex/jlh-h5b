@@ -363,7 +363,7 @@ set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
     ra-delay=3s ra-interval=3m20s-10m ra-lifetime=30m ra-preference=medium \
     reachable-time=unspecified retransmit-interval=unspecified
 /ipv6 nd prefix default
-set autonomous=yes preferred-lifetime=1w valid-lifetime=4w2d
+set autonomous=yes preferred-lifetime=1h valid-lifetime=4w2d
 
 # Install cloudflare cert
 /certificate import file-name=cloudflare-dns-com.pem passphrase=""
