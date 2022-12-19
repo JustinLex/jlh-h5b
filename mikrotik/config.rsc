@@ -332,7 +332,9 @@ set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
 
 # Static DHCP leases
 /ip dhcp-server lease
-# Temporary static lease here for Cloyster
+# Temporary static lease here for pve, freenas, and Cloyster
+add mac-address=00:02:C9:55:A2:04 address=10.2.0.2 server=workstations
+add mac-address=5A:B1:9C:82:4F:70 address=10.2.0.3 server=workstations
 add mac-address=a6:9b:d3:a4:4e:ac address=10.2.15.248 server=workstations
 
 # SLAAC configuration
@@ -360,6 +362,8 @@ set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes \
 
 /ip dns static
 add address=10.2.0.1 disabled=no name=router.home ttl=1d
+add address=10.2.0.2 disabled=no name=pve.home.jlh.name ttl=1d
+add address=10.2.0.3 disabled=no name=freenas.home.jlh.name ttl=1d
 
 /ip firewall filter
 add action=accept chain=input comment=\
