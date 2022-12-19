@@ -118,25 +118,28 @@ set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-f
 add interface=ether1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
     frame-types=admit-only-vlan-tagged ingress-filtering=yes pvid=1 tag-stacking=no
-add interface=ether3 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
-    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
-add interface=ether4 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
-    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=4 tag-stacking=no
-add interface=ether5 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
-    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=17 tag-stacking=no
-add interface=ether6 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
-    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
-add interface=ether7 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
-    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
-add interface=ether8 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
-    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+#add interface=ether3 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+#    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+#    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+#add interface=ether4 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+#    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+#    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=4 tag-stacking=no
+#add interface=ether5 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+#    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+#    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=17 tag-stacking=no
+#add interface=ether6 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+#    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+#    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+#add interface=ether7 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+#    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+#    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+#add interface=ether8 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+#    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+#    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
+    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
+    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+add interface=trunk-bond bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
     frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 
