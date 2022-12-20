@@ -384,8 +384,8 @@ set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes \
     max-concurrent-queries=1000 max-concurrent-tcp-sessions=50 \
     max-udp-packet-size=4096 query-server-timeout=2s query-total-timeout=10s
 
+# static IPs needed for old kubernetes cluster
 /ip dns static
-add address=10.2.0.1 disabled=no name=router.home ttl=1d
 add address=10.2.0.2 disabled=no name=pve.home.jlh.name ttl=1d
 add address=10.2.0.3 disabled=no name=freenas.home.jlh.name ttl=1d
 add address=10.2.0.4 disabled=no name=ditto.home.jlh.name ttl=1d
