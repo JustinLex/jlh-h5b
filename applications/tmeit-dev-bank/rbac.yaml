@@ -27,7 +27,7 @@ rules:
 - apiGroups: ["kubegres.reactive-tech.io"]
   resources: ["kubegres"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: ["databases.spotahome.com/v1"]
+- apiGroups: ["databases.spotahome.com"]
   resources: ["redisfailovers"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["", "extensions", "apps", "autoscaling"]
