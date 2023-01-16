@@ -53,7 +53,7 @@ spec:
         externalDatabase:
           enabled: true
           type: postgresql
-          host: "nextcloud-db:5432"
+          host: "crunchy-nextcloud-primary:5432"
           database: nextcloud
           existingSecret:
             enabled: true
