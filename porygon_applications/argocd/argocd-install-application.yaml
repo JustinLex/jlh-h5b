@@ -2,7 +2,6 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argocd-install
-  namespace: argocd
   annotations:
     kubernetes.io/description: |
       This Application manages ArgoCD's own installation. It points to ArgoCD's install manifest on Github.
