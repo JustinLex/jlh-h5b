@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: root-appset
+  namespace: argocd
+  annotations:
+    kubernetes.io/description: |
+      This Applicationset is the root Appset that loads all directories inside porygon_applications.
+      
+      How this app of apps pattern works:
+      Each directory here triggers ArgoCD's git generator, which creates a new Application for each directory.
+      The Application will be named after the directory, and will create a namespace with the given directory.
+      All resources defined in the directory will be created in the given namespace, 
+      if the resource doesn't specify its own namespace in its metadata.
+      
+      (Separate, limited-scope ArgoCD instances should be used if you want to restrict namespaces accesible from GitOps for security purposes, 
+      these applications do not provide security boundaries.)
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/JustinLex/jlh-h5b.git
+      revision: HEAD
+      directories:
+      - path: porygon_applications/*
+  template:
+    metadata:
+      name: '{{path.basename}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/JustinLex/jlh-h5b.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        name: in-cluster
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated: {}
+        syncOptions:
+          - CreateNamespace=true

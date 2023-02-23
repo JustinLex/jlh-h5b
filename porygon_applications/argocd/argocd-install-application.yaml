@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-install
+  namespace: argocd
+  annotations:
+    kubernetes.io/description: |
+      This Application manages ArgoCD's own installation. It points to ArgoCD's install manifest on Github.
+      
+      This Application automatically installs new "patch" releases. 
+      To update ArgoCD to a new major or minor release, change the targetRevision branch to a new release branch.
+spec:
+  project: default
+    source:
+      repoURL: https://github.com/argoproj/argo-cd.git
+      targetRevision: release-2.6
+      path: 'manifests/install.yaml'
+    destination:
+      name: in-cluster
+      namespace: 'argocd'
+    syncPolicy:
+      automated: {}

@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap
+  namespace: argocd
+  annotations:
+    kubernetes.io/description: |
+      This is the root "app of apps" that bootstraps all other Applications in this directory.
+      This Application points to its own directory, thereby loading itself, as well as root-appset.
+spec:
+  project: default
+    source:
+      repoURL: https://github.com/JustinLex/jlh-h5b.git
+      targetRevision: HEAD
+      path: 'porygon_applications/'
+    destination:
+      name: in-cluster
+      namespace: 'argocd'
