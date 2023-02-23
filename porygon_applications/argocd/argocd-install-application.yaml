@@ -13,9 +13,11 @@ spec:
   source:
     repoURL: https://github.com/argoproj/argo-cd.git
     targetRevision: release-2.6
-    path: 'manifests/install.yaml'
+    path: 'manifests/'
+    directory:
+      include: install.yaml
   destination:
     name: in-cluster
     namespace: 'argocd'
-  syncPolicy:
-    automated: {}
+#  syncPolicy:
+#    automated: {}
