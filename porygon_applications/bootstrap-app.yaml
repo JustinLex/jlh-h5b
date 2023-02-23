@@ -9,10 +9,10 @@ metadata:
       This Application points to its own directory, thereby loading itself, as well as root-appset.
 spec:
   project: default
-    source:
-      repoURL: https://github.com/JustinLex/jlh-h5b.git
-      targetRevision: HEAD
-      path: 'porygon_applications/'
-    destination:
-      name: in-cluster
-      namespace: 'argocd'
+  source:
+    repoURL: https://github.com/JustinLex/jlh-h5b.git
+    targetRevision: HEAD
+    path: 'porygon_applications/'
+  destination:
+    name: in-cluster
+    namespace: 'argocd'

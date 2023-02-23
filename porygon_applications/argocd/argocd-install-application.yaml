@@ -10,12 +10,12 @@ metadata:
       To update ArgoCD to a new major or minor release, change the targetRevision branch to a new release branch.
 spec:
   project: default
-    source:
-      repoURL: https://github.com/argoproj/argo-cd.git
-      targetRevision: release-2.6
-      path: 'manifests/install.yaml'
-    destination:
-      name: in-cluster
-      namespace: 'argocd'
-    syncPolicy:
-      automated: {}
+  source:
+    repoURL: https://github.com/argoproj/argo-cd.git
+    targetRevision: release-2.6
+    path: 'manifests/install.yaml'
+  destination:
+    name: in-cluster
+    namespace: 'argocd'
+  syncPolicy:
+    automated: {}
