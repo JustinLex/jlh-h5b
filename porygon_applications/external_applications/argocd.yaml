@@ -8,6 +8,7 @@ metadata:
       
       This Application automatically installs new "patch" releases as they're pushed to the release branch. 
       To update ArgoCD to a new major or minor release, change the targetRevision branch to a new release branch.
+    jlh.name/upstream: https://github.com/argoproj/argo-cd
 spec:
   project: default
   source:
