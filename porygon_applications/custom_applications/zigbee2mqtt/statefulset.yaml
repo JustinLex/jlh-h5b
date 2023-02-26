@@ -22,8 +22,8 @@ spec:
         - containerPort: 8080
           name: http
         volumeMounts:
-#        - mountPath: /app/data
-#          name: data
+        - mountPath: /app/data
+          name: data
         - mountPath: /app/data/configuration.yaml
           name: config
           subPath: configuration.yaml
@@ -38,9 +38,9 @@ spec:
             path: /api/v1/status
             port: http
       volumes:
-#      - name: data
-#        persistentVolumeClaim:
-#          claimName: data
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
       - name: config
         configMap:
           name: configuration
