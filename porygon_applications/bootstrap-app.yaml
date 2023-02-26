@@ -17,4 +17,5 @@ spec:
     name: in-cluster
     namespace: 'argocd'
   syncPolicy:
-    automated: {}
+    automated:
+      selfHeal: true  # k3s uses the manifests in /var/lib to overwrite the bootstrap on every boot, so we need to use self-heal.
