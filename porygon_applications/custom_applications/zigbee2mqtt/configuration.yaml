@@ -12,6 +12,8 @@ data:
       adapter: deconz
     
     homeassistant: true
+    frontend: true
+
     permit_join: true
     
     devices: devices.yaml
