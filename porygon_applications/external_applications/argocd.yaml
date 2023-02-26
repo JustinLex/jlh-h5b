@@ -22,6 +22,6 @@ spec:
     namespace: 'argocd'
   syncPolicy:
     automated:
-      selfHeal: true  # k3s uses the manifests in /var/lib to overwrite argocd on every boot, so we need to use self-heal.
-      syncOptions:
-        - CreateNamespace=true
+      selfHeal: true  # This was bootstrapped by k3s with the manifests in /var/lib, k3s will use these to overwrite argocd on every boot, so we need to use self-heal.
+    syncOptions:
+      - CreateNamespace=true
