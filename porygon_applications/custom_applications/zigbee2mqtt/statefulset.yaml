@@ -35,7 +35,7 @@ spec:
           name: conbee
         readinessProbe:
           httpGet:
-            path: /api/v1/status
+            path: /
             port: http
       volumes:
       - name: data
