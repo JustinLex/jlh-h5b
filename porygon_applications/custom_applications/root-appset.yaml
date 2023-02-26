@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
   annotations:
     kubernetes.io/description: |
-      This Applicationset is the root Appset that loads all directories inside porygon_applications.
+      This Applicationset loads all directories inside custom_applications.
       
       How this app of apps pattern works:
       Each directory here triggers ArgoCD's git generator, which creates a new Application for each directory.
@@ -14,14 +14,14 @@ metadata:
       if the resource doesn't specify its own namespace in its metadata.
       
       (Separate, limited-scope ArgoCD instances should be used if you want to restrict namespaces accesible from GitOps for security purposes, 
-      these applications do not provide security boundaries.)
+      just having 1 application per namespace does not provide a security boundary.)
 spec:
   generators:
   - git:
       repoURL: https://github.com/JustinLex/jlh-h5b.git
       revision: HEAD
       directories:
-      - path: porygon_applications/*
+      - path: porygon_applications/custom_applications/*
   template:
     metadata:
       name: '{{path.basename}}'

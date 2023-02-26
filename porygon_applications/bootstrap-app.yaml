@@ -5,8 +5,10 @@ metadata:
   namespace: argocd
   annotations:
     kubernetes.io/description: |
-      This is the root "app of apps" that bootstraps all other Applications in this directory.
-      This Application points to its own directory, thereby loading itself, as well as root-appset.
+      This is the root "app of apps" that bootstraps this GitOps directory.
+      
+      This Application points here, to its own directory, thereby loading itself, 
+      as well as the Applications for the subdirectories.
 spec:
   project: default
   source:

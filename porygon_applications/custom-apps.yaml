@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: custom-apps
+  namespace: argocd
+  annotations:
+    kubernetes.io/description: |
+      This is the "app of apps" for the custom_applications subdirectory.
+      It loads root-appset, which in turn loads everything else in that directory.
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/JustinLex/jlh-h5b.git
+    targetRevision: HEAD
+    path: 'porygon_applications/custom_applications'
+  destination:
+    name: in-cluster
+    namespace: 'argocd'
+  syncPolicy:
+    automated:
