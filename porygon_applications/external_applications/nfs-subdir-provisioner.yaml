@@ -32,3 +32,5 @@ spec:
     namespace: 'nfs-subdir-provisioner'
   syncPolicy:
     automated: {}
+      syncOptions:
+        - CreateNamespace=true
