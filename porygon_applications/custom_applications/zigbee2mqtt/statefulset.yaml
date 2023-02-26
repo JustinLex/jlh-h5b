@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zigbee2mqtt
+spec:
+  selector:
+    matchLabels:
+      app: zigbee2mqtt
+  serviceName: zigbee2mqtt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: zigbee2mqtt
+    spec:
+      containers:
+      - name: zigbee2mqtt
+        image: koenkk/zigbee2mqtt:1.30.1
+        securityContext:
+          privileged: true  # Needed to access usb devices
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+#        - mountPath: /app/data
+#          name: data
+        - mountPath: /app/data/configuration.yaml
+          name: config
+          subPath: configuration.yaml
+          readOnly: true
+        - mountPath: /run/udev
+          name: udev
+          readOnly: true
+        - mountPath: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2485309-if00
+          name: conbee
+        readinessProbe:
+          httpGet:
+            path: /api/v1/status
+            port: http
+      volumes:
+#      - name: data
+#        persistentVolumeClaim:
+#          claimName: data
+      - name: config
+        configMap:
+          name: configuration
+      - name: udev
+        hostPath:
+          path: /run/udev
+      - name: conbee
+        hostPath:
+          path: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2485309-if00
