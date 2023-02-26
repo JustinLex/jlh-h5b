@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nfs-subdir-provisioner
+  annotations:
+    kubernetes.io/description: |
+      This Application installs the Kubernetes NFS subdir provisioner, 
+      used for automatically provisioning PersistentVolumes from a single NFS share.
+      
+      The NFS share is specified using Helm values in this application under "helm.parameters"
+      
+      This application points to the nfs-subdir-external-provisioner Helm repo on Github.
+      To update nfs-subdir-external-provisioner to a new major or minor release, 
+      change the targetRevision tag to a new release tag.
+      https://argo-cd.readthedocs.io/en/stable/user-guide/tracking_strategies/#helm
+    jlh.name/upstream: https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
+spec:
+  project: default
+  source:
+    chart: nfs-subdir-external-provisioner
+    repoURL: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+    targetRevision: 4.0.*
+    helm:
+      releaseName: nfs-subdir-external-provisioner
+      parameters:
+        - name: "nfs.server"
+          value: "freenas.home.jlh.name"
+        - name: "nfs.path"
+          value: "/mnt/solid/porygon"
+  destination:
+    name: in-cluster
+    namespace: 'nfs-subdir-provisioner'
+  syncPolicy:
+    automated: {}
