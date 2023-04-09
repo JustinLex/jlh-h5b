@@ -7,7 +7,8 @@
     * SELinux audits
   * Kubernetes
     * Kubernetes granular performance metrics ✓
-    * Kubernetes events 
+    * Kubernetes events
+      * https://grafana.com/docs/loki/latest/clients/aws/eks/#adding-kubernetes-events
     * Kubernetes API auditing
   * Ingress
     * (HTTP logs are in container logs)
@@ -23,5 +24,6 @@
     * wifi logs form Zyxel (VRPT/Syslog)
   * Home Assistant
     * Sensor metrics
+      * https://josh-v.com/home_assistant/homeassistant-prometheus/
     * Event logs
   
