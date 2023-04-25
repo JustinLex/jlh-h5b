@@ -121,7 +121,7 @@ set allow-fast-path=yes use-ip-firewall=no use-ip-firewall-for-pppoe=no use-ip-f
 /interface bridge port
 add interface=ether1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-vlan-tagged ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
 #add interface=ether3 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
 #    broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
 #    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
@@ -142,45 +142,26 @@ add interface=ether1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
 #    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
 add interface=sfp-sfpplus1 bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-untagged-and-priority-tagged ingress-filtering=yes pvid=2 tag-stacking=no
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
 add interface=trunk-bond bridge=bridge disabled=no learn=yes hw=yes trusted=no \
     broadcast-flood=yes unknown-multicast-flood=yes unknown-unicast-flood=yes \
-    frame-types=admit-only-vlan-tagged ingress-filtering=yes pvid=1 tag-stacking=no
+    frame-types=admit-all ingress-filtering=yes pvid=1 tag-stacking=no
 
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-BridgeVLANtable
 # https://help.mikrotik.com/docs/display/ROS/Bridge+VLAN+Table
 # https://help.mikrotik.com/docs/display/ROS/Basic+VLAN+switching
 # bridge ports with the corresponding PVID are automatically added as untagged ports in this table
 /interface bridge vlan
-add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=2
-add bridge=bridge tagged=bridge,trunk-bond vlan-ids=3
-add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=4
-add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=5
-add bridge=bridge tagged=bridge,trunk-bond vlan-ids=16
-add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=17
-add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=48
-add bridge=bridge tagged=bridge,ether1,trunk-bond vlan-ids=64
+add bridge=bridge tagged=bridge,ether1,trunk-bond,sfp-sfpplus1 vlan-ids=128
 
 # Configure CPU ports and static ips
 # https://help.mikrotik.com/docs/display/ROS/Bridging+and+Switching#BridgingandSwitching-Managementaccessconfiguration
 /interface vlan
-add interface=bridge vlan-id=2 name=workstations
-add interface=bridge vlan-id=3 name=vpn
-add interface=bridge vlan-id=4 name=media
-add interface=bridge vlan-id=5 name=gaming
-add interface=bridge vlan-id=16 name=servers
-add interface=bridge vlan-id=17 name=management
-add interface=bridge vlan-id=48 name=guest
-add interface=bridge vlan-id=64 name=iot
+add interface=bridge vlan-id=128 name=guest
+
 /ip address
-add address=10.2.0.1/16 interface=workstations
-add address=10.3.0.1/16 interface=vpn
-add address=10.4.0.1/16 interface=media
-add address=10.5.0.1/16 interface=gaming
-add address=10.16.0.1/16 interface=servers
-add address=10.17.0.1/16 interface=management
-add address=10.48.0.1/16 interface=guest
-add address=10.64.0.1/16 interface=iot
+add address=10.0.0.1/16 interface=bridge
+add address=10.128.0.1/16 interface=guest
 
 # Packet queues
 /queue type
@@ -224,14 +205,7 @@ set detect-interface-list=none internet-interface-list=none \
 
 /interface list member
 add comment=defconf disabled=no interface=bridge list=LAN
-add comment=defconf disabled=no interface=workstations list=LAN
-add comment=defconf disabled=no interface=vpn list=LAN
-add comment=defconf disabled=no interface=media list=LAN
-add comment=defconf disabled=no interface=gaming list=LAN
-add comment=defconf disabled=no interface=servers list=LAN
-add comment=defconf disabled=no interface=management list=LAN
 add comment=defconf disabled=no interface=guest list=LAN
-add comment=defconf disabled=no interface=iot list=LAN
 add comment=defconf disabled=no interface=ether2 list=WAN
 
 
@@ -280,74 +254,30 @@ name=he-tunnel remote-address=216.66.80.90
 
 /ipv6 route add comment="" disabled=no distance=1 dst-address=2000::/3 gateway=2600:70ff:b04f::1 scope=30 target-scope=10
 /ipv6 address add address=2600:70ff:b04f::2/48 advertise=no disabled=no eui-64=no interface=he-tunnel
-/ipv6 address add address=2600:70ff:b04f:2::2/64 interface=workstations advertise=yes
-/ipv6 address add address=2600:70ff:b04f:3::2/64 interface=vpn advertise=yes
-/ipv6 address add address=2600:70ff:b04f:4::2/64 interface=media advertise=yes
-/ipv6 address add address=2600:70ff:b04f:5::2/64 interface=gaming advertise=yes
-/ipv6 address add address=2600:70ff:b04f:10::2/64 interface=servers advertise=yes
-/ipv6 address add address=2600:70ff:b04f:11::2/64 interface=management advertise=yes
-/ipv6 address add address=2600:70ff:b04f:30::2/64 interface=guest advertise=yes
-/ipv6 address add address=2600:70ff:b04f:40::2/64 interface=iot advertise=yes
+/ipv6 address add address=2600:70ff:b04f:2::2/64 interface=bridge advertise=yes
+# /ipv6 address add address=2600:70ff:b04f:1::2/64 interface=bridge advertise=yes
 
 # DHCP server configuration
 # https://wiki.mikrotik.com/wiki/Manual:IP/DHCP_Server
 # https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-Network
 /ip pool
-add name=dhcp-workstations ranges=10.2.0.2-10.2.255.254
-add name=dhcp-vpn          ranges=10.3.0.2-10.3.255.254
-add name=dhcp-media        ranges=10.4.0.2-10.4.255.254
-add name=dhcp-gaming       ranges=10.5.0.2-10.5.255.254
-add name=dhcp-servers      ranges=10.16.0.2-10.16.255.254
-add name=dhcp-management   ranges=10.17.0.2-10.17.255.254
-add name=dhcp-guest        ranges=10.48.0.2-10.48.255.254
-add name=dhcp-iot          ranges=10.64.0.2-10.64.255.254
+add name=dhcp-bridge       ranges=10.0.0.2-10.0.1.255
+add name=dhcp-guest        ranges=10.128.0.2-10.128.1.255
 
 /ip dhcp-server
-add add-arp=no address-pool=dhcp-workstations allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=workstations lease-time=12h name=workstations \
-relay=0.0.0.0 use-radius=no
-# TODO: Not sure if I'm supposed to add a DHCP server here for VPN clients
-# add add-arp=no address-pool=dhcp-vpn allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-# client-mac-limit=unlimited conflict-detection=yes interface=vpn lease-time=12h name=vpn \
-# relay=0.0.0.0 use-radius=no
-add add-arp=no address-pool=dhcp-media allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=media lease-time=12h name=media \
-relay=0.0.0.0 use-radius=no
-add add-arp=no address-pool=dhcp-gaming allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=gaming lease-time=12h name=gaming \
-relay=0.0.0.0 use-radius=no
-add add-arp=no address-pool=dhcp-servers allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=servers lease-time=12h name=servers \
-relay=0.0.0.0 use-radius=no
-add add-arp=no address-pool=dhcp-management allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=management lease-time=12h name=management \
+add add-arp=no address-pool=dhcp-bridge allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
+client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=12h name=bridge \
 relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-guest allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
 client-mac-limit=unlimited conflict-detection=yes interface=guest lease-time=12h name=guest \
 relay=0.0.0.0 use-radius=no
-add add-arp=no address-pool=dhcp-iot allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=iot lease-time=12h name=iot \
-relay=0.0.0.0 use-radius=no
 
 #TODO: set up an NTP server
 /ip dhcp-server network
-add address=10.2.0.0/16 netmask=16 gateway=10.2.0.1 comment=Workstations dhcp-option="" domain="home" !next-server \
-    dns-server=10.2.0.1 ntp-server=""
-# TODO: Not sure if I'm supposed to add a DHCP server here for VPN clients
-# add address=10.3.0.0/16 netmask=16 gateway=10.3.0.1 comment=VPN dhcp-option="" domain="home" !next-server \
-#     dns-server=10.3.0.1 ntp-server=""
-add address=10.4.0.0/16 netmask=16 gateway=10.4.0.1 comment=Media dhcp-option="" domain="home" !next-server \
-    dns-server=10.4.0.1 ntp-server=""
-add address=10.5.0.0/16 netmask=16 gateway=10.5.0.1 comment=Gaming dhcp-option="" domain="home" !next-server \
-    dns-server=10.5.0.1 ntp-server=""
-add address=10.16.0.0/16 netmask=16 gateway=10.16.0.1 comment=Servers dhcp-option="" domain="home" !next-server \
-    dns-server=10.16.0.1 ntp-server=""
-add address=10.17.0.0/16 netmask=16 gateway=10.17.0.1 comment=Management dhcp-option="" domain="home" !next-server \
-    dns-server=10.17.0.1 ntp-server=""
-add address=10.48.0.0/16 netmask=16 gateway=10.48.0.1 comment=Guest dhcp-option="" domain="home" !next-server \
-    dns-server=10.48.0.1 ntp-server=""
-add address=10.64.0.0/16 netmask=16 gateway=10.64.0.1 comment=IoT dhcp-option="" domain="home" !next-server \
-    dns-server=10.64.0.1 ntp-server=""
+add address=10.0.0.0/16 netmask=16 gateway=10.0.0.1 comment=Bridge dhcp-option="" domain="home" !next-server \
+    dns-server=10.0.0.1 ntp-server=""
+add address=10.128.0.0/16 netmask=16 gateway=10.128.0.1 comment=Guest dhcp-option="" domain="home" !next-server \
+    dns-server=10.128.0.1 ntp-server=""
 
 # DHCP lease persistence https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-StoreConfiguration
 /ip dhcp-server config
@@ -356,13 +286,12 @@ set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
 # Static DHCP leases
 /ip dhcp-server lease
 # Temporary static lease here for pve, freenas, ditto, and Cloyster
-add mac-address=00:02:C9:55:A2:04 address=10.2.0.2 server=workstations
-add mac-address=5A:B1:9C:82:4F:70 address=10.2.0.3 server=workstations
-add mac-address=3E:10:97:73:17:53 address=10.2.0.4 server=workstations
-add mac-address=a6:9b:d3:a4:4e:ac address=10.2.15.248 server=workstations
+add mac-address=00:02:C9:55:A2:04 address=10.0.0.2 server=bridge
+add mac-address=5A:B1:9C:82:4F:70 address=10.0.0.3 server=bridge
+add mac-address=3E:10:97:73:17:53 address=10.0.0.4 server=bridge
+add mac-address=a6:9b:d3:a4:4e:ac address=10.0.15.248 server=bridge
 
 # SLAAC configuration
-# TODO write a script like ipv6neigh to do DDNS by pulling nodes from /ipv6 neighbor and adding them to DNS
 /ipv6 nd
 set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
     disabled=no dns="2600:70ff:b04f::2" hop-limit=unspecified interface=all \
@@ -386,9 +315,9 @@ set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes \
 
 # static IPs needed for old kubernetes cluster
 /ip dns static
-add address=10.2.0.2 disabled=no name=pve.home.jlh.name ttl=1d
-add address=10.2.0.3 disabled=no name=freenas.home.jlh.name ttl=1d
-add address=10.2.0.4 disabled=no name=ditto.home.jlh.name ttl=1d
+add address=10.0.0.2 disabled=no name=pve.home.jlh.name ttl=1d
+add address=10.0.0.3 disabled=no name=freenas.home.jlh.name ttl=1d
+add address=10.0.0.4 disabled=no name=ditto.home.jlh.name ttl=1d
 
 /ip firewall filter
 add action=accept chain=input comment=\
@@ -419,19 +348,17 @@ add action=drop chain=forward comment=\
 add action=masquerade chain=srcnat comment="defconf: masquerade" out-interface-list=WAN src-address=10.0.0.0/8
 
 # Hairpin NAT (aka NAT reflection)
-add action=masquerade chain=srcnat dst-address=10.2.15.248 out-interface=workstations protocol=tcp src-address=10.0.0.0/8
-add action=masquerade chain=srcnat dst-address=10.2.16.0 out-interface=workstations protocol=tcp src-address=10.0.0.0/8
-add action=masquerade chain=srcnat dst-address=10.2.16.2 out-interface=workstations protocol=udp src-address=10.0.0.0/8
+add action=masquerade chain=srcnat dst-address=10.0.15.248 out-interface=bridge protocol=tcp src-address=10.0.0.0/8
+add action=masquerade chain=srcnat dst-address=10.0.16.0 out-interface=bridge protocol=tcp src-address=10.0.0.0/8
+add action=masquerade chain=srcnat dst-address=10.0.16.2 out-interface=bridge protocol=udp src-address=10.0.0.0/8
 
 # Port forwarding
 add action=dst-nat chain=dstnat comment="Kubernetes API" dst-address=158.174.30.59 \
-    protocol=tcp dst-port=6616 to-addresses=10.2.15.248 to-ports=6443
+    protocol=tcp dst-port=6616 to-addresses=10.0.15.248 to-ports=6443
 add action=dst-nat chain=dstnat comment="Ingress HTTP" dst-address=158.174.30.59 \
-    protocol=tcp dst-port=80 to-addresses=10.2.16.0 to-ports=80
+    protocol=tcp dst-port=80 to-addresses=10.0.16.0 to-ports=80
 add action=dst-nat chain=dstnat comment="Ingress HTTPS" dst-address=158.174.30.59 \
-    protocol=tcp dst-port=443 to-addresses=10.2.16.0 to-ports=443
-add action=dst-nat chain=dstnat comment="Viktor Factorio" dst-address=158.174.30.59 \
-    protocol=udp dst-port=34197 to-addresses=10.2.16.2 to-ports=34197
+    protocol=tcp dst-port=443 to-addresses=10.0.16.0 to-ports=443
 
 /ip firewall service-port
 set ftp disabled=no ports=21
@@ -569,7 +496,7 @@ set contact="" enabled=no engine-id="" location="" src-address=:: \
     trap-version=1 vrf=main
 
 /system clock
-set time-zone-autodetect=yes time-zone-name=Europe/Stockholm date=nov/17/2022 time=12:00:00
+set time-zone-autodetect=yes time-zone-name=Europe/Stockholm date=apr/24/2023 time=12:00:00
 
 /system identity
 set name=MikroTik
