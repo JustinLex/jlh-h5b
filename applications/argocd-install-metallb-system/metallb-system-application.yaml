@@ -25,4 +25,4 @@ spec:
         - name: "configInline.address-pools[0].protocol"
           value: "layer2"
         - name: "configInline.address-pools[0].addresses[0]"
-          value: "10.2.16.0/20"
+          value: "10.0.16.0/20"
