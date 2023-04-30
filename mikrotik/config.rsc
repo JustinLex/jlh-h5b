@@ -349,16 +349,15 @@ add action=masquerade chain=srcnat comment="defconf: masquerade" out-interface-l
 
 # Hairpin NAT (aka NAT reflection)
 add action=masquerade chain=srcnat dst-address=10.0.15.248 out-interface=bridge protocol=tcp src-address=10.0.0.0/8
-add action=masquerade chain=srcnat dst-address=10.0.16.0 out-interface=bridge protocol=tcp src-address=10.0.0.0/8
-add action=masquerade chain=srcnat dst-address=10.0.16.2 out-interface=bridge protocol=udp src-address=10.0.0.0/8
+add action=masquerade chain=srcnat dst-address=10.0.16.1 out-interface=bridge protocol=tcp src-address=10.0.0.0/8
 
 # Port forwarding
 add action=dst-nat chain=dstnat comment="Kubernetes API" dst-address=158.174.30.59 \
     protocol=tcp dst-port=6616 to-addresses=10.0.15.248 to-ports=6443
 add action=dst-nat chain=dstnat comment="Ingress HTTP" dst-address=158.174.30.59 \
-    protocol=tcp dst-port=80 to-addresses=10.0.16.0 to-ports=80
+    protocol=tcp dst-port=80 to-addresses=10.0.16.1 to-ports=80
 add action=dst-nat chain=dstnat comment="Ingress HTTPS" dst-address=158.174.30.59 \
-    protocol=tcp dst-port=443 to-addresses=10.0.16.0 to-ports=443
+    protocol=tcp dst-port=443 to-addresses=10.0.16.1 to-ports=443
 
 /ip firewall service-port
 set ftp disabled=no ports=21
