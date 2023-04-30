@@ -6,7 +6,7 @@ data:
   configuration.yaml: |
     mqtt:
       base_topic: zigbee2mqtt
-      server: mqtt://10.2.16.2
+      server: mqtt://10.0.16.0
     serial:
       port: /dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2485309-if00
       adapter: deconz
