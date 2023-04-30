@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: onepassword-helm
-
+  namespace: argocd
   annotations:
     kubernetes.io/description: |
       This Application installs the 1password operator, 
