@@ -14,7 +14,11 @@ ExecStart=/usr/local/bin/k3s server \
   --disable=traefik \
   --disable=servicelb \
   --disable=local-storage \
-  --cluster-cidr=10.4.0.0/16
+  --cluster-cidr=10.4.0.0/16 \
+  --kube-apiserver-arg=oidc-issuer-url=https://codeberg.org/ \
+  --kube-apiserver-arg=oidc-client-id=11751232-5dc2-4acb-b123-44af49c8d3c2 \
+  --kube-apiserver-arg=oidc-username-claim=email \
+  --kube-apiserver-arg=oidc-groups-claim=groups
 KillMode=process
 Delegate=yes
 # Having non-zero Limit*s causes performance problems due to accounting overhead
