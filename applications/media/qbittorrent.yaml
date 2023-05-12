@@ -11,6 +11,15 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      initContainers:
+      - name: sysctl-setter
+        image: alpine
+        securityContext:
+          privileged: true
+        command:
+          - /bin/sh
+          - -c
+          - sysctl -w net.ipv4.conf.all.src_valid_mark=1
       containers:
       - name: qbittorrent
         image: cr.hotio.dev/hotio/qbittorrent:release-4.5.2
