@@ -22,6 +22,7 @@ spec:
           - |
             sysctl -w net.ipv4.conf.all.src_valid_mark=1
             modprobe ip6_tables
+            modprobe ip6table_filter
         volumeMounts:
           - mountPath: /lib/modules
             name: host-modules
