@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent
+spec:
+  selector:
+    matchLabels:
+      app: qbittorrent
+  template:
+    metadata:
+      labels:
+        app: qbittorrent
+    spec:
+      containers:
+      - name: qbittorrent
+        image: cr.hotio.dev/hotio/qbittorrent:4.5.2
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: VPN_ENABLED
+            value: "true"
+          - name: VPN_LAN_NETWORK
+            value: "10.0.0.0/8"
+          - name: VPN_CONF
+            value: wg0
+          - name: PRIVOXY_ENABLED
+            value: "false"
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8118
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add: [ "NET_ADMIN" ]
+            drop: [ "ALL" ]
+          runAsGroup: 0
+          runAsNonRoot: false
+          runAsUser: 0
+        volumeMounts:
+        - mountPath: /data
+          name: downloads
+        - mountPath: /config
+          name: config
+        - mountPath: /config/wireguard
+          name: wg-config
+      restartPolicy: Always
+      securityContext:
+        sysctls:
+          - name: net.ipv4.conf.all.src_valid_mark
+            value: "1"
+          - name: net.ipv6.conf.all.disable_ipv6
+            value: "0"
+      volumes:
+      - name: downloads
+        persistentVolumeClaim:
+          claimName: downloads
+      - name: config
+        persistentVolumeClaim:
+          claimName: qbittorrent-config
+      - name: wg-config
+        secret:
+          secretName: mullvad-wg-config
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  labels:
+#    app: qbittorrent
+#  name: qbittorrent
+#spec:
+#  ports:
+#  - name: web
+#    port: 8096
+#    protocol: TCP
+#    targetPort: 8096
+#  selector:
+#    app: qbittorrent
+#  type: ClusterIP
