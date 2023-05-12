@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: qbittorrent
-        image: cr.hotio.dev/hotio/qbittorrent:4.5.2
+        image: cr.hotio.dev/hotio/qbittorrent:release-4.5.2
         imagePullPolicy: IfNotPresent
         env:
           - name: VPN_ENABLED
