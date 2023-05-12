@@ -45,12 +45,12 @@ spec:
         - mountPath: /config/wireguard
           name: wg-config
       restartPolicy: Always
-      securityContext:
-        sysctls:
-          - name: net.ipv4.conf.all.src_valid_mark
-            value: "1"
-          - name: net.ipv6.conf.all.disable_ipv6
-            value: "0"
+#      securityContext:
+#        sysctls:
+#          - name: net.ipv4.conf.all.src_valid_mark
+#            value: "1"
+#          - name: net.ipv6.conf.all.disable_ipv6
+#            value: "0"
       volumes:
       - name: downloads
         persistentVolumeClaim:
