@@ -19,7 +19,9 @@ spec:
         command:
           - /bin/sh
           - -c
-          - sysctl -w net.ipv4.conf.all.src_valid_mark=1
+          - |
+            sysctl -w net.ipv4.conf.all.src_valid_mark=1
+            modprobe ip6_tables
       containers:
       - name: qbittorrent
         image: cr.hotio.dev/hotio/qbittorrent:release-4.5.2
