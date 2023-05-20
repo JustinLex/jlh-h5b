@@ -32,6 +32,8 @@ spec:
         env:
           - name: VPN_ENABLED
             value: "true"
+          - name: VPN_LAN_NETWORK
+            value: "10.0.0.0/10"
           - name: VPN_CONF
             value: wg0
           - name: PRIVOXY_ENABLED
