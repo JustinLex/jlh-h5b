@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prowlarr
+spec:
+  selector:
+    matchLabels:
+      app: prowlarr
+  serviceName: prowlarr
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      containers:
+      - name: radarr
+        image: linuxserver/prowlarr:1.4.1
+        env:
+        - name: TZ
+          value: "europe/stockholm"
+        ports:
+        - containerPort: 9696
+          name: http
+        volumeMounts:
+        - mountPath: /config
+          name: config
+#        readinessProbe:
+#          httpGet:
+#            path: /api/v1/status
+#            port: http
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: prowlarr-config
+      dnsConfig: # Fix DNS resolution in Alpine 3.11 https://github.com/kubernetes/kubernetes/issues/64924 https://github.com/gliderlabs/docker-alpine/issues/539
+        options:
+          - name: ndots
+            value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  selector:
+    app: prowlarr
+  type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prowlarr-config
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
