@@ -76,6 +76,7 @@ spec:
       - name: setup-wg
         configMap:
           name: qb-setup-wg
+          defaultMode: 0777
       - name: wg-config
         secret:
           secretName: mullvad-wg-config
