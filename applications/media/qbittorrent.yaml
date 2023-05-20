@@ -84,19 +84,19 @@ spec:
       - name: host-modules
         hostPath:
           path: /lib/modules
-#---
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  labels:
-#    app: qbittorrent
-#  name: qbittorrent
-#spec:
-#  ports:
-#  - name: web
-#    port: 8096
-#    protocol: TCP
-#    targetPort: 8096
-#  selector:
-#    app: qbittorrent
-#  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: qbittorrent
+  name: qbittorrent
+spec:
+  ports:
+  - name: web
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: qbittorrent
+  type: ClusterIP
