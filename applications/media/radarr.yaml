@@ -27,6 +27,8 @@ spec:
           name: config
         - mountPath: /downloads
           name: downloads
+        - mountPath: /movies
+          name: media
 #        readinessProbe:
 #          httpGet:
 #            path: /api/v1/status
@@ -38,6 +40,9 @@ spec:
       - name: downloads
         persistentVolumeClaim:
           claimName: downloads
+      - name: media
+        persistentVolumeClaim:
+          claimName: media
 ---
 apiVersion: v1
 kind: Service
