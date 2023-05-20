@@ -54,6 +54,9 @@ spec:
           name: downloads
         - mountPath: /config
           name: config
+        - mountPath: /root/etc/cont-init.d/02-setup-wg
+          name: setup-wg
+          subPath: 02-setup-wg  # https://stackoverflow.com/a/39479928
         - mountPath: /config/wireguard
           name: wg-config
       restartPolicy: Always
@@ -70,6 +73,9 @@ spec:
       - name: config
         persistentVolumeClaim:
           claimName: qbittorrent-config
+      - name: setup-wg
+        configMap:
+          name: qb-setup-wg
       - name: wg-config
         secret:
           secretName: mullvad-wg-config
