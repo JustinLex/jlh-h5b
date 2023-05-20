@@ -1,0 +1,116 @@
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: oauth2-proxy #this name will also be used for naming the generated kubernetes secret
+spec:
+  itemPath: "vaults/eum332ncoupzqyxp2po3kwhjqe/items/ingress-oidc-client"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: oauth2-proxy
+  template:
+    metadata:
+      labels:
+        k8s-app: oauth2-proxy
+    spec:
+      containers:
+        - args:
+            - --provider=github
+            - --email-domain=*
+            - --upstream=file:///dev/null
+            - --http-address=0.0.0.0:4180
+          # Register a new application
+          # https://github.com/settings/applications/new
+          env:
+            - name: OAUTH2_PROXY_PROVIDER
+              value: github
+            - name: OAUTH2_PROXY_PROVIDER_DISPLAY_NAME
+              value: Codeberg
+            - name: OAUTH2_PROXY_REDIRECT_URL
+              value: https://oauth.jlh.name/oauth2/callback
+            - name: OAUTH2_PROXY_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-proxy
+                  key: id
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-proxy
+                  key: secret
+            - name: OAUTH2_PROXY_LOGIN_URL
+              value: https://codeberg.org/login/oauth/authorize
+            - name: OAUTH2_PROXY_REDEEM_URL
+              value: https://codeberg.org/login/oauth/access_token
+            - name: OAUTH2_PROXY_VALIDATE_URL
+              value: https://codeberg.org/api/v1
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-proxy
+                  key: oauth2_proxy_cookie_secret
+          image: quay.io/oauth2-proxy/oauth2-proxy:latest
+          imagePullPolicy: Always
+          name: oauth2-proxy
+          ports:
+            - containerPort: 4180
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    k8s-app: oauth2-proxy
+  name: oauth2-proxy
+  namespace: kube-system
+spec:
+  ports:
+    - name: http
+      port: 4180
+      protocol: TCP
+      targetPort: 4180
+  selector:
+    k8s-app: oauth2-proxy
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oauth2-proxy
+  namespace: kube-system
+spec:
+  rules:
+    - host: oauth.jlh.name
+      http:
+        paths:
+          - path: /oauth2
+            pathType: Prefix
+            backend:
+              service:
+                name: oauth2-proxy
+                port:
+                  number: 4180
+  tls:
+    - hosts:
+        - oauth.jlh.name
+      secretName: oauth-jlh-name-tls
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: oauth-jlh-name
+spec:
+  secretName: oauth-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+    - oauth.jlh.name
