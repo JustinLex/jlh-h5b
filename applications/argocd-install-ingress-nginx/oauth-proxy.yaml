@@ -2,6 +2,7 @@ apiVersion: onepassword.com/v1
 kind: OnePasswordItem
 metadata:
   name: oauth2-proxy #this name will also be used for naming the generated kubernetes secret
+  namespace: kube-system
 spec:
   itemPath: "vaults/eum332ncoupzqyxp2po3kwhjqe/items/ingress-oidc-client"
 ---
@@ -107,6 +108,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: oauth-jlh-name
+  namespace: kube-system
 spec:
   secretName: oauth-jlh-name-tls
   issuerRef:
