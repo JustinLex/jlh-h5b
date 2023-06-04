@@ -69,8 +69,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-url: "https://oauth.jlh.name/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=$host$escaped_request_uri"
   name: prowlarr
 spec:
   tls:
@@ -82,7 +82,7 @@ spec:
       http:
         paths:
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: prowlarr
