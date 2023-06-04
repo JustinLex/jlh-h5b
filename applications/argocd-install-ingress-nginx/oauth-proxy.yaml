@@ -89,11 +89,11 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
 spec:
   rules:
-    - host: oauth.jlh.name
+    - host: prowlarr.jlh.name
       http:
         paths:
           - path: /oauth2
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: oauth2-proxy
@@ -101,18 +101,18 @@ spec:
                   number: 4180
   tls:
     - hosts:
-        - oauth.jlh.name
-      secretName: oauth-jlh-name-tls
+        - prowlarr.jlh.name
+      secretName: prowlarr-jlh-name-tls
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: oauth-jlh-name
+  name: prowlarr-jlh-name
   namespace: kube-system
 spec:
-  secretName: oauth-jlh-name-tls
+  secretName: prowlarr-jlh-name-tls
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
   dnsNames:
-    - oauth.jlh.name
+    - prowlarr.jlh.name
