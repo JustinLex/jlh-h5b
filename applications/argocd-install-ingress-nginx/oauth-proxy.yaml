@@ -26,12 +26,11 @@ spec:
       containers:
         - args:
             - --email-domain=jlh.name
+            - --whitelist-domain=*.jlh.name
             - --http-address=0.0.0.0:4180
           # Register a new application
           # https://github.com/settings/applications/new
           env:
-            - name: OAUTH2_PROXY_WHITELIST_DOMAIN
-              value: "*.jlh.name"
             - name: OAUTH2_PROXY_PROVIDER
               value: oidc
             - name: OAUTH2_PROXY_PROVIDER_DISPLAY_NAME
