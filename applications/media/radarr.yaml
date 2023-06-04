@@ -74,3 +74,39 @@ spec:
   resources:
     requests:
       storage: 1Gi
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://oauth.jlh.name/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=https://$host$escaped_request_uri"
+  name: radarr
+spec:
+  tls:
+    - hosts:
+        - radarr.jlh.name
+      secretName: radarr-jlh-name-tls
+  rules:
+    - host: radarr.jlh.name
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: radarr
+                port:
+                  number: 80
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: radarr-jlh-name
+spec:
+  secretName: radarr-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+    - radarr.jlh.name

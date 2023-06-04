@@ -100,3 +100,39 @@ spec:
   selector:
     app: qbittorrent
   type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://oauth.jlh.name/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=https://$host$escaped_request_uri"
+  name: qbittorrent
+spec:
+  tls:
+    - hosts:
+        - qbittorrent.jlh.name
+      secretName: qbittorrent-jlh-name-tls
+  rules:
+    - host: qbittorrent.jlh.name
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: qbittorrent
+                port:
+                  number: 80
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: qbittorrent-jlh-name
+spec:
+  secretName: qbittorrent-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+    - qbittorrent.jlh.name
