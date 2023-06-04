@@ -75,7 +75,7 @@ metadata:
       auth_request_set $name_upstream_1 $upstream_cookie_name_1;
       
       access_by_lua_block {
-        if ngx.var.name_upstream_1 ~= "" then
+        if ngx.var.name_upstream_1 ~= "prowlarr.jlh.name" then
           ngx.header["Set-Cookie"] = "name_1=" .. ngx.var.name_upstream_1 .. ngx.var.auth_cookie:match("(; .*)")
         end
       }
