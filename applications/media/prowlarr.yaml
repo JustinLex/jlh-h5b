@@ -70,7 +70,7 @@ kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "https://oauth.jlh.name/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=$host$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=$scheme://$host$escaped_request_uri"
   name: prowlarr
 spec:
   tls:
