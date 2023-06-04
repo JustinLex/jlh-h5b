@@ -26,7 +26,6 @@ spec:
       containers:
         - args:
             - --email-domain=jlh.name
-            - --upstream=file:///dev/null
             - --http-address=0.0.0.0:4180
           # Register a new application
           # https://github.com/settings/applications/new
