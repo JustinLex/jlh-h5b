@@ -83,6 +83,9 @@ kind: Ingress
 metadata:
   name: oauth2-proxy
   namespace: kube-system
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+    nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
 spec:
   rules:
     - host: oauth.jlh.name
