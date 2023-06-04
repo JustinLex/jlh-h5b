@@ -33,7 +33,7 @@ spec:
           # https://github.com/settings/applications/new
           env:
             - name: OAUTH2_PROXY_PROVIDER
-              value: github
+              value: oidc
             - name: OAUTH2_PROXY_PROVIDER_DISPLAY_NAME
               value: Codeberg
             - name: OAUTH2_PROXY_REDIRECT_URL
@@ -48,12 +48,10 @@ spec:
                 secretKeyRef:
                   name: oauth2-proxy
                   key: secret
-            - name: OAUTH2_PROXY_LOGIN_URL
-              value: https://codeberg.org/login/oauth/authorize
-            - name: OAUTH2_PROXY_REDEEM_URL
-              value: https://codeberg.org/login/oauth/access_token
-            - name: OAUTH2_PROXY_VALIDATE_URL
-              value: https://codeberg.org/api/v1
+            - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+              value: https://codeberg.org/
+            - name: OAUTH2_PROXY_COOKIE_SECURE
+              value: "false"
             - name: OAUTH2_PROXY_COOKIE_SECRET
               valueFrom:
                 secretKeyRef:
