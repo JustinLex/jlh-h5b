@@ -73,6 +73,10 @@ metadata:
     nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=$escaped_request_uri"
   name: prowlarr
 spec:
+  tls:
+    - hosts:
+        - prowlarr.jlh.name
+      secretName: prowlarr-jlh-name-tls
   rules:
     - host: prowlarr.jlh.name
       http:
@@ -84,3 +88,15 @@ spec:
                 name: prowlarr
                 port:
                   number: 80
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prowlarr-jlh-name
+spec:
+  secretName: prowlarr-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+    - prowlarr.jlh.name
