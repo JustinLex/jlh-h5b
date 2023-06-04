@@ -27,6 +27,7 @@ spec:
         - args:
             - --email-domain=jlh.name
             - '--whitelist-domain="*.jlh.name"'
+            - '--cookie-domain="*.jlh.name"'
             - --http-address=0.0.0.0:4180
           # Register a new application
           # https://github.com/settings/applications/new
