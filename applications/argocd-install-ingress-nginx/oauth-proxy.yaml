@@ -89,8 +89,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-buffers-number: "8"
 spec:
   rules:
-    - host: oauth.jlh.name
-      http:
+    - http:
         paths:
           - path: /oauth2
             pathType: Prefix
