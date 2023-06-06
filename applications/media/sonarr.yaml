@@ -27,7 +27,7 @@ spec:
           name: config
         - mountPath: /downloads
           name: downloads
-        - mountPath: /movies
+        - mountPath: /shows
           name: media
 #        readinessProbe:
 #          httpGet:
