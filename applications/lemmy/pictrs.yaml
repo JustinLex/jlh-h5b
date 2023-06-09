@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lemmy-backend
+  name: pictrs
 spec:
   selector:
     matchLabels:
@@ -44,8 +44,8 @@ kind: Service
 metadata:
   labels:
     app: lemmy
-    service: ui
-  name: lemmy-ui
+    service: pictrs
+  name: pictrs
 spec:
   ports:
     - name: http
@@ -54,5 +54,5 @@ spec:
       targetPort: 1234
   selector:
     app: lemmy
-    service: ui
+    service: pictrs
   type: ClusterIP
