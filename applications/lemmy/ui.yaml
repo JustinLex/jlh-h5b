@@ -24,7 +24,7 @@ spec:
             - name: LEMMY_UI_LEMMY_EXTERNAL_HOST
               value: "lemmy.jlh.name"
             - name: LEMMY_HTTPS
-              value: "true
+              value: "true"
           ports:
             - containerPort: 1234
           securityContext:
