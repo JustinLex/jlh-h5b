@@ -14,5 +14,5 @@ spec:
       - CreateNamespace=true
   source:
     repoURL: https://github.com/CrunchyData/postgres-operator-examples.git
-    targetRevision: efdadb3b38388a13ca39d7e395d3799889567513
+    targetRevision: f94c261ef1c83bca9aa3e5d9894710ab3e03cd7e
     path: 'kustomize/install/default'
