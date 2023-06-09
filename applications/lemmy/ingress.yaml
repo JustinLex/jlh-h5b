@@ -1,0 +1,36 @@
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://oauth.jlh.name/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=https://$host$escaped_request_uri"
+  name: lemmy
+spec:
+  tls:
+    - hosts:
+        - lemmy.jlh.name
+      secretName: lemmy-jlh-name-tls
+  rules:
+    - host: lemmy.jlh.name
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lemmy-ui
+                port:
+                  name: http
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lemmy-jlh-name
+spec:
+  secretName: lemmy-jlh-name-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  dnsNames:
+    - lemmy.jlh.name

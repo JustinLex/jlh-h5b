@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lemmy-backend
+spec:
+  selector:
+    matchLabels:
+      app: lemmy
+      service: lemmy
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lemmy
+        service: lemmy
+    spec:
+      containers:
+        - name: lemmy
+          image: dessalines/lemmy:0.17.3
+          imagePullPolicy: Always
+          env:
+            - name: RUST_LOG
+              value: "warn,lemmy_server=info,lemmy_api=info,lemmy_api_common=info,lemmy_api_crud=info,lemmy_apub=info,lemmy_db_schema=info,lemmy_db_views=info,lemmy_db_views_actor=info,lemmy_db_views_moderator=info,lemmy_routes=info,lemmy_utils=info,lemmy_websocket=info"
+          ports:
+            - containerPort: 8536
+          volumeMounts:
+            - mountPath: /config/config.hjson
+              name: lemmy-hjson
+              subPath: lemmy.hjson  # https://stackoverflow.com/a/39479928
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 1Gi
+              ephemeral-storage: 500Mi
+            limits:
+              memory: 1Gi
+              ephemeral-storage: 1Gi
+      volumes:
+        - name: lemmy-hjson
+          secret:
+            secretName: lemmy-hjson
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: lemmy
+    service: lemmy
+  name: lemmy-backend
+spec:
+  ports:
+    - port: 8536
+      protocol: TCP
+      targetPort: 8536
+  selector:
+    app: lemmy
+    service: lemmy
+  type: ClusterIP

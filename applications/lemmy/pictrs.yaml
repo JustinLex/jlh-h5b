@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lemmy-backend
+spec:
+  selector:
+    matchLabels:
+      app: lemmy
+      service: pictrs
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: lemmy
+        service: pictrs
+    spec:
+      containers:
+        - name: pictrs
+          image: asonix/pictrs:0.3.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: pictrs
+              mountPath: /mnt
+          resources:
+            requests:
+              cpu: 100m
+              memory: 1Gi
+              ephemeral-storage: 500Mi
+            limits:
+              memory: 1Gi
+              ephemeral-storage: 1Gi
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: lemmy
+    service: ui
+  name: lemmy-ui
+spec:
+  ports:
+    - name: http
+      port: 1234
+      protocol: TCP
+      targetPort: 1234
+  selector:
+    app: lemmy
+    service: ui
+  type: ClusterIP
