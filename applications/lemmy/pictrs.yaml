@@ -18,6 +18,12 @@ spec:
         - name: pictrs
           image: asonix/pictrs:0.3.1
           imagePullPolicy: Always
+          env:
+            - name: PICTRS__API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: pictrs
+                  key: API_KEY
           ports:
             - containerPort: 8080
           securityContext:
@@ -56,3 +62,23 @@ spec:
     app: lemmy
     service: pictrs
   type: ClusterIP
+---
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: pictrs #this name will also be used for naming the generated kubernetes secret
+spec:
+  itemPath: "vaults/eum332ncoupzqyxp2po3kwhjqe/items/lemmy_pictrs"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pictrs
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 100Gi

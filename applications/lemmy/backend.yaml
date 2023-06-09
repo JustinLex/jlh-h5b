@@ -47,6 +47,13 @@ spec:
         runAsGroup: 3000
         fsGroup: 2000
 ---
+apiVersion: onepassword.com/v1
+kind: OnePasswordItem
+metadata:
+  name: lemmy-hjson #this name will also be used for naming the generated kubernetes secret
+spec:
+  itemPath: "vaults/eum332ncoupzqyxp2po3kwhjqe/items/lemmy_lemmy-hjson"
+---
 apiVersion: v1
 kind: Service
 metadata:
