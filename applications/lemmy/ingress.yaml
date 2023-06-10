@@ -2,9 +2,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://oauth.jlh.name/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "https://oauth.jlh.name/oauth2/start?rd=https://$host$escaped_request_uri"
   name: lemmy
 spec:
   tls:
