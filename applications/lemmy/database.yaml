@@ -8,6 +8,11 @@ spec:
       databases:
         - lemmy
       options: "SUPERUSER"
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        pg_hba:
+          - "hostnossl all all all md5"
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-15.2-0
   postgresVersion: 15
   instances:
