@@ -46,6 +46,10 @@ spec:
         runAsUser: 1000
         runAsGroup: 3000
         fsGroup: 2000
+      dnsConfig: # Fix DNS resolution in Alpine 3.11 https://github.com/kubernetes/kubernetes/issues/64924 https://github.com/gliderlabs/docker-alpine/issues/539
+        options:
+          - name: ndots
+            value: "1"
 ---
 apiVersion: onepassword.com/v1
 kind: OnePasswordItem
