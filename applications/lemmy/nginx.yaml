@@ -21,6 +21,10 @@ spec:
           ports:
             - containerPort: 80
           volumeMounts:
+            - name: cache
+              mountPath: /var/cache/nginx
+            - name: tmp
+              mountPath: /tmp/nginx
             - mountPath: /etc/nginx/nginx.conf
               name: nginx-conf
               subPath: nginx.conf  # https://stackoverflow.com/a/39479928
@@ -40,6 +44,10 @@ spec:
         runAsGroup: 3000
         fsGroup: 2000
       volumes:
+        - name: cache
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
         - name: nginx-conf
           configMap:
             name: lemmy-nginx-config
