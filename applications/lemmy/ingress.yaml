@@ -19,7 +19,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: lemmy-ui
+                name: lemmy-nginx
                 port:
                   name: http
 ---
