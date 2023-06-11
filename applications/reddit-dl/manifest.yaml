@@ -6,5 +6,27 @@ spec:
   containers:
     - name: rdl
       image: shadowmoose/redditdownloader:latest
+      ports:
+        - containerPort: 7505
+      volumeMounts:
+        - mountPath: /download
+          name: downloads
+        # /storage/config/settings.json
   restartPolicy: Never
-      # /storage/config/settings.json
+  volumes:
+    - name: dowloads
+      persistentVolumeClaim:
+        claimName: rdl
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rdl
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Ti
