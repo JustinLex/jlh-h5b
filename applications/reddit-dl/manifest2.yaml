@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rdl
+spec:
+  containers:
+    - name: rdl2
+      image: shadowmoose/redditdownloader:latest
+      ports:
+        - containerPort: 7505
+      volumeMounts:
+        - mountPath: /download
+          name: downloads
+        # /storage/config/settings.json
+  restartPolicy: Never
+  volumes:
+    - name: downloads
+      persistentVolumeClaim:
+        claimName: rdl2
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rdl2
+spec:
+  storageClassName: nfs-freenas
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Ti
