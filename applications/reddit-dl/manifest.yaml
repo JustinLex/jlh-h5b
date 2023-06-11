@@ -14,7 +14,7 @@ spec:
         # /storage/config/settings.json
   restartPolicy: Never
   volumes:
-    - name: dowloads
+    - name: downloads
       persistentVolumeClaim:
         claimName: rdl
 ---
