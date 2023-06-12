@@ -59,9 +59,9 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 1234
+      port: 8080
       protocol: TCP
-      targetPort: 1234
+      targetPort: 8080
   selector:
     app: lemmy
     service: pictrs
