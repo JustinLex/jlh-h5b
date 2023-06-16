@@ -24,6 +24,8 @@ spec:
                 secretKeyRef:
                   name: pictrs
                   key: API_KEY
+            - name: RUST_LOG
+              value: "warn"
           ports:
             - containerPort: 8080
           securityContext:
