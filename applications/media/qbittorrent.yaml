@@ -1,11 +1,13 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: qbittorrent
 spec:
   selector:
     matchLabels:
       app: qbittorrent
+  serviceName: qbittorrent
+  replicas: 1
   template:
     metadata:
       labels:
