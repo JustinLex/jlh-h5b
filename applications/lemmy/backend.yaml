@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: lemmy
-          image: dessalines/lemmy:0.17.4
+          image: dessalines/lemmy:0.18.0-rc.6
           imagePullPolicy: Always
           env:
             - name: RUST_LOG
