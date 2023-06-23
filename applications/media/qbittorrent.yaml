@@ -13,6 +13,7 @@ spec:
       labels:
         app: qbittorrent
     spec:
+      dnsPolicy: None  # fix wireguard resolv.conf issue
       initContainers:
       - name: sysctl-setter
         image: alpine
