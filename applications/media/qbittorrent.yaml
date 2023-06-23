@@ -87,6 +87,7 @@ spec:
       - name: wg-config
         secret:
           secretName: mullvad-wg-config
+          defaultMode: 0400
       - name: host-modules
         hostPath:
           path: /lib/modules
