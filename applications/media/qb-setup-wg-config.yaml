@@ -34,8 +34,6 @@ data:
     		exit 1
     	else
     		echo "[INFO] Configuration file \"${CONFIG_DIR}/wireguard/${VPN_CONF}.conf\" was found."
-    		chown hotio:hotio "${CONFIG_DIR}/wireguard/${VPN_CONF}.conf"
-    		chmod 600 "${CONFIG_DIR}/wireguard/${VPN_CONF}.conf"
     	fi
 
     	if wg-quick down "${CONFIG_DIR}/wireguard/${VPN_CONF}.conf" > /dev/null 2>&1; then
