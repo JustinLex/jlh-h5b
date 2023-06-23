@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: radarr
-        image: lscr.io/linuxserver/radarr:4.5.1-develop
+        image: cr.hotio.dev/hotio/radarr:4.6.2.7490
         env:
         - name: TZ
           value: "europe/stockholm"
