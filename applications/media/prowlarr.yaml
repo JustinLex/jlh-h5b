@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: radarr
-        image:  cr.hotio.dev/hotio/prowlarr:1.5.2.3484
+        image:  cr.hotio.dev/hotio/prowlarr:release-1.5.2.3484
         env:
         - name: TZ
           value: "europe/stockholm"
