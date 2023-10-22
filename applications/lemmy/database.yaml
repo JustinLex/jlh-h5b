@@ -26,6 +26,11 @@ spec:
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
+      configuration: # https://github.com/CrunchyData/postgres-operator/issues/3118
+        - global:
+            repo1-retention-full: "2"
+            repo1-retention-full-type: count
+            repo1-retention-diff: "2"
       repos:
         - name: repo1
           volume:
