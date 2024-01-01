@@ -46,17 +46,15 @@
     * Lightweight OS for raspberry pis
 
 ### Agent Selection
-* Calico CNI
-  * Robust, standardized layer 3 networking
+* Cilium CNI
+  * eBPF, Hubble, Ingress, the future
 
 * MetalLB layer 2 gateway
-  * No routing bottlenecks with cheap switches and routers, even at 10GB throughput
-  * x86 Node will be leader in normal situations
-  * Most services will use local traffic policy so that TCP applications aren't confused about source
-  * This means that x86 node will have node-affinity for all TCP applications,
-  * such as ingress, Wireguard, DLNA, and game servers, and these will not be load balanced
-    * However ingress and wireguard will fail over to raspi nodes if x86 node goes down
-  * HTTP servers and internal services will still use ingress to load balance across servers
+  * Simple, flat network with no routing bottlenecks or inter-subnet headaches
+  * Services use local traffic policy so that TCP applications aren't confused about source
+  * Two address pools, one for interal-only services, and one for internet-facing services.
+    * IPv6 range for internet-facing services get an open firewall
+  * All LB services get corresponding DNS records using external-dns to report to coreDNS
 
 ### Agent configuration
 * Minimal RBAC
