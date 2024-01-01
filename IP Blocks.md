@@ -32,6 +32,9 @@ to issue an additional IPv6 address and add a DNS record for the hostname pointi
   * 2600:70ff:b04f:20:1:0::/96  (Private External IPs)
   * No VLAN
   * Wifi network: Johto
+  * Static IP addresses
+    * 2600:70ff:b04f::2 router.home.jlh.name
+    * 2600:70ff:b04f::3 porygon.home.jlh.name
 
 * Guest Wifi
   * Anyone who connects to my guest wifi. Every device is locked in a /32 with no local network access, all they can do is talk to a Mullvad VPN client through NAT.
