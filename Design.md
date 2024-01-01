@@ -60,3 +60,8 @@
 * Minimal RBAC
   * Cluster only administered by me
   * Only need service accounts for meta services like monitoring or job spawners
+
+## DNS/DHCP
+* Running on Porygon
+* ODOH dns proxy or coredns?
+* Kea for DHCP/DHCPv6 and registering dhcp records in local dns
