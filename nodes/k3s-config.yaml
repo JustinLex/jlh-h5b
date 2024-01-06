@@ -1,0 +1,7 @@
+
+# Disable default networking to allow for Cilium CNI
+flannel-backend: "none"
+disable-network-policy: true
+
+# Disable k3s default ingress
+disable: "traefik"
