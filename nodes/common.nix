@@ -11,6 +11,7 @@
   environment.systemPackages = with pkgs; [
     htop
     dig
+    xfsprogs
     dmidecode
     usbutils
     pciutils

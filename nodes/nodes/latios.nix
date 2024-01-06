@@ -5,6 +5,12 @@
 
 {
 
+  # Mount /var
+  fileSystems."/var" = {
+    device = "/dev/disk/by-uuid/39fa028d-e147-428f-9f9f-6fbf2af76871";
+    fsType = "xfs";
+  };
+
   # Configure k3s
   services.k3s = {
     enable = true;
