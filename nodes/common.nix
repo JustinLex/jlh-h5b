@@ -13,13 +13,25 @@
     dig
     ipmitool
     lm_sensors
+    smartmontools
     xfsprogs
     dmidecode
+    efibootmgr
     usbutils
     pciutils
     unzrip
     trivy
   ];
+
+
+  # Enable LVFS/fwupd
+  services.fwupd.enable = true;
+
+  # Enable TRIM timer
+  services.fstrim = {
+    enable = true;
+    interval = "daily";
+  };
 
 
   # Use sudo-rs instead of sudo for better security
