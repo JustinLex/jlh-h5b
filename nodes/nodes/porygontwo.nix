@@ -33,6 +33,7 @@
     };
     interfaces = {
       bondnet = {
+        useDHCP = false;
         ipv4.addresses = [{
           address = "10.0.0.53";
           prefixLength = 16;
@@ -130,8 +131,8 @@
 # https://www.knot-dns.cz/docs/3.3/html/configuration.html#simple-configuration
 
 server:
-  listen: 0.0.0.0@54
-  listen: ::@54
+  listen: 10.0.0.53@54
+  listen: 2600:70ff:b04f:2::53@54
 
 #zone:
 #  - domain: example.com
@@ -150,7 +151,7 @@ server:
     settings = {
       # Default settings defined here:
       # https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/example-dnscrypt-proxy.toml)
-      listen_addresses = ["[::]:53"];
+      listen_addresses = ["10.0.0.53:53" "[2600:70ff:b04f:2::53]:53"];
 
       # Use both ipv4 and ipv6 servers
       ipv4_servers = true;
