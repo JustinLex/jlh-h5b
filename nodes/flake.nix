@@ -57,16 +57,16 @@
             nodeHostName = "chikorita";
         };
       };
-      porygon = nixos-generators.nixosGenerate {
+      porygontwo = nixos-generators.nixosGenerate {
         system = "x86_64-linux";
         format = "raw-efi";
         modules = [
            ./common.nix
-           ./nodes/porygon.nix
+           ./nodes/porygontwo.nix
         ];
         specialArgs = {
             # additional arguments to pass to modules
-            nodeHostName = "porygon";
+            nodeHostName = "porygontwo";
         };
       };
     };
