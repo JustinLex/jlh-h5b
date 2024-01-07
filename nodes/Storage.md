@@ -24,6 +24,7 @@ sudo blkid -s UUID -o value /dev/disk/by-id/nvme-UMIS_RPETJ512MGE2QDQ_SS0L25217X
 
 Then add the filesystem to the node config by adding the following code block with the UUID you got.
 ```nix
+# Mount /var
 fileSystems."/var" = { 
   device = "/dev/disk/by-uuid/39fa028d-e147-428f-9f9f-6fbf2af76871";
   fsType = "xfs";
