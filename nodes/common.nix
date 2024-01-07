@@ -3,7 +3,6 @@
 {
   networking.hostName = nodeHostName;
 
-  networking.networkmanager.enable = true;  # Enable networking
   networking.firewall.enable = false;  # Disable the firewall
 
   # List packages installed in system profile. To search, run:
@@ -59,7 +58,7 @@
 
   in {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "wheel" ];
     packages = with pkgs; [
     ];
     openssh.authorizedKeys.keys = [
