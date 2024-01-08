@@ -38,10 +38,16 @@
           address = "10.0.0.53";
           prefixLength = 16;
         }];
-        ipv6.addresses = [{
-          address = "2600:70ff:b04f:2::53";
-          prefixLength = 64;
-        }];
+        ipv6.addresses = [
+          {  # IP for most services
+            address = "2600:70ff:b04f:2::53";
+            prefixLength = 64;
+          }
+          {  # IPv6 address for hlund.jlh.name nameserver
+            address = "2600:70ff:b04f:2::54";
+            prefixLength = 64;
+          }
+        ];
       };
       enp1s0.useDHCP = false;
       enp2s0.useDHCP = false;
@@ -92,6 +98,27 @@
           "name" = "/var/lib/kea/dhcp6.leases";
         };
 
+        # DDNS configuration
+
+        "dhcp-ddns" ={
+           "enable-updates" = true;
+           "server-ip" = "::1";
+           "server-port" = 53001;
+           "sender-ip" = "";
+           "sender-port" = 0;
+           "max-queue-size" = 1024;
+           "ncr-protocol" = "UDP";
+           "ncr-format" = "JSON";
+        };
+
+        "ddns-override-client-update" = true; # Don't let clients refuse a DNS name
+        "ddns-override-no-update" = true; # Don't let clients refuse a DNS name
+        "ddns-qualifying-suffix" = "hlund.jlh.name.";
+        "ddns-update-on-renew" = true;  # Set DNS records even for renews
+        "ddns-conflict-resolution-mode" = "check-exists-with-dhcid";  # Allow clients to overwrite DNS records, unless it's a static record. Removing this security check makes dual-stack environments work well.
+        "hostname-char-set" = "[^A-Za-z0-9.-]";
+        "hostname-char-replacement" = "-"; # Turn underscores/etc in hostname into dashes
+
         # Finally, we list the subnets from which we will be leasing addresses.
         "subnet6" = [
           {
@@ -123,6 +150,15 @@
           }
           {
               "name" = "srv-addr";
+              "code" = 1;
+              "type" = "ipv6-address";
+              "array" = true;
+              "record-types" = "";
+              "space" = "ntp";
+              "encapsulate" = "";
+          }
+          {
+              "name" = "mc-addr";
               "code" = 2;
               "type" = "ipv6-address";
               "array" = true;
@@ -133,7 +169,7 @@
           {
               "name" = "srv-fqdn";
               "code" = 3;
-              "type" = "string";
+              "type" = "fqdn";
               "array" = true;
               "record-types" = "";
               "space" = "ntp";
@@ -172,13 +208,33 @@
       };
     };
 
-    # Disabled while testing dhcpv6
-#    dhcp-ddns = {
-#      enable = true;
-#      settings = {
-#        # https://kea.readthedocs.io/en/kea-2.4.1/arm/ddns.html
-#      };
-#    };
+    dhcp-ddns = {
+      enable = true;
+      settings = {
+        # https://kea.readthedocs.io/en/kea-2.4.1/arm/ddns.html
+       "ip-address" = "::1";
+          "port" = 53001;
+          "dns-server-timeout" = 500;
+          "ncr-protocol" = "UDP";
+          "ncr-format" = "JSON";
+          "tsig-keys" = [ ];
+          "forward-ddns" = {
+              "ddns-domains" = [
+                {
+                  "name" = "hlund.jlh.name.";
+                  "key-name" = "";
+                  "dns-servers" = [
+                    {
+                      "ip-address" = "::1";
+                      "port" = "54";
+                    }
+                  ];
+                }
+              ];
+          };
+#          "reverse-ddns" = {};  # Reverse DNS is not neccessary for my network
+      };
+    };
 
 
   };
@@ -186,21 +242,31 @@
   # Configure KnotDNS, my authoritative name server for DDNS records for DHCP clients
   services.knot = {
     enable = true;
+
+    # https://www.knot-dns.cz/docs/3.3/html/configuration.html#simple-configuration
     settingsFile = pkgs.writeText "knot.conf" ''
-# https://www.knot-dns.cz/docs/3.3/html/configuration.html#simple-configuration
 
 server:
-  listen: 10.0.0.53@54
-  listen: 2600:70ff:b04f:2::53@54
+  listen: 2600:70ff:b04f:2::54@53  # Socket used for public DNS
+  listen: ::1@54  # Socket used for DDNS
 
-#zone:
-#  - domain: example.com
-#    storage: /var/lib/knot/zones/
-#    file: example.com.zone
-#
-#log:
-#  - target: syslog
-#    any: info
+# DDNS access rule
+acl:
+  - id: ddns_acl
+    address: ::1/128
+    action: update
+
+zone:
+  - domain: hlund.jlh.name.
+    storage: /var/lib/knot/zones/
+    file: hlund.jlh.name.zone
+    dnssec-signing: on
+    semantic-checks: soft # Do extra validity checks https://www.knot-dns.cz/docs/3.3/html/reference.html#semantic-checks
+    acl: ddns_acl
+
+log:
+  - target: syslog
+    any: info
     '';
   };
 
