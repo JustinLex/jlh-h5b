@@ -110,6 +110,65 @@
 
           }
         ];
+
+        "option-def" = [
+          {
+              "name" = "ntp-server";
+              "code" = 56;
+              "type" = "empty";
+              "array" = false;
+              "record-types" = "";
+              "space" = "dhcp6";
+              "encapsulate" = "ntp";
+          }
+          {
+              "name" = "srv-addr";
+              "code" = 2;
+              "type" = "ipv6-address";
+              "array" = true;
+              "record-types" = "";
+              "space" = "ntp";
+              "encapsulate" = "";
+          }
+          {
+              "name" = "srv-fqdn";
+              "code" = 3;
+              "type" = "string";
+              "array" = true;
+              "record-types" = "";
+              "space" = "ntp";
+              "encapsulate" = "";
+          }
+        ];
+
+        "option-data" = [
+          # DNS
+          {
+            "name" = "dns-servers";
+            "data" = "2600:70ff:b04f:2::53";
+          }
+
+          # Search domain
+          {
+            "name" = "domain-search";
+            "data" = "hlund.jlh.name";
+          }
+
+          # NTP
+          {
+            "name" = "ntp-server";
+            "code" = 56;
+            "space" = "dhcp6";
+          }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "gbg1.ntp.se"; }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "gbg2.ntp.se"; }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "mmo1.ntp.se"; }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "mmo2.ntp.se"; }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "sth1.ntp.se"; }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "sth2.ntp.se"; }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "svl1.ntp.se"; }
+          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "svl2.ntp.se"; }
+        ];
       };
     };
 
