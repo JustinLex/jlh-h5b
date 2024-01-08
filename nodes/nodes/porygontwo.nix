@@ -210,7 +210,7 @@ server:
     settings = {
       # Default settings defined here:
       # https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/example-dnscrypt-proxy.toml)
-      listen_addresses = ["10.0.0.53:53" "[2600:70ff:b04f:2::53]:53"];
+      listen_addresses = ["[::1]:53" "10.0.0.53:53" "[2600:70ff:b04f:2::53]:53"];
 
       # Use both ipv4 and ipv6 servers
       ipv4_servers = true;
