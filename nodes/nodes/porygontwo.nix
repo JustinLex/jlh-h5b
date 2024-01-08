@@ -196,14 +196,12 @@
             "code" = 56;
             "space" = "dhcp6";
           }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "gbg1.ntp.se"; }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "gbg2.ntp.se"; }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "mmo1.ntp.se"; }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "mmo2.ntp.se"; }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "sth1.ntp.se"; }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "sth2.ntp.se"; }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "svl1.ntp.se"; }
-          { "name" = "srv-fqdn"; "code" = 3; "space" = "ntp"; "data" = "svl2.ntp.se"; }
+          {
+            "name" = "srv-fqdn";
+            "code" = 3;
+            "space" = "ntp";
+            "data" = "sth1.ntp.se, sth2.ntp.se";
+          }
         ];
       };
     };
@@ -269,6 +267,27 @@ log:
     any: info
     '';
   };
+
+  # Configure Chrony, my local NTP server
+  services.timesyncd.enable = false;
+  services.chrony = {
+    enable = true;
+
+    # Don't access time servers through ipv6 tunnel
+    # (Saves about 500us latency and eliminates random 20-70ms latency spikes)
+    # Unfortunately, this also means the server is only accessible via ipv4
+    extraFlags = ["-4"];
+
+    # Use the Intel I211s' ethernet hardware clock
+    extraConfig = ''
+hwtimestamp *
+    '';
+  };
+  networking.timeServers = [
+    # Use the local, government servers
+    "sth1.ntp.se"
+    "sth2.ntp.se"
+  ];
 
   # Configure DNScrypt Proxy, my local forwarding name server for using Oblivious DNS-over-HTTPS
   services.dnscrypt-proxy2 = {
