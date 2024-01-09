@@ -344,55 +344,46 @@ combinelimit 7
       ipv4_servers = true;
       ipv6_servers = true;
 
-      # Only use ODoH
+      # Only use DoH, ODoH is not stable
       dnscrypt_servers = false;
-      doh_servers = false;
-      odoh_servers = true;
+      doh_servers = true;
+      odoh_servers = false;
 
       # Security requirements for servers
       require_dnssec = true;
       require_nolog = true;
       require_nofilter = true;
 
-#      # Use all 6 european odoh servers instead of just 2, for extra security
-##      4ms odoh-koki-se
-##      31ms odoh-cloudflare
-##      33ms odoh-koki-ams
-##      39ms odoh-marco.cx
-##      46ms odoh-ibksturm
-##      71ms odoh-crypto-sx
-##      261ms odoh-jp.tiar.app
-##      1042ms odoh-jp.tiarap.org
-#
-#      lb_strategy = "p6";
+#      # Use top 4 doh servers instead of just 2, for extra security
+#      lb_strategy = "p4";
 
       # Optimize cache
       cache_size = 8192;
       cache_neg_min_ttl = 5;
       cache_neg_max_ttl = 10;
 
-      # Enable ODoH lists (disabled by default)
-      sources.odoh-servers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-servers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/odoh-servers.md"
-        ];
-        cache_file = "odoh-servers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-        refresh_delay = 24;
-        prefix = "";
-      };
-      sources.odoh-relays = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-relays.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/odoh-relays.md"
-        ];
-        cache_file = "odoh-relays.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-        refresh_delay = 24;
-        prefix = "";
-      };
-      anonymized_dns.routes = [ { server_name="*"; via=["*"]; } ];  # Use any relay for all odoh servers
+#      # Enable ODoH lists (disabled by default)
+#      sources.odoh-servers = {
+#        urls = [
+#          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-servers.md"
+#          "https://download.dnscrypt.info/resolvers-list/v3/odoh-servers.md"
+#        ];
+#        cache_file = "odoh-servers.md";
+#        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+#        refresh_delay = 24;
+#        prefix = "";
+#      };
+#      sources.odoh-relays = {
+#        urls = [
+#          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-relays.md"
+#          "https://download.dnscrypt.info/resolvers-list/v3/odoh-relays.md"
+#        ];
+#        cache_file = "odoh-relays.md";
+#        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+#        refresh_delay = 24;
+#        prefix = "";
+#      };
+#      anonymized_dns.routes = [ { server_name="*"; via=["*"]; } ];  # Use any relay for all odoh servers
     };
   };
 
