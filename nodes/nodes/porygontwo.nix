@@ -20,6 +20,7 @@
   };
 
   networking = {
+    useDHCP = false;
     bonds = {
       bondnet = {  # Internet access and DNS servers
         interfaces = [ "enp1s0" "enp2s0" ];
@@ -49,10 +50,6 @@
           }
         ];
       };
-      enp1s0.useDHCP = false;
-      enp2s0.useDHCP = false;
-      enp3s0.useDHCP = false;
-      enp4s0.useDHCP = false;
     };
     defaultGateway = {
       address = "10.0.0.1";
