@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Deploys the config file.
 
 # Reboots the router in the process though :/
