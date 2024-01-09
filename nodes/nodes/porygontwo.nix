@@ -259,7 +259,7 @@ zone:
   - domain: hlund.jlh.name.
     storage: /var/lib/knot/zones
     file: hlund.jlh.name.zone # Note that /var/lib/knot/zones/hlund.jlh.name.zone must be created and managed
-    serial-policy: dateserial
+    serial-policy: increment
     dnssec-signing: on
     semantic-checks: soft # Do extra validity checks https://www.knot-dns.cz/docs/3.3/html/reference.html#semantic-checks
     acl: ddns_acl
@@ -277,7 +277,7 @@ log:
 ; https://en.wikipedia.org/wiki/Zone_file#Example_file
 $ORIGIN hlund.jlh.name.     ; designates the start of this zone file in the namespace
 $TTL 300                    ; default expiration time (in seconds) of all RRs without their own TTL value
-hlund.jlh.name.   IN  SOA   ns.jlh.name. dns.jlh.name. ( 2024010901 7200 600 3600000 60 )
+hlund.jlh.name.   IN  SOA   ns.jlh.name. dns.jlh.name. ( 1111111111 7200 600 3600000 60 )
 hlund.jlh.name.   IN  NS    ns.jlh.name.
 
 hlund.jlh.name.   IN  A     158.174.30.59
