@@ -322,6 +322,8 @@ hwtimestamp *
     "sth1.ntp.se"
     "sth2.ntp.se"
   ];
+  # Start chrony after dnscrypt-proxy
+  systemd.services.chronyd.after = [ "dnscrypt-proxy2.service" ];
 
   # Configure DNScrypt Proxy, my local forwarding name server for using Oblivious DNS-over-HTTPS
   networking.nameservers = [ "::1" ];
