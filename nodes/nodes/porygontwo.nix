@@ -357,17 +357,17 @@ combinelimit 7
       require_nolog = true;
       require_nofilter = true;
 
-      # Use all 6 european odoh servers instead of just 2, for extra security
-#      4ms odoh-koki-se
-#      31ms odoh-cloudflare
-#      33ms odoh-koki-ams
-#      39ms odoh-marco.cx
-#      46ms odoh-ibksturm
-#      71ms odoh-crypto-sx
-#      261ms odoh-jp.tiar.app
-#      1042ms odoh-jp.tiarap.org
-
-      lb_strategy = "p6";
+#      # Use all 6 european odoh servers instead of just 2, for extra security
+##      4ms odoh-koki-se
+##      31ms odoh-cloudflare
+##      33ms odoh-koki-ams
+##      39ms odoh-marco.cx
+##      46ms odoh-ibksturm
+##      71ms odoh-crypto-sx
+##      261ms odoh-jp.tiar.app
+##      1042ms odoh-jp.tiarap.org
+#
+#      lb_strategy = "p6";
 
       # Optimize cache
       cache_size = 8192;
@@ -395,7 +395,7 @@ combinelimit 7
         refresh_delay = 24;
         prefix = "";
       };
-      anonymized_dns.routes = [ { server_name="*"; via=["odohrelay-se"]; } ];  # Use Swedish relay for all odoh servers
+      anonymized_dns.routes = [ { server_name="*"; via=["*"]; } ];  # Use any relay for all odoh servers
     };
   };
 
