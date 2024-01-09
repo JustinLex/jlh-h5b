@@ -324,6 +324,7 @@ hwtimestamp *
   ];
 
   # Configure DNScrypt Proxy, my local forwarding name server for using Oblivious DNS-over-HTTPS
+  networking.nameservers = [ "::1" ];
   services.dnscrypt-proxy2 = {
     enable = true;
     settings = {
