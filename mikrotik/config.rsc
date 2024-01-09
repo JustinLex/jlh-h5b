@@ -272,12 +272,11 @@ add add-arp=no address-pool=dhcp-guest allow-dual-stack-queue=no always-broadcas
 client-mac-limit=unlimited conflict-detection=yes interface=guest lease-time=12h name=guest \
 relay=0.0.0.0 use-radius=no
 
-#TODO: set up an NTP server
 /ip dhcp-server network
-add address=10.0.0.0/16 netmask=16 gateway=10.0.0.1 comment=Bridge dhcp-option="" domain="home" !next-server \
-    dns-server=10.0.0.1 ntp-server=""
-add address=10.128.0.0/16 netmask=16 gateway=10.128.0.1 comment=Guest dhcp-option="" domain="home" !next-server \
-    dns-server=10.128.0.1 ntp-server=""
+add address=10.0.0.0/16 netmask=16 gateway=10.0.0.1 comment=Bridge dhcp-option="" domain="hlund.jlh.name" !next-server \
+    dns-server=10.0.0.53 ntp-server=""
+add address=10.128.0.0/16 netmask=16 gateway=10.128.0.1 comment=Guest dhcp-option="" domain="hlund.jlh.name" !next-server \
+    dns-server=10.0.0.53 ntp-server=""
 
 # DHCP lease persistence https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-StoreConfiguration
 /ip dhcp-server config
@@ -294,30 +293,12 @@ add mac-address=a6:9b:d3:a4:4e:ac address=10.0.15.248 server=bridge
 # SLAAC configuration
 /ipv6 nd
 set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
-    disabled=no dns="2600:70ff:b04f::2" hop-limit=unspecified interface=all \
-    managed-address-configuration=no mtu=unspecified other-configuration=no \
+    disabled=no dns="2600:70ff:b04f:2::53" hop-limit=unspecified interface=all \
+    managed-address-configuration=yes mtu=unspecified other-configuration=no \
     ra-delay=3s ra-interval=3m20s-10m ra-lifetime=30m ra-preference=medium \
     reachable-time=unspecified retransmit-interval=unspecified
 /ipv6 nd prefix default
 set autonomous=yes preferred-lifetime=1h valid-lifetime=4w2d
-
-# Install cloudflare cert
-/certificate import file-name=cloudflare-dns-com.pem passphrase=""
-
-# DNS resolver
-# Not well documented, see /ip dns print
-/ip dns
-set use-doh-server=https://cloudflare-dns.com/dns-query verify-doh-cert=yes \
-    servers=2606:4700:4700::1111,2606:4700:4700::1001,1.1.1.1,1.0.0.1 \
-    allow-remote-requests=yes cache-max-ttl=2w cache-size=10240KiB \
-    max-concurrent-queries=1000 max-concurrent-tcp-sessions=50 \
-    max-udp-packet-size=4096 query-server-timeout=2s query-total-timeout=10s
-
-# static IPs needed for old kubernetes cluster
-/ip dns static
-add address=10.0.0.2 disabled=no name=pve.home.jlh.name ttl=1d
-add address=10.0.0.3 disabled=no name=freenas.home.jlh.name ttl=1d
-add address=10.0.0.4 disabled=no name=ditto.home.jlh.name ttl=1d
 
 /ip firewall filter
 add action=accept chain=input comment=\
@@ -516,12 +497,7 @@ set 3 action=echo disabled=no prefix="" topics=critical
 set note="" show-at-login=yes
 
 /system ntp client
-set enabled=yes mode=unicast servers=0.se.pool.ntp.org,1.se.pool.ntp.org,2.se.pool.ntp.org,3.se.pool.ntp.org
-/system ntp server
-set auth-key=none broadcast=no broadcast-addresses="" enabled=no \
-    local-clock-stratum=5 manycast=no multicast=no use-local-clock=no vrf=\
-    main
-
+set enabled=yes mode=unicast servers=10.0.0.53
 
 /routing bgp template
 set default as=65530 name=default
