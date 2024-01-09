@@ -201,7 +201,7 @@
             "name" = "srv-fqdn";
             "code" = 3;
             "space" = "ntp";
-            "data" = "sth1.ntp.se, sth2.ntp.se";
+            "data" = "sth1.ntp.se";
           }
         ];
       };
