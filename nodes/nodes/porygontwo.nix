@@ -115,7 +115,8 @@
         "ddns-override-no-update" = true; # Don't let clients refuse a DNS name
         "ddns-qualifying-suffix" = "hlund.jlh.name.";
         "ddns-update-on-renew" = true;  # Set DNS records even for renews
-        "ddns-conflict-resolution-mode" = "check-exists-with-dhcid";  # Allow clients to overwrite DNS records, unless it's a static record. Removing this security check makes dual-stack environments work well.
+        "ddns-use-conflict-resolution" = false;  # TEMPORARY FIX until the below option is added
+#        "ddns-conflict-resolution-mode" = "check-exists-with-dhcid";  # Allow clients to overwrite DNS records, unless it's a static record. Removing this security check makes dual-stack environments work well. # NOT ADDED UNTIL KEA 2.5
         "hostname-char-set" = "[^A-Za-z0-9.-]";
         "hostname-char-replacement" = "-"; # Turn underscores/etc in hostname into dashes
 
@@ -224,7 +225,7 @@
                   "dns-servers" = [
                     {
                       "ip-address" = "::1";
-                      "port" = "54";
+                      "port" = 54;
                     }
                   ];
                 }
