@@ -278,8 +278,11 @@ log:
     # Unfortunately, this also means the server is only accessible via ipv4
     extraFlags = ["-4"];
 
-    # Use the Intel I211s' ethernet hardware clock
     extraConfig = ''
+# Allow all connections
+allow
+
+# Use the Intel I211s' ethernet hardware clock
 hwtimestamp *
     '';
   };
