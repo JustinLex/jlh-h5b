@@ -7,7 +7,7 @@
 # It was a Raspberry Pi 4 4GiB that ran zigbee2mqtt on top of k3s. It had no other applications running on it.
 # It took a few iterations to find a "truly IaC on Edge" configuration that would work on a Raspberry Pi 3/4.
 # One of the iterations had tried to use CoreOS, until finally settling on NixOS.
-# The proygon configuration was defined at these two git repos:
+# The porygon configuration was defined at these two git repos:
 # * https://github.com/JustinLex/nixpi
 # * https://github.com/JustinLex/jlh-h5b/tree/main/porygon_applications
 
@@ -257,8 +257,9 @@ acl:
 
 zone:
   - domain: hlund.jlh.name.
-    storage: /var/lib/knot/zones/
-    file: hlund.jlh.name.zone
+    storage: /var/lib/knot/zones
+    file: hlund.jlh.name.zone # Note that /var/lib/knot/zones/hlund.jlh.name.zone must be created and managed
+    serial-policy: dateserial
     dnssec-signing: on
     semantic-checks: soft # Do extra validity checks https://www.knot-dns.cz/docs/3.3/html/reference.html#semantic-checks
     acl: ddns_acl
@@ -268,6 +269,35 @@ log:
     any: info
     '';
   };
+
+  # Initialize Knot's zonefile
+  system.activationScripts =
+    let hlundZonefile = pkgs.writeText "hlund.jlh.name.zone"
+      ''
+; https://en.wikipedia.org/wiki/Zone_file#Example_file
+$ORIGIN hlund.jlh.name.     ; designates the start of this zone file in the namespace
+$TTL 300                    ; default expiration time (in seconds) of all RRs without their own TTL value
+hlund.jlh.name.   IN  SOA   ns.jlh.name. dns.jlh.name. ( 2024010901 7200 600 3600000 60 )
+hlund.jlh.name.   IN  NS    ns.jlh.name.
+
+hlund.jlh.name.   IN  A     158.174.30.59
+
+router            IN  A     10.0.0.2
+router            IN  AAAA  2600:70ff:b04f::2
+
+porygontwo        IN  A     10.0.0.53
+porygontwo        IN  AAAA  2600:70ff:b04f:2::53
+
+ntp               IN  A     10.0.0.53
+      '';  # Writing file directly: https://stackoverflow.com/a/73377726
+    in {
+      install_pod = ''
+      mkdir -p /var/lib/knot/zones
+      cp ${hlundZonefile} /var/lib/knot/zones/hlund.jlh.name.zone
+      chown -R knot:knot /var/lib/knot/zones
+      chmod -R 770 /var/lib/knot/zones
+      '';
+    };
 
   # Configure Chrony, my local NTP server
   services.timesyncd.enable = false;
