@@ -315,12 +315,21 @@ allow
 
 # Use the Intel I211s' ethernet hardware clock
 hwtimestamp *
+
+# Mix all sources
+minsources 2
+combinelimit 7
     '';
   };
   networking.timeServers = [
-    # Use the local, government servers
+    # Use the stockholm atomic clocks
     "sth1.ntp.se"
     "sth2.ntp.se"
+    "sth2.ntp.se"
+    "time1.stupi.se"
+    "time2.stupi.se"
+    "time4.stupi.se"
+    "time20.stupi.se"
   ];
   # Start chrony after dnscrypt-proxy
   systemd.services.chronyd.after = [ "dnscrypt-proxy2.service" ];
