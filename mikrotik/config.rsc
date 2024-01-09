@@ -463,6 +463,14 @@ add action=accept chain=forward comment="defconf: accept ipsec ESP" protocol=\
     ipsec-esp
 add action=accept chain=forward comment=\
     "defconf: accept all that matches ipsec policy" ipsec-policy=in,ipsec
+
+# Open ports
+# https://forum.mikrotik.com/viewtopic.php?t=152246
+add chain=forward dst-address=2600:70ff:b04f:2::54 protocol=tcp dst-port=53 action=accept comment=\
+  "Allow DNS over TCP to nameserver"
+add chain=forward dst-address=2600:70ff:b04f:2::54 protocol=udp dst-port=53 action=accept comment=\
+  "Allow DNS over UDP to nameserver"
+
 add action=drop chain=forward comment=\
     "defconf: drop everything else not coming from LAN" in-interface-list=\
     !LAN
