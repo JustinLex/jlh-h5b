@@ -19,6 +19,7 @@
     fsType = "xfs";
   };
 
+
   networking = {
     useDHCP = false;
     bonds = {
@@ -61,8 +62,39 @@
     };
   };
 
+
 # Configure Kea DHCP server
   services.kea = {
+    #Enable Kea API for kea-shell
+    ctrl-agent = {
+      enable = true;
+      settings = {
+        "control-sockets" = {
+#          "dhcp4" = {
+#            "comment" = "main server";
+#            "socket-type" = "unix";
+#            "socket-name" = "/path/to/the/unix/socket-v4";
+#          };
+          "dhcp6" = {
+            "socket-type" = "unix";
+            "socket-name" = "/run/kea/socket-v6";
+            "user-context" = { "version" = 3; };
+          };
+          "d2" = {
+            "socket-type" = "unix";
+            "socket-name" = "/run/kea/socket-d2";
+          };
+        };
+
+        "loggers" = [
+          {
+            "name" = "kea-ctrl-agent";
+            "severity" = "INFO";
+          }
+        ];
+      };
+    };
+
     # Disabled while testing dhcpv6+ddns
 #    dhcp4 = {
 #      enable = true;
@@ -96,7 +128,6 @@
         };
 
         # DDNS configuration
-
         "dhcp-ddns" ={
            "enable-updates" = true;
            "server-ip" = "::1";
@@ -107,7 +138,6 @@
            "ncr-protocol" = "UDP";
            "ncr-format" = "JSON";
         };
-
         "ddns-override-client-update" = true; # Don't let clients refuse a DNS name
         "ddns-override-no-update" = true; # Don't let clients refuse a DNS name
         "ddns-qualifying-suffix" = "hlund.jlh.name.";
@@ -201,6 +231,15 @@
             "data" = "sth1.ntp.se";
           }
         ];
+
+        # Management
+        "control-socket" = {
+          "socket-type" = "unix";
+          "socket-name" = "/run/kea/socket-v6";
+        };
+        "hooks-libraries" = [
+          { "library" = "${pkgs.kea}/lib/kea/hooks/libdhcp_lease_cmds.so"; }  # Add lease management commands to management API
+        ];
       };
     };
 
@@ -209,31 +248,36 @@
       settings = {
         # https://kea.readthedocs.io/en/kea-2.4.1/arm/ddns.html
        "ip-address" = "::1";
-          "port" = 53001;
-          "dns-server-timeout" = 500;
-          "ncr-protocol" = "UDP";
-          "ncr-format" = "JSON";
-          "tsig-keys" = [ ];
-          "forward-ddns" = {
-              "ddns-domains" = [
-                {
-                  "name" = "hlund.jlh.name.";
-                  "key-name" = "";
-                  "dns-servers" = [
-                    {
-                      "ip-address" = "::1";
-                      "port" = 54;
-                    }
-                  ];
-                }
-              ];
-          };
+        "port" = 53001;
+        "dns-server-timeout" = 500;
+        "ncr-protocol" = "UDP";
+        "ncr-format" = "JSON";
+        "tsig-keys" = [ ];
+        "forward-ddns" = {
+            "ddns-domains" = [
+              {
+                "name" = "hlund.jlh.name.";
+                "key-name" = "";
+                "dns-servers" = [
+                  {
+                    "ip-address" = "::1";
+                    "port" = 54;
+                  }
+                ];
+              }
+            ];
+        };
 #          "reverse-ddns" = {};  # Reverse DNS is not neccessary for my network
+
+        # Management
+        "control-socket" = {
+          "socket-type" = "unix";
+          "socket-name" = "/run/kea/socket-d2";
+        };
       };
     };
-
-
   };
+
 
   # Configure KnotDNS, my authoritative name server for DDNS records for DHCP clients
   services.knot = {
@@ -296,6 +340,7 @@ ntp               IN  A     10.0.0.53
       '';
     };
 
+
   # Configure Chrony, my local NTP server
   services.timesyncd.enable = false;
   services.chrony = {
@@ -330,6 +375,7 @@ combinelimit 7
   ];
   # Start chrony after dnscrypt-proxy
   systemd.services.chronyd.after = [ "dnscrypt-proxy2.service" ];
+
 
   # Configure DNScrypt Proxy, my local forwarding name server for using Oblivious DNS-over-HTTPS
   networking.nameservers = [ "::1" ];
@@ -386,6 +432,7 @@ combinelimit 7
 #      anonymized_dns.routes = [ { server_name="*"; via=["*"]; } ];  # Use any relay for all odoh servers
     };
   };
+
 
   # TODO: prometheus: knot, kea
 
