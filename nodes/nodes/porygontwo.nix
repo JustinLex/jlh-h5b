@@ -437,13 +437,26 @@ combinelimit 7
   # TODO: prometheus: knot, kea
 
 
-#  # Configure zigbee2mqtt
-#  services.zigbee2mqtt = {
-#    enable = true;
-#    enable = true;
-#    settings = {
-#
-#    };
-#  };
+  # Configure zigbee2mqtt
+  services.zigbee2mqtt = {
+    enable = true;
+    package = unstablePkgs.zigbee2mqtt;  # TODO use unstable here to get latest bugfixes and hardware support
+    settings = {
+      mqtt = {
+        base_topic = "zigbee2mqtt";
+        server = "mqtt://10.0.16.0";
+      };
+      serial = {
+        port = "/dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2485309-if00";
+        adapter = "deconz";
+      };
+
+      homeassistant = true;
+      frontend = true;
+
+      devices = "devices.yaml";
+      groups = "groups.yaml";
+    };
+  };
 
 }
