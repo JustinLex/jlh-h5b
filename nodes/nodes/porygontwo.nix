@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, unstablePkgs, ... }:
 
 # Fanless Intel quad-core atom box from 2019 (Intel Celeron J1900)
 # Zigbee router, DHCP server, and DNS server
@@ -163,7 +163,6 @@
               }
             ];
 
-            # Subnet interface is required for dhcpv6 https://kea.readthedocs.io/en/kea-2.4.1/arm/dhcp6-srv.html#ipv6-subnet-selection
             "interface" = "bondnet";
 
           }
