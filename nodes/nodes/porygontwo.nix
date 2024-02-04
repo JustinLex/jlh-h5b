@@ -13,6 +13,9 @@
 
 {
 
+  # Don't allow automatic reboot because of broken EFI
+  system.autoUpgrade.allowReboot = true;
+
   # Mount /var
   fileSystems."/var" = {
     device = "/dev/disk/by-uuid/0ffdf107-457c-4558-90d1-3ac73a09df2a";
