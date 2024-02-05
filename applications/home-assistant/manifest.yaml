@@ -31,7 +31,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: home-assistant
-        image: ghcr.io/home-assistant/home-assistant:2023.2
+        image: ghcr.io/home-assistant/home-assistant:2024.1.6
         env:
         - name: TZ
           value: "Europe/Stockholm"
