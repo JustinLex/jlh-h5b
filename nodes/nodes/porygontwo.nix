@@ -453,6 +453,14 @@ combinelimit 7
         adapter = "deconz";
       };
 
+      advanced = {
+        pan_id = 41307;
+        ext_pan_id = [46 82 65 136 175 31 0 76];
+        # Switch from channel 11 to avoid interference with Whirl Islands (chan 1) and TP-Link_E878 (chan 4) wifi networks
+        channel = 25;
+        network_key = "!networkkey.yaml network_key";
+      };
+
       homeassistant = true;
       frontend = true;
 
