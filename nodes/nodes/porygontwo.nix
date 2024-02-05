@@ -463,6 +463,7 @@ combinelimit 7
 
       homeassistant = true;
       frontend = true;
+      availability = true;
 
       devices = "devices.yaml";
       groups = "groups.yaml";
