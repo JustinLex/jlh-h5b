@@ -68,17 +68,25 @@
 
   # Enable automatic updates
   # https://nixos.wiki/wiki/Automatic_system_upgrades
-#  system.autoUpgrade = {
-#    enable = true;
-#    flake = inputs.self.outPath;
-#    flags = [
-#      "--update-input"
-#      "nixpkgs"
-#      "-L" # print build logs
-#    ];
-#    dates = "02:00";
-#    randomizedDelaySec = "45min";
-#  };
+  system.autoUpgrade = {
+    enable = true;
+    dates = "Sun *-*-* 03:00 Europe/Stockholm"; # Every week on sunday mornings
+    randomizedDelaySec = "6hr"; # Between 03:00 and 09:00, to minimize the chance of multiple systems rebooting at the same time
+    allowReboot = true;
+
+    flake = "path:${self.outPath}#${nodeHostName}";  # flake path must be preceded with "path:" because otherwise nix build will get confused when we ask to build a flake in the nix store
+
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--update-input"
+      "unstable"
+      "-L" # print build logs
+      "--impure"
+    ];
+  };
+
+  # prometheus: smartctl
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

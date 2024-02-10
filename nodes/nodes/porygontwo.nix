@@ -1,4 +1,4 @@
-{ config, pkgs, unstablePkgs, ... }:
+{ config, pkgs, unstablePkgs, lib, ... }:
 
 # Fanless Intel quad-core atom box from 2019 (Intel Celeron J1900)
 # Zigbee router, DHCP server, and DNS server
@@ -13,8 +13,8 @@
 
 {
 
-  # Don't allow automatic reboot because of broken EFI
-  system.autoUpgrade.allowReboot = true;
+  # Don't allow automatic reboot because of broken EFI, power has to be pulled in between restarts.
+  system.autoUpgrade.allowReboot = lib.mkForce false;
 
   # Mount /var
   fileSystems."/var" = {
@@ -436,13 +436,10 @@ combinelimit 7
   };
 
 
-  # TODO: prometheus: knot, kea
-
-
-  # Configure zigbee2mqtt
+   # Configure zigbee2mqtt
   services.zigbee2mqtt = {
     enable = true;
-    package = unstablePkgs.zigbee2mqtt;  # TODO use unstable here to get latest bugfixes and hardware support
+    package = unstablePkgs.zigbee2mqtt;
     settings = {
       mqtt = {
         base_topic = "zigbee2mqtt";
