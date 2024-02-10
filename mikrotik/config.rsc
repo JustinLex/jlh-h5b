@@ -261,34 +261,20 @@ name=he-tunnel remote-address=216.66.80.90
 # https://wiki.mikrotik.com/wiki/Manual:IP/DHCP_Server
 # https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-Network
 /ip pool
-add name=dhcp-bridge       ranges=10.0.0.2-10.0.1.255
 add name=dhcp-guest        ranges=10.128.0.2-10.128.1.255
 
 /ip dhcp-server
-add add-arp=no address-pool=dhcp-bridge allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
-client-mac-limit=unlimited conflict-detection=yes interface=bridge lease-time=12h name=bridge \
-relay=0.0.0.0 use-radius=no
 add add-arp=no address-pool=dhcp-guest allow-dual-stack-queue=no always-broadcast=no authoritative=yes \
 client-mac-limit=unlimited conflict-detection=yes interface=guest lease-time=12h name=guest \
 relay=0.0.0.0 use-radius=no
 
 /ip dhcp-server network
-add address=10.0.0.0/16 netmask=16 gateway=10.0.0.1 comment=Bridge dhcp-option="" domain="hlund.jlh.name" !next-server \
-    dns-server=10.0.0.53 ntp-server=""
 add address=10.128.0.0/16 netmask=16 gateway=10.128.0.1 comment=Guest dhcp-option="" domain="hlund.jlh.name" !next-server \
     dns-server=10.0.0.53 ntp-server=""
 
 # DHCP lease persistence https://help.mikrotik.com/docs/display/ROS/DHCP#DHCP-StoreConfiguration
 /ip dhcp-server config
 set accounting=yes interim-update=0s radius-password=empty store-leases-disk=5m
-
-# Static DHCP leases
-/ip dhcp-server lease
-# Temporary static lease here for pve, freenas, ditto, and Cloyster
-add mac-address=00:02:C9:55:A2:04 address=10.0.0.2 server=bridge
-add mac-address=5A:B1:9C:82:4F:70 address=10.0.0.3 server=bridge
-add mac-address=3E:10:97:73:17:53 address=10.0.0.4 server=bridge
-add mac-address=a6:9b:d3:a4:4e:ac address=10.0.15.248 server=bridge
 
 # SLAAC configuration
 /ipv6 nd

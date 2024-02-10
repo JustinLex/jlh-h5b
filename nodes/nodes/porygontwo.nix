@@ -73,11 +73,11 @@
       enable = true;
       settings = {
         "control-sockets" = {
-#          "dhcp4" = {
-#            "comment" = "main server";
-#            "socket-type" = "unix";
-#            "socket-name" = "/path/to/the/unix/socket-v4";
-#          };
+          "dhcp4" = {
+            "comment" = "main server";
+            "socket-type" = "unix";
+            "socket-name" = "/run/kea/socket-v4";
+          };
           "dhcp6" = {
             "socket-type" = "unix";
             "socket-name" = "/run/kea/socket-v6";
@@ -98,14 +98,124 @@
       };
     };
 
-    # Disabled while testing dhcpv6+ddns
-#    dhcp4 = {
-#      enable = true;
-#      settings = {
-#        # https://kea.readthedocs.io/en/kea-2.4.1/arm/dhcp4-srv.html
-#
-#      };
-#    };
+    dhcp4 = {
+      enable = true;
+      settings = {
+        # https://kea.readthedocs.io/en/kea-2.4.1/arm/dhcp4-srv.html
+
+        # First we set up global values
+        "valid-lifetime" = 4000;
+        "renew-timer" = 1000;
+        "rebind-timer" = 2000;
+
+        # Next we set up the interfaces to be used by the server.
+        "interfaces-config" = {
+          "interfaces" = [ "bondnet" ];
+        };
+
+        # And we specify the type of lease database
+        "lease-database" = {
+          "type" = "memfile";
+          "persist" = true;
+          "name" = "/var/lib/kea/dhcp4.leases";
+        };
+
+        # DDNS configuration
+        "dhcp-ddns" ={
+           "enable-updates" = true;
+           "server-ip" = "::1";
+           "server-port" = 53001;
+           "sender-ip" = "";
+           "sender-port" = 0;
+           "max-queue-size" = 1024;
+           "ncr-protocol" = "UDP";
+           "ncr-format" = "JSON";
+        };
+        "ddns-override-client-update" = true; # Don't let clients refuse a DNS name
+        "ddns-override-no-update" = true; # Don't let clients refuse a DNS name
+        "ddns-qualifying-suffix" = "hlund.jlh.name.";
+        "ddns-update-on-renew" = true;  # Set DNS records even for renews
+        "ddns-use-conflict-resolution" = false;  # TEMPORARY FIX until the below option is added
+#        "ddns-conflict-resolution-mode" = "check-exists-with-dhcid";  # Allow clients to overwrite DNS records, unless it's a static record. Removing this security check makes dual-stack environments work well. # NOT ADDED UNTIL KEA 2.5
+        "hostname-char-set" = "[^A-Za-z0-9.-]";
+        "hostname-char-replacement" = "-"; # Turn underscores/etc in hostname into dashes
+
+        # Finally, we list the subnets from which we will be leasing addresses.
+        "subnet4" = [
+          {
+            "id" = 1;
+            "subnet" = "10.0.0.0/16";
+            "interface" = "bondnet";
+            "pools" = [
+              {
+                # Skip 10.0.0.1 for router, stop before 10.0.2.0 to leave room for MetalLB on the subnet
+                "pool" = "10.0.0.2 - 10.0.1.255";
+              }
+            ];
+            "reservations" = [
+              { "hw-address" = "00:02:C9:55:A2:04"; "ip-address" = "10.0.0.2"; } # Proxmox, aka pve.home.jlh.name
+              { "hw-address" = "5A:B1:9C:82:4F:70"; "ip-address" = "10.0.0.3"; } # FreeNAS, aka freenas.home.jlh.name
+              { "hw-address" = "3E:10:97:73:17:53"; "ip-address" = "10.0.0.4"; } # Ditto backup server, aka ditto.home.jlh.name
+              { "hw-address" = "a6:9b:d3:a4:4e:ac"; "ip-address" = "10.0.15.248"; } # Cloyster Kubernetes Host, aka cloyster.home.jlh.name
+            ];
+          }
+        ];
+
+        "option-data" = [
+          # https://kea.readthedocs.io/en/kea-2.4.1/arm/dhcp4-srv.html#dhcp4-std-options-list
+          {
+            "name" = "routers";
+            "data" = "10.0.0.1";
+            "always-send" = true;
+          }
+          {
+            "name" = "domain-name-servers";
+            "data" = "10.0.0.53";
+            "always-send" = true;
+          }
+          {
+            "name" = "domain-name";
+            "data" = "hlund.jlh.name";
+            "always-send" = true;
+          }
+#          { # Set MTU for IPv4
+#            "name" = "interface-mtu";
+#            "data" = "9000";
+#          }
+          {
+            "name" = "ntp-servers";
+            "data" = "10.0.0.53";
+          }
+          {
+            "name" = "dhcp-server-identifier";
+            "data" = "10.0.0.53";
+            "always-send" = true;
+          }
+#          { # Enable NAT64
+#            "name" = "v6-only-preferred";
+#            "data" = 4000;  # Block IPv4 for 4000 secs
+#            "always-send" = true;
+#          }
+          {
+            "name" = "tcode";
+            "data" = "Europe/Stockholm";
+          }
+          {
+            "name" = "domain-search";
+            "data" = "hlund.jlh.name";
+          }
+        ];
+
+        # Management
+        "control-socket" = {
+          "socket-type" = "unix";
+          "socket-name" = "/run/kea/socket-v4";
+        };
+        "hooks-libraries" = [
+          { "library" = "${pkgs.kea}/lib/kea/hooks/libdhcp_lease_cmds.so"; }  # Add lease management commands to management API
+        ];
+      };
+    };
 
     dhcp6 = {
       enable = true;
