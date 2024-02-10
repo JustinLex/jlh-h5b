@@ -1,4 +1,4 @@
-{ config, pkgs, nodeHostName, ... }:
+{ config, pkgs, self, nodeHostName, ... }:
 
 {
   networking.hostName = nodeHostName;
