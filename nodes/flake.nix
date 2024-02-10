@@ -18,7 +18,8 @@
         "porygontwo"
       ];
       generate = (
-        # attrset Template for configuring NixOS generator for a given node
+        # Function that templates out a value for the `packages` attrset.
+        # Used for defining the NixOS generator for a given node.
         # docs: https://github.com/nix-community/nixos-generators/blob/master/README.md
         nodename:
           nixos-generators.nixosGenerate {
