@@ -626,6 +626,6 @@ set minimum-categories=0 minimum-password-length=0
 
 # Configure ssh
 /user
-ssh-keys import user=admin public-key-file=id_rsa.pub
+ssh-keys import user=admin public-key-file=id_ed25519.pub
 /ip ssh
 set strong-crypto=yes
