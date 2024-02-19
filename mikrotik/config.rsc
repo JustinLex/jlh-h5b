@@ -286,6 +286,12 @@ set [ find default=yes ] advertise-dns=yes advertise-mac-address=yes \
 /ipv6 nd prefix default
 set autonomous=yes preferred-lifetime=1h valid-lifetime=4w2d
 
+# DNS resolver
+# Not well documented, see /ip dns print
+/ip dns
+set servers=2600:70ff:b04f:2::53,10.0.0.53 allow-remote-requests=no
+
+
 /ip firewall filter
 add action=accept chain=input comment=\
     "defconf: accept established,related,untracked" connection-state=\
