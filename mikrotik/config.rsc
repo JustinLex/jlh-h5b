@@ -8,67 +8,68 @@
 # https://help.mikrotik.com/docs/display/ROS/PoE-Out
 /interface ethernet
 set [ find default-name=ether1 ] name=ether1 \
-    advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full,2500M-full \
+    advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full,2.5G-baseT \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:27 orig-mac-address=18:FD:74:7B:01:27 \
     poe-out=off poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=2.5Gbps tx-flow-control=off
-set [ find default-name=ether2 ] name=ether2 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=ether2 ] name=ether2 advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=68:7f:74:22:1c:23 orig-mac-address=18:FD:74:7B:01:28 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=ether3 ] name=ether3 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=ether3 ] name=ether3 advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:29 orig-mac-address=18:FD:74:7B:01:29 \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=ether4 ] name=ether4 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=ether4 ] name=ether4 advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:2A orig-mac-address=18:FD:74:7B:01:2A \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=ether5 ] name=ether5 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=ether5 ] name=ether5 advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:2B orig-mac-address=18:FD:74:7B:01:2B \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=ether6 ] name=ether6 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=ether6 ] name=ether6 advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:2C orig-mac-address=18:FD:74:7B:01:2C \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=ether7 ] name=ether7 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=ether7 ] name=ether7 advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:2D orig-mac-address=18:FD:74:7B:01:2D \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=ether8 ] name=ether8 advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=ether8 ] name=ether8 advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:2E orig-mac-address=18:FD:74:7B:01:2E \
     poe-out=auto-on poe-priority=10 poe-voltage=auto \
     power-cycle-interval=none !power-cycle-ping-address power-cycle-ping-enabled=no !power-cycle-ping-timeout \
-    rx-flow-control=off speed=1Gbps tx-flow-control=off
-set [ find default-name=sfp-sfpplus1 ] name=sfp-sfpplus1 advertise="" \
+    rx-flow-control=off tx-flow-control=off
+set [ find default-name=sfp-sfpplus1 ] name=sfp-sfpplus1 \
+    advertise=10M-baseT-half,10M-baseT-full,100M-baseT-half,100M-baseT-full,1G-baseT-half,1G-baseT-full,1G-baseX,2.5G-baseT,2.5G-baseX,5G-baseT,10G-baseT,10G-baseSR-LR,10G-baseCR \
     arp=enabled arp-timeout=auto auto-negotiation=yes bandwidth=unlimited/unlimited \
-    disabled=no full-duplex=yes l2mtu=1514 mtu=1500 \
+    disabled=no l2mtu=1514 mtu=1500 \
     mac-address=18:FD:74:7B:01:2F orig-mac-address=18:FD:74:7B:01:2F \
-    rx-flow-control=off speed=10Gbps tx-flow-control=off\
+    rx-flow-control=off tx-flow-control=off\
     sfp-rate-select=high sfp-shutdown-temperature=95C
 
 /interface ethernet switch
@@ -592,7 +593,7 @@ set auto-send-supout=no automatic-supout=yes ping-start-after-boot=5m \
 set allocate-udp-ports-from=2000 authenticate=yes enabled=yes max-sessions=\
     100
 /tool e-mail
-set address=0.0.0.0 from=<> port=25 tls=no user="" vrf=main
+set server=0.0.0.0 from=<> port=25 tls=no user="" vrf=main
 /tool graphing
 set page-refresh=300 store-every=5min
 /tool mac-server
@@ -605,8 +606,6 @@ set enabled=yes
 set enabled=no id=00:00:00:00:00:00
 /tool romon port
 set [ find default=yes ] cost=100 disabled=no forbid=no interface=all
-/tool sms
-set allowed-number="" auto-erase=no channel=0 port=none receive-enabled=no
 /tool sniffer
 set file-limit=1000KiB file-name="" filter-cpu="" filter-direction=any \
     filter-interface="" filter-ip-address="" filter-ip-protocol="" \
