@@ -225,7 +225,7 @@ set discover-interface-list=LAN lldp-med-net-policy-vlan=disabled protocol=\
 /ip settings
 set accept-redirects=no accept-source-route=no allow-fast-path=yes \
     arp-timeout=30s icmp-rate-limit=10 icmp-rate-mask=0x1818 ip-forward=yes \
-    max-neighbor-entries=16384 route-cache=yes rp-filter=no secure-redirects=\
+    max-neighbor-entries=16384 rp-filter=no secure-redirects=\
     yes send-redirects=yes tcp-syncookies=no
 /ipv6 settings
 set accept-redirects=yes-if-forwarding-disabled accept-router-advertisements=\
