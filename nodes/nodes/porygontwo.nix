@@ -111,9 +111,9 @@
         # Next we set up the interfaces to be used by the server.
         "interfaces-config" = {
           "interfaces" = [ "bondnet" ];
-          "service-sockets-require-all" = true
-          "service-sockets-max-retries" = 30,
-          "service-sockets-retry-wait-time" = 1000
+          "service-sockets-require-all" = true;
+          "service-sockets-max-retries" = 30;
+          "service-sockets-retry-wait-time" = 1000;
         };
 
         # And we specify the type of lease database
@@ -240,9 +240,9 @@
         # Next we set up the interfaces to be used by the server.
         "interfaces-config" = {
           "interfaces" = [ "bondnet" ];
-          "service-sockets-require-all" = true
-          "service-sockets-max-retries" = 30,
-          "service-sockets-retry-wait-time" = 1000
+          "service-sockets-require-all" = true;
+          "service-sockets-max-retries" = 30;
+          "service-sockets-retry-wait-time" = 1000;
         };
 
         # And we specify the type of lease database
