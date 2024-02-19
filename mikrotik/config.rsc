@@ -500,7 +500,20 @@ set note="" show-at-login=yes
 set enabled=yes mode=unicast servers=10.0.0.53
 
 /routing bgp template
-set default as=65530 name=default
+set default as=65512 name=default
+
+# Kubernetes Cilium BGP peers
+# https://rx-m.com/kubernetes-loadbalance-service-using-cilium-bgp-control-plane/
+/routing bgp connection
+add name=suicune remote.address=2600:70ff:b04f:2:0:beef:0:0 \
+    as=64512 address-families=ipv6 local.address=2600:70ff:b04f::2 \
+    local.role=ibgp routing-table=main output.default-originate=always
+#add name=entei remote.address=2600:70ff:b04f:2:0:beef:0:1 \
+#    as=64512 address-families=ip6 local.address=2600:70ff:b04f::2 \
+#    local.role=ibgp routing-table=main output.default-originate=always
+#add name=raikou remote.address=2600:70ff:b04f:2:0:beef:0:2 \
+#    as=64512 address-families=ip6 local.address=2600:70ff:b04f::2 \
+#    local.role=ibgp routing-table=main output.default-originate=always
 
 /snmp community
 set [ find default=yes ] addresses=::/0 authentication-protocol=MD5 disabled=\
