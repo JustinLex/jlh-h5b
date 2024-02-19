@@ -151,14 +151,20 @@
             "interface" = "bondnet";
             "pools" = [
               {
-                # Skip 10.0.0.1 for router, stop before 10.0.2.0 to leave room for MetalLB on the subnet
+                # Skip 10.0.0.1 for router, stop before 10.0.16.0/20 to leave room for MetalLB on the subnet, see "IP Blocks.md
                 "pool" = "10.0.0.2 - 10.0.1.255";
               }
             ];
             "reservations" = [
+              # Legacy nodes
               { "hw-address" = "00:02:C9:55:A2:04"; "ip-address" = "10.0.0.2"; } # Proxmox, aka pve.home.jlh.name
               { "hw-address" = "5A:B1:9C:82:4F:70"; "ip-address" = "10.0.0.3"; } # FreeNAS, aka freenas.home.jlh.name
               { "hw-address" = "3E:10:97:73:17:53"; "ip-address" = "10.0.0.4"; } # Ditto backup server, aka ditto.home.jlh.name
+
+              # DNS
+              { "hw-address" = "00:9E:27:E0:05:38"; "ip-address" = "10.0.0.53"; } # me lol
+
+              # Legacy node
               { "hw-address" = "a6:9b:d3:a4:4e:ac"; "ip-address" = "10.0.15.248"; } # Cloyster Kubernetes Host, aka cloyster.home.jlh.name
             ];
           }
@@ -448,6 +454,21 @@ porygontwo        IN  A     10.0.0.53
 porygontwo        IN  AAAA  2600:70ff:b04f:2::53
 
 ntp               IN  A     10.0.0.53
+
+; kubernetes control-plane
+cluster-api       IN  AAAA  2600:70ff:b04f:2:0:beef:0:0
+;                  IN  AAAA  2600:70ff:b04f:2:0:beef:0:1
+;                  IN  AAAA  2600:70ff:b04f:2:0:beef:0:2
+suicune           IN  AAAA  2600:70ff:b04f:2:0:beef:0:0
+entei             IN  AAAA  2600:70ff:b04f:2:0:beef:0:1
+raikou            IN  AAAA  2600:70ff:b04f:2:0:beef:0:2
+
+; kubernetes workers
+latios            IN  AAAA  2600:70ff:b04f:2:0:beef:1:0
+latias            IN  AAAA  2600:70ff:b04f:2:0:beef:1:1
+chikorita         IN  AAAA  2600:70ff:b04f:2:0:beef:1:2
+cyndaquil         IN  AAAA  2600:70ff:b04f:2:0:beef:1:3
+totodile          IN  AAAA  2600:70ff:b04f:2:0:beef:1:4
       '';  # Writing file directly: https://stackoverflow.com/a/73377726
     in {
       install_pod = ''
