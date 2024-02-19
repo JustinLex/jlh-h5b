@@ -6,8 +6,13 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix.url = "github:yaxitech/ragenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix-rekey.url = "github:justinlex/agenix-rekey";
+    agenix-rekey.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, unstable, nixos-generators, ... }:
+  outputs = { self, nixpkgs, unstable, nixos-generators, agenix, agenix-rekey, ... }:
     let
       unstablePkgs = unstable.legacyPackages.x86_64-linux; # https://github.com/nix-community/home-manager/issues/1538#issuecomment-1265293260
       nodes = [
@@ -28,12 +33,16 @@
             modules = [
                ./common.nix
                ./nodes/${nodename}.nix
+                agenix.nixosModules.default
+                agenix-rekey.nixosModules.default
+                ./inject-hostkey.nix # Inject SSH/agenix host key when building image
             ];
             specialArgs = {
                 # additional arguments to pass to modules
                 self = self;
                 nodeHostName = nodename;
                 unstablePkgs = unstablePkgs;
+                rootDecryptionKey = "/homelab_rootkey/rootkey";
             };
           }
       );
@@ -47,12 +56,15 @@
                ./raw-efi.nix # Duplicate some bits of config from upstream nixox-generators so that we can use nixos-rebuild
                ./common.nix
                ./nodes/${nodename}.nix
+                agenix.nixosModules.default
+                agenix-rekey.nixosModules.default
             ];
             specialArgs = {
                 # additional arguments to pass to modules
                 self = self;
                 nodeHostName = nodename;
                 unstablePkgs = unstablePkgs;
+                rootDecryptionKey = "/homelab_rootkey/rootkey";
             };
           }
       );
@@ -71,5 +83,12 @@
           ( nodename: { "name" = nodename; "value" = configuration(nodename); } )
           ( nodes )  # List of nodes to generate NixOS Configurations for
       );
+
+      # Expose the necessary information in your flake so agenix-rekey
+      # knows where it has too look for secrets and paths.
+      agenix-rekey = agenix-rekey.configure {
+        userFlake = self;
+        nodes = self.nixosConfigurations;
+      };
   };
 }

@@ -1,7 +1,36 @@
-{ config, pkgs, self, nodeHostName, ... }:
+{ config, pkgs, self, lib, nodeHostName, rootDecryptionKey, ... }:
 
 {
   networking.hostName = nodeHostName;
+
+  # Enable firmware loading
+  hardware.enableRedistributableFirmware = true;
+
+  age = {
+
+    # Define agenix-rekey credentials
+    rekey = {
+      hostPubkey = ./nodes/${nodeHostName}.pub;
+      masterIdentities = [ rootDecryptionKey ];
+    };
+
+    # Path to decryption key for agenix on node.
+    # This key is bootstrapped by inject-hostkey.nix only when building the usb image.
+    # We depend on /etc/ persistence to remember the key after a nixos-upgrade
+    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+    # Secret files
+    secrets = {
+      host_key.rekeyFile = ./secrets/${nodeHostName}_ssh_host_ed25519_key.age;
+    };
+
+  };
+
+  # Use stable ssh host key
+  services.openssh.hostKeys = [];
+  services.openssh.extraConfig = ''
+    HostKey ${config.age.secrets.host_key.path}
+  '';
 
   networking.firewall.enable = false;  # Disable the firewall
 
