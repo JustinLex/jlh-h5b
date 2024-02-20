@@ -249,7 +249,7 @@ set hostname code=12 name=hostname value="\$(HOSTNAME)"
 add add-default-route=yes default-route-distance=1 disabled=no interface=ether2 use-peer-dns=no use-peer-ntp=no
 
 # 6to4 Tunnel configuration
-/interface 6to4 add comment="Hurricane Electric IPv6 Tunnel Broker" disabled=no local-address=158.174.30.59 mtu=1280 \
+/interface 6to4 add comment="Hurricane Electric IPv6 Tunnel Broker" disabled=no local-address=158.174.30.59 mtu=1480 \
 name=he-tunnel remote-address=216.66.80.90
 /interface list member add comment="IPv6 tunnel" disabled=no interface=he-tunnel list=WAN
 
