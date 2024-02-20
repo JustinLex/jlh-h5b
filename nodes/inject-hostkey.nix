@@ -12,6 +12,6 @@
   in ''
     mkdir -p /etc/ssh/
     cp ${hostKey} /etc/ssh/ssh_host_ed25519_key
-    cp ./nodes/${nodeHostName}.pub /etc/ssh/ssh_host_ed25519_key.pub
+    cp .${/nodes/${nodeHostName}.pub} /etc/ssh/ssh_host_ed25519_key.pub
   '';
 }
