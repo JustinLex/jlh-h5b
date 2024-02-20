@@ -1,0 +1,43 @@
+# Cilium ipv6 configuration
+# https://yolops.net/k8s-dualstack-cilium.html
+ipv4:
+  enabled: true
+ipv6:
+  enabled: true
+ipam:
+  mode: cluster-pool
+  operator:
+    # must match k3s-config.yaml
+    clusterPoolIPv4PodCIDRList: "10.42.0.0/16"
+    clusterPoolIPv6PodCIDRList: "2600:70ff:b04f:beef:0::/80"
+    clusterPoolIPv4MaskSize: 24
+    clusterPoolIPv6MaskSize: 96
+
+# Do eBPF SNAT for ipv4 only, so cluster can pretend it's on the same subnet as iot devices
+bpf:
+  masquerade: true
+enableIPv6Masquerade: false
+
+# Enable native routing
+# https://docs.cilium.io/en/stable/network/concepts/routing/#native-routing
+routingMode: native
+autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: "10.42.0.0/16"
+ipv6NativeRoutingCIDR: "::/0"
+
+# Enable BGP
+# https://rx-m.com/kubernetes-loadbalance-service-using-cilium-bgp-control-plane/
+# https://docs.cilium.io/en/stable/network/bgp-control-plane/#cilium-bgp-control-plane-beta
+bgpControlPlane:
+  enabled: true
+
+# Enable Gateway API
+# https://docs.cilium.io/en/stable/network/servicemesh/gateway-api/gateway-api/
+kubeProxyReplacement: true
+gatewayAPI:
+  enabled: true
+
+# Configure kubernetes API url to allow Cilium to start without kubeproxy
+# https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/#kubernetes-without-kube-proxy
+k8sServiceHost: cluster-api.hlund.jlh.name
+k8sServicePort: 443

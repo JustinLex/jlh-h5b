@@ -1,0 +1,18 @@
+# https://rx-m.com/kubernetes-loadbalance-service-using-cilium-bgp-control-plane/
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumBGPPeeringPolicy
+metadata:
+  name: 01-bgp-peering-policy
+spec: # CiliumBGPPeeringPolicySpec
+  nodeSelector:
+    matchLabels:
+      bgp-policy: a
+  virtualRouters:
+    - localASN: 64512
+      exportPodCIDR: true
+      neighbors:
+        - peerAddress: "2600:70ff:b04f::2/128"  # router.home.jlh.name
+          peerASN: 64512
+      serviceSelector:
+        matchExpressions:
+          - { key: somekey, operator: NotIn, values: [ 'never-used-value' ] }

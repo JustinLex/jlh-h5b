@@ -6,6 +6,9 @@
   # Enable firmware loading
   hardware.enableRedistributableFirmware = true;
 
+  # Required for Cilium
+  boot.kernelModules = ["ip6table_mangle" "ip6table_raw"];
+
   age = {
 
     # Define agenix-rekey credentials
