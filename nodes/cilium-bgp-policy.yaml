@@ -13,6 +13,9 @@ spec: # CiliumBGPPeeringPolicySpec
       neighbors:
         - peerAddress: "2600:70ff:b04f::2/128"  # router.home.jlh.name
           peerASN: 64512
+          gracefulRestart:
+            enabled: true
+            restartTimeSeconds: 60
       serviceSelector:
         matchExpressions:
           - { key: somekey, operator: NotIn, values: [ 'never-used-value' ] }
