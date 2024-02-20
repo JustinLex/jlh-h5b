@@ -18,4 +18,4 @@ spec: # CiliumBGPPeeringPolicySpec
             restartTimeSeconds: 60
       serviceSelector:
         matchExpressions:
-          - { key: somekey, operator: NotIn, values: [ 'never-used-value' ] }
+          - { key: somekey, operator: NotIn, values: [ 'never-used-value' ] } # Add all LoadBalancer services to BGP
