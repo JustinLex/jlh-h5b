@@ -20,4 +20,14 @@
     configPath = ../k3s-config.yaml;
   };
 
+#  systemd.user.services."configure-ipmi" = {
+#    enable = true;
+#    serviceConfig.Type = "oneshot";
+#    wantedBy = ["multi-user.target"];
+#    path = with pkgs; [ ipmitool ];
+#    script = ''
+#      ipmitool xxxxx
+#    '';
+#  };
+
 }
