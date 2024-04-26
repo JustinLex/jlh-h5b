@@ -1,5 +1,8 @@
-# jlh-h5b
-A Kubernetes-based Homelab
+# [ARCHIVED] jlh-h5b
+
+~~A Kubernetes-based Homelab~~
+
+ARCHIVED: Moved to Codeberg: https://codeberg.org/jlh/h5b
 
 ## Install order
 1. Ansible playbook for x86 node
